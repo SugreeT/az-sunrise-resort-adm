@@ -34,9 +34,9 @@
 									<div class="row p-b-20">
 										<div class="col-md-6 col-sm-6 col-6">
 											<div class="btn-group">
-												<a href="/manage-banner/banner-add" id="addRow" class="btn btn-info">
+												<!-- <a href="/manage-banner/banner-add" id="addRow" class="btn btn-info">
 												Add New <i class="fa fa-plus"></i>
-												</a>
+												</a> -->
 												<!-- <NuxtLink to="/manage-banner/banner-add"  >
 												<button type="button"  class="btn btn-info">	Add New <i class="fa fa-plus"></i></button>
 													</NuxtLink> -->
@@ -44,23 +44,93 @@
 										</div>
 									</div>
 									<div class="table-scrollable">
-										<table class="table table-hover table-checkable order-column full-width"
-											id="example4">
+										<table class="table table-hover table-checkable order-column full-width" id="tableBanner">
 											<thead>
 												<tr>
 													<th class="center"> No </th>
-													<th class="center"> Image Name </th>
+													<th class="center"> Banner </th>
 													<th class="center"> Page </th>
-													<th class="center"> Create Date </th>
-													<th class="center"> Status </th>
+													<th class="center"> Main Title </th>
+													<th class="center"> Description </th>
+													<th class="center"> Main Title(CN) </th>
+													<th class="center"> Description(CN) </th>
+													<th class="center"> Main Title(RU) </th>
+													<th class="center"> Description(RU) </th>
+													<!-- <th class="center"> Create Date </th> -->
+													<!-- <th class="center"> Status </th> -->
 													<th class="center"> Action </th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr class="odd gradeX">
-													<!-- <td class="user-circle-img">
-														<img src="/img/user/user1.jpg" alt="">
+												 <!-- loop data จาก mediaItems -->
+												<tr
+													v-for="(item, idx) in responseData"
+													:key="item.id"
+													class="odd gradeX"
+												>
+													<td class="center">{{ idx + 1 }}</td>
+
+													<!-- Image Name -->
+													<td class="center">
+														  <!-- item.banner.path และ item.banner.name มาจาก API -->
+															<img width="150" height="150"
+															:src="apiService.getImageUrl(item.banner?.path, item.banner?.name)" 
+															alt="Banner image" 
+														/>
+													</td>
+
+													<!-- Page (path หรือ name ตาม DTO) -->
+													<td class="text-left">{{ item.pageName }}</td>
+
+													<td class="text-left">{{ item.title }}</td>
+
+													<td class="text-left">{{ item.title_mini }}</td>
+
+													<td class="text-left">{{ item.title_cn }}</td>
+
+													<td class="text-left">{{ item.title_mini_cn }}</td>
+
+													<td class="text-left">{{ item.title_ru }}</td>
+
+													<td class="text-left">{{ item.title_mini_ru }}</td>
+
+													<!-- Create Date format -->
+													<!-- <td class="center">{{ formatDate(item.created_at) }}</td> -->
+
+													<!-- Status -->
+													<!-- <td class="center">
+													<span
+														class="label label-sm"
+														:class="item.status === 'active'
+														? 'label-success'
+														: 'label-danger'"
+													>
+														{{ item.status === 'active' ? 'Active' : 'Inactive' }}
+													</span>
 													</td> -->
+
+													<!-- Action -->
+													<td class="center">
+													<NuxtLink
+														:to="`/manage-banner/banner-edit/${item.id}`"
+														class="btn btn-tbl-edit btn-xs"
+													>
+														<i class="fa fa-pencil"></i>
+													</NuxtLink>
+													<!-- <button
+														class="btn btn-tbl-delete btn-xs"
+														@click="deleteBanner(item.id)"
+													>
+														<i class="fa fa-trash-o"></i>
+													</button> -->
+													</td>
+												</tr>
+
+												<!-- กรณีไม่มีข้อมูล -->
+												<tr v-if="!responseData.length">
+													<td class="center" colspan="11">No data found</td>
+												</tr>
+												<!-- <tr class="odd gradeX">
 													<td class="center">1</td>
 													<td class="center">Main1</td>
 													<td class="center">Home</td>
@@ -72,10 +142,6 @@
 														<a href="/manage-rooms/room-edit" class="btn btn-tbl-edit btn-xs">
 															<i class="fa fa-pencil"></i>
 														</a>
-														<!-- <NuxtLink to="/manage-banner/banner-edit"  >
-															<button type="button" class="btn btn-tbl-edit btn-xs">
-																<i class="fa fa-pencil"></i></button>
-														</NuxtLink> -->
 														<a class="btn btn-tbl-delete btn-xs">
 															<i class="fa fa-trash-o "></i>
 														</a>
@@ -98,60 +164,7 @@
 															<i class="fa fa-trash-o "></i>
 														</a>
 													</td>
-												</tr>
-												<tr class="odd gradeX">
-												
-													<td class="center">3</td>
-													<td class="center">Restaurant1</td>
-													<td class="center">Restaurant</td>
-													<td class="center">2024-12-24 20:01</td>
-													<td class="center">
-														<span class="label label-sm label-success">Active</span>
-													</td>
-													<td class="center">
-														<a href="/manage-rooms/room-edit" class="btn btn-tbl-edit btn-xs">
-															<i class="fa fa-pencil"></i>
-														</a>
-														<a class="btn btn-tbl-delete btn-xs">
-															<i class="fa fa-trash-o "></i>
-														</a>
-													</td>
-												</tr>
-												<tr class="odd gradeX">
-												
-													<td class="center">4</td>
-													<td class="center">Fitness.jpg</td>
-													<td class="center">Fitness</td>
-													<td class="center">2024-12-24 20:01</td>
-													<td class="center">
-														<span class="label label-sm label-success">Active</span>
-													</td>
-													<td class="center">
-														<a href="/manage-rooms/room-edit" class="btn btn-tbl-edit btn-xs">
-															<i class="fa fa-pencil"></i>
-														</a>
-														<a class="btn btn-tbl-delete btn-xs">
-															<i class="fa fa-trash-o "></i>
-														</a>
-													</td>
-												</tr>
-												<tr class="odd gradeX">
-													<td class="center">5</td>
-													<td class="center">Spa.jpg</td>
-													<td class="center">Spa</td>
-													<td class="center">2024-12-24 20:01</td>
-													<td class="center">
-														<span class="label label-sm label-success">Active</span>
-													</td>
-													<td class="center">
-														<a href="/manage-rooms/room-edit" class="btn btn-tbl-edit btn-xs">
-															<i class="fa fa-pencil"></i>
-														</a>
-														<a class="btn btn-tbl-delete btn-xs">
-															<i class="fa fa-trash-o "></i>
-														</a>
-													</td>
-												</tr>
+												</tr> -->
 											</tbody>
 										</table>
 									</div>
@@ -177,4 +190,95 @@ useHead({
 onMounted(() => {
   console.log('Scripts are loaded and DOM is ready');
 });
+</script>
+
+<script>
+
+
+import apiService from '@/services/apiService'
+
+export default {
+  data() {
+    return {
+	  pages: [],
+      responseData: [], // Store selected images and previews
+    };
+  },
+  async mounted() {
+    // this.initPage()
+
+	await this.callServicePageInfo()
+    await this.callServiceMain()
+
+	$('#tableBanner').DataTable( {
+		"scrollX": true,
+		pageLength: 10,               // เริ่มต้นแสดง 5 รายการ
+		lengthMenu: [                // กำหนดตัวเลือกใน dropdown
+			[ 10, 25, 50, 100],
+			[ 10, 25, 50, 100]
+		]
+	} );
+	Layout.init();
+  },
+  methods: {
+	async callServicePageInfo() {
+		const response = await apiService.get('/api/page-info/search')
+		this.pages = response;
+    },
+	async callServiceMain() {
+        try {
+			const response = await apiService.get('/api/page-info/content/section1')
+		
+			this.responseData = response;
+		// สมมติ this.pages เป็น array ของ { id, name, ... }
+				console.log('this.pages >', this.pages);
+
+			for (let i = 0; i < this.responseData.length; i++) {
+			const res = this.responseData[i];
+
+			// หา page object ตัวเดียวที่ id ตรงกับ res.page_id
+			const page = this.pages.find(p => p.id === res.page_id);
+
+			// ถ้าเจอ ก็เซ็ต pageName ให้เป็นชื่อของมัน
+			res.pageName = page ? page.description : null;
+			}
+
+			console.log('res >', this.responseData);
+			// setTimeout(() => {
+			// 	console.log('2222222222222222222222222 >')
+			//   $('#tableBanner').DataTable( {
+			// 	"scrollX": true
+			// } );
+			// }, 1000);
+			
+        } catch (err) {
+            console.error('Error loading landing page:', err)
+        }
+    },
+	 /** format วันที่ ให้สวยงาม */
+	 formatDate(dt) {
+      if (!dt) return '-';
+      const d = new Date(dt);
+      return d.toLocaleString('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    },
+
+    /** ลบ banner ตาม id */
+    async deleteBanner(id) {
+      if (!confirm('Are you sure to delete this banner?')) return;
+      try {
+        await apiService.delete(`/banners/${id}`);
+        // หลังลบเสร็จ โหลดใหม่
+        await this.loadMedia();
+      } catch (err) {
+        console.error('Delete failed:', err);
+      }
+    }
+  }
+}
 </script>

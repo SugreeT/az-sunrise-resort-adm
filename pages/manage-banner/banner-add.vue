@@ -38,7 +38,134 @@
 									</ul> -->
 								</div>
 								<div class="card-body row">
+
+									<div  class="col-lg-12 p-t-20">
+										<!-- language tabs -->
+									<ul class="nav nav-tabs mb-3" role="tablist">
+										<li class="nav-item">
+											<button
+											class="nav-link active"
+											data-bs-toggle="tab"
+											data-bs-target="#lang-en"
+											type="button"
+											>English</button>
+										</li>
+										<li class="nav-item">
+											<button
+											class="nav-link"
+											data-bs-toggle="tab"
+											data-bs-target="#lang-zh"
+											type="button"
+											>Chinese</button>
+										</li>
+										<li class="nav-item">
+											<button
+											class="nav-link"
+											data-bs-toggle="tab"
+											data-bs-target="#lang-ru"
+											type="button"
+											>Russian </button>
+										</li>
+										</ul>
+
+										<div class="tab-content">
+										<!-- EN -->
+										<div class="tab-pane fade show active" id="lang-en">
+											<div class="row mb-3">
+											<label class="col-sm-2 col-form-label">Main Title</label>
+											<div class="col-sm-10">
+												<input
+												type="text"
+												class="form-control"
+												v-model="banner.translations.en.title"
+												/>
+											</div>
+											</div>
+											<div class="row mb-3">
+											<label class="col-sm-2 col-form-label">Description</label>
+											<div class="col-sm-10">
+												<textarea
+												class="form-control"
+												rows="3"
+												v-model="banner.translations.en.description"
+												></textarea>
+											</div>
+											</div>
+										</div>
+
+										<!-- ZH -->
+										<div class="tab-pane fade" id="lang-zh">
+											<div class="row mb-3">
+											<label class="col-sm-2 col-form-label">Main Title</label>
+											<div class="col-sm-10">
+												<input
+												type="text"
+												class="form-control"
+												v-model="banner.translations.zh.title"
+												/>
+											</div>
+											</div>
+											<div class="row mb-3">
+											<label class="col-sm-2 col-form-label">Description</label>
+											<div class="col-sm-10">
+												<textarea
+												class="form-control"
+												rows="3"
+												v-model="banner.translations.zh.description"
+												></textarea>
+											</div>
+											</div>
+										</div>
+
+										<!-- RU -->
+										<div class="tab-pane fade" id="lang-ru">
+											<div class="row mb-3">
+											<label class="col-sm-2 col-form-label">Main Title</label>
+											<div class="col-sm-10">
+												<input
+												type="text"
+												class="form-control"
+												v-model="banner.translations.ru.title"
+												/>
+											</div>
+											</div>
+											<div class="row mb-3">
+											<label class="col-sm-2 col-form-label">Description</label>
+											<div class="col-sm-10">
+												<textarea
+												class="form-control"
+												rows="3"
+												v-model="banner.translations.ru.description"
+												></textarea>
+											</div>
+											</div>
+										</div>
+										</div>
+									</div>
 								
+									<div class="col-lg-6 p-t-20">
+										<div class="form-group">
+
+											<label for="pages" class="form-label">Choose a Page</label>
+											<select
+												id="pages"
+												class="form-select"
+												v-model="selectedPage"
+												>
+												<!-- ค่าดีฟอลต์ -->
+												<!-- <option disabled value="">-- กรุณาเลือกหน้า --</option> -->
+												<!-- วนลูป pages ที่มาจาก API -->
+												<option
+													v-for="page in pages"
+													:key="page.id"
+													:value="page"
+												>
+													{{ page.description }}
+												</option>
+												</select>
+										</div>
+									</div>
+
 									<div class="col-lg-6 p-t-20">
 										<div class="form-group">
 											<label for="images" class="form-label">Select Images</label>
@@ -47,7 +174,7 @@
 											class="form-control"
 											id="images"
 											accept="image/*"
-											multiple
+											
 											@change="handleFiles"
 											/>
 										</div>
@@ -81,27 +208,8 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-lg-6 p-t-20">
-										<div class="form-group">
-											<label>Banner No</label>
-											<input type="text" class="form-control" v-model="bannerNo" placeholder="Enter ...">
-										</div>
-									</div>
-									<div class="col-lg-6 p-t-20">
-										<div class="form-group">
-
-											<label for="pages" class="form-label">Choose a Page</label>
-												<select
-												id="pages"
-												class="form-select"
-												v-model="selectedPage"
-												>
-												<option v-for="(page, index) in pages" :key="index" :value="page">
-													{{ page }}
-												</option>
-												</select>
-										</div>
-									</div>
+								
+								
 									<div class="col-lg-6 p-t-20">
 										<div class="form-group">
 											<label for="status" class="form-label">Status</label>
@@ -117,6 +225,10 @@
 										</div>
 									</div>
 							
+									
+
+
+									
 							
 									<!-- <div class="col-lg-6 p-t-20">
 										<div
@@ -215,10 +327,9 @@
 									</div> -->
 									<div class="col-lg-12 p-t-20 text-center">
 									
-											<a href="/manage-banner/banner-list"  >
-												<button type="button"
+								
+												<button type="button" @click="saveSections"
 											class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Submit</button>
-											</a>
 								
 											<a href="/manage-banner/banner-list"  >
 												<button type="button"
@@ -241,6 +352,7 @@
 				</div>
 			</div>
 			<!-- end page content -->
+			 
 </template>
 
 
@@ -248,6 +360,9 @@
 import Header from '@/components/Header.vue';
 import Sidebar from '@/components/Sidebar.vue';
 import Footer from '@/components/Footer.vue';
+
+
+import apiService from '@/services/apiService'
 
 // เพิ่ม Script ที่จำเป็นใน <head>
 useHead({
@@ -277,6 +392,13 @@ export default {
     return {
       images: [], // Store selected images and previews
 	  bannerNo: "",
+	  banner: {
+        translations: {
+          en: { title: '', description: '' },
+          zh: { title: '', description: '' },
+          ru: { title: '', description: '' },
+        },
+      },
       errorMessage: '',
       isUploading: false,
       uploadSuccess: false,
@@ -299,13 +421,40 @@ export default {
         I: "In Active",
       },
       selectedStatus: "A", // เก็บคีย์ที่ผู้ใช้เลือก
+	  requestLandingPage: {
+        section1: {
+          // ฟิลด์อื่น ๆ ของ section1 …
+          banner: {},      // <--- ตรงนี้จะเก็บ { name, path }
+          titleMini: '',
+          title: '',
+		  titleMiniCn: '',
+          titleCn: '',
+		  titleMiniRu: '',
+          titleRu: '',
+          // …
+        },
+        // section2–section5 …
+      }
     };
   },
+  mounted() {
+    // this.initPage()
+
+    this.callServiceMain()
+  },
   methods: {
-    handleFiles(event) {
+	async callServiceMain() {
+        try {
+			const response = await apiService.get('/api/page-info/search')
+			this.pages = response;
+        } catch (err) {
+            console.error('Error loading landing page:', err)
+        }
+    },
+    async handleFiles(event) {
       this.errorMessage = '';
       const selectedFiles = Array.from(event.target.files);
-      const totalSize = selectedFiles.reduce((acc, file) => acc + file.size, 0);
+      const totalSize = selectedFiles.reduce((acc, f) => acc + f.size, 0);
 
       if (totalSize > this.maxSize) {
         this.errorMessage = 'Total file size exceeds 50MB!';
@@ -313,41 +462,67 @@ export default {
         return;
       }
 
-      // Generate previews for each image
-      this.images = selectedFiles.map((file) => ({
-        file,
-        preview: URL.createObjectURL(file),
+      // สร้าง preview
+      this.images = selectedFiles.map(f => ({
+        file: f,
+        preview: URL.createObjectURL(f)
       }));
-    },
+
+      // upload แต่ละไฟล์เลย
+      for (const { file } of this.images) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('pageName', this.selectedPage?.name);
+
+        try {
+          const resp = await apiService.post('/media/upsert',      // หรือ path ที่คุณแม็ปใน Spring
+            formData,
+            { headers: { 'Content-Type': 'multipart/form-data' } }
+          );
+          console.log('Upload success:', resp);
+		  const { name, path } = resp.data;
+			this.requestLandingPage.section1.banner = { name, path };
+
+			console.log('section1.banner:', this.requestLandingPage.section1.banner);
+        } catch (err) {
+          console.error('Upload error:', err);
+          this.errorMessage = 'Upload failed: ' + (err.message || err);
+        }
+      }
+	},
     formatSize(size) {
       const mbSize = (size / (1024 * 1024)).toFixed(2);
       return `${mbSize} MB`;
     },
-    async handleSubmit() {
-      if (this.images.length === 0) {
-        this.errorMessage = 'Please select at least one image!';
-        return;
-      }
-
-      this.isUploading = true;
-      this.errorMessage = '';
-      this.uploadSuccess = false;
-
+	async saveSections() {
       try {
-        const formData = new FormData();
-        this.images.forEach((image) => formData.append('images', image.file));
 
-        // Simulate API upload request (replace with your actual API endpoint)
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+ 	   // 2. flatten translations
+ 	  const t = this.banner.translations;
+      this.requestLandingPage.section1.title     = t.en.title;
+      this.requestLandingPage.section1.title_mini = t.en.description;
 
-        this.uploadSuccess = true;
-        this.images = [];
-      } catch (error) {
-        this.errorMessage = 'Failed to upload images!';
-      } finally {
-        this.isUploading = false;
+      this.requestLandingPage.section1.title_cn     = t.zh.title;
+      this.requestLandingPage.section1.title_mini_cn = t.zh.description;
+
+      this.requestLandingPage.section1.title_ru     = t.ru.title;
+      this.requestLandingPage.section1.title_mini_ru = t.ru.description;
+
+      // 3. กำหนด pageId จาก selectedPageId (ถ้ามี)
+      this.requestLandingPage.section1.page_id = this.selectedPage?.id
+
+	  this.requestLandingPage.section1.status = this.selectedStatus
+
+	  console.log('section1.banner:', this.requestLandingPage.section1);
+        const resp = await apiService.post(
+          `/landingpage/update/page/${this.selectedPage?.name}/sections`,
+          this.requestLandingPage
+        );
+        console.log('Update sections success:', resp);
+      } catch (err) {
+        console.error('Update sections error:', err);
       }
-    },
+  	}
   },
   beforeUnmount() {
     // Revoke preview URLs to free up memory

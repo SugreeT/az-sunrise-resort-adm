@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true }, // เปิดเครื่องมือ DevTools
   pages: true, // เปิดใช้งานระบบ Pages
   app: {
-    baseURL: '/', // หรือ '/subfolder/' หากใช้ Subdirectory
+    baseURL: '/adm/', // หรือ '/subfolder/' หากใช้ Subdirectory
     buildAssetsDir: '/_nuxt/', // Path สำหรับ Static Assets
     head: {
       link: [
@@ -38,6 +38,10 @@ export default defineNuxtConfig({
         {
           rel: 'stylesheet',
           href: '/css/pages/animate_page.css', // animation
+        },
+        {
+          rel: 'stylesheet',
+          href: '/plugins/sweet-alert/sweetalert.min.css', // animation
         },
         {
           rel: 'stylesheet',

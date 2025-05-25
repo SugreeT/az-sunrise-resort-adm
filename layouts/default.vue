@@ -39,6 +39,9 @@ useHead({
     { src: '/plugins/material/material.min.js', type: 'text/javascript', defer: true },
     { src: '/js/pages/material_select/getmdl-select.js', type: 'text/javascript', defer: true },
 
+    { src: '/plugins/sweet-alert/sweetalert.min.js', type: 'text/javascript', defer: true },
+    { src: '/js/pages/sweet-alert/sweet-alert-data.js', type: 'text/javascript', defer: true },
+
     { src: '/js/pages/ui/animations.js', type: 'text/javascript', defer: true },
     // { src: '/plugins/sparkline/jquery.sparkline.min.js', type: 'text/javascript', defer: true },
     // { src: '/js/pages/sparkline/sparkline-data.js', type: 'text/javascript', defer: true },

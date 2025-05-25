@@ -54,25 +54,19 @@
                         </li>
                         <!-- <li class="nav-item">
                           <a href="#" class="nav-link nav-toggle">
-                            <i class="material-icons">email</i>
-                            <span class="title">Email</span>
+                            <i class="material-icons">group</i>
+                            <span class="title">Upload</span>
                             <span class="arrow"></span>
-                            <span class="label label-rouded label-menu label-danger">new</span>
                           </a>
                           <ul class="sub-menu">
                             <li class="nav-item">
-                              <a href="email_inbox" class="nav-link ">
-                                <span class="title">Inbox</span>
+                              <a href="/manage-upload/upload-list" class="nav-link ">
+                                <span class="title">Banner</span>
                               </a>
                             </li>
                             <li class="nav-item">
-                              <a href="/index" class="nav-link ">
-                                <span class="title">View Mail</span>
-                              </a>
-                            </li>
-                            <li class="nav-item">
-                              <a href="email_compose" class="nav-link ">
-                                <span class="title">Compose Mail</span>
+                              <a href="/manage-upload/upload-list" class="nav-link ">
+                                <span class="title">Gallery</span>
                               </a>
                             </li>
                           </ul>
@@ -83,8 +77,14 @@
                             <span class="title"> Banner</span>
                           </NuxtLink> -->
                           <a href="/manage-banner/banner-list" class="nav-link ">
-                            <i class="material-icons">home</i>
+                            <i class="material-icons">business_center</i>
                             <span class="title"> Banner</span>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a href="/manage-upload/upload-list" class="nav-link ">
+                            <i class="material-icons">business_center</i>
+                            <span class="title"> Gallery</span>
                           </a>
                         </li>
                         <li class="nav-item">

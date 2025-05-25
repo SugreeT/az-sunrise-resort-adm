@@ -18,7 +18,7 @@
 
 /********* [1. FORM CONTROL]*********/ 
 .form-control {
-	border-radius: 0;
+	/* border-radius: 0; */
 	box-shadow: none;
 	border-color: #d2d6de
 }
