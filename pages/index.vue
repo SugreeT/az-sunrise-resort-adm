@@ -494,6 +494,10 @@ export default {
   },
   created() {
     // this.title = this.$t('slide-title', { name: 'vue-i18n' });
+	// Layout.init();
+  },
+  mounted() {
+	Layout.init();
   },
 };
 </script>

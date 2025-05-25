@@ -334,17 +334,21 @@
 			<!-- end page content -->
 </template>
 
-<script setup>
-
-// เพิ่ม Script ที่จำเป็นใน <head>
-useHead({
-  script: [
-    // { src: '/js/pages/table/table_data.js', type: 'text/javascript', defer: true },
-  ],
-});
-
-// ใช้ onMounted เพื่อจัดการ script ที่ต้องการ DOM พร้อมใช้งาน
-onMounted(() => {
-  console.log('Scripts are loaded and DOM is ready');
-});
+<script>
+export default {
+  data() {
+    return {
+        title: '', // ค่าเริ่มต้น
+    };
+  },
+  computed: {
+  },
+  created() {
+    // this.title = this.$t('slide-title', { name: 'vue-i18n' });
+	// Layout.init();
+  },
+  mounted() {
+	Layout.init();
+  },
+};
 </script>

@@ -21,28 +21,24 @@ import Footer from '@/components/Footer.vue';
 // เพิ่ม Script ที่จำเป็นใน <head>
 useHead({
   script: [
-    { src: '/plugins/jquery/jquery.min.js', type: 'text/javascript', defer: true },
-    { src: '/plugins/popper/popper.min.js', type: 'text/javascript', defer: true },
-    { src: '/plugins/jquery-blockui/jquery.blockui.min.js', type: 'text/javascript', defer: true },
-    { src: '/plugins/jquery-slimscroll/jquery.slimscroll.min.js', type: 'text/javascript', defer: true },
-    { src: '/plugins/bootstrap/js/bootstrap.min.js', type: 'text/javascript', defer: true },
-    { src: '/plugins/counterup/jquery.waypoints.min.js', type: 'text/javascript', defer: true },
-    { src: '/plugins/counterup/jquery.counterup.min.js', type: 'text/javascript', defer: true },
-    { src: '/js/app.js', type: 'text/javascript', defer: true },
-    { src: '/js/layout.js', type: 'text/javascript', defer: true },
-    { src: '/js/theme-color.js', type: 'text/javascript', defer: true },
-
-    { src: '/plugins/datatables/jquery.dataTables.min.js', type: 'text/javascript', defer: true },
-    { src: '/plugins/datatables/plugins/bootstrap/dataTables.bootstrap4.min.js', type: 'text/javascript', defer: true },
-    { src: '/js/pages/table/table_data.js', type: 'text/javascript', defer: true },
-
-    { src: '/plugins/material/material.min.js', type: 'text/javascript', defer: true },
-    { src: '/js/pages/material_select/getmdl-select.js', type: 'text/javascript', defer: true },
-
-    { src: '/plugins/sweet-alert/sweetalert.min.js', type: 'text/javascript', defer: true },
-    { src: '/js/pages/sweet-alert/sweet-alert-data.js', type: 'text/javascript', defer: true },
-
-    { src: '/js/pages/ui/animations.js', type: 'text/javascript', defer: true },
+    { src: '/adm/plugins/jquery/jquery.min.js', type: 'text/javascript', defer: true },
+    { src: '/adm/plugins/popper/popper.min.js', type: 'text/javascript', defer: true },
+    { src: '/adm/plugins/jquery-blockui/jquery.blockui.min.js', type: 'text/javascript', defer: true },
+    { src: '/adm/plugins/jquery-slimscroll/jquery.slimscroll.min.js', type: 'text/javascript', defer: true },
+    { src: '/adm/plugins/bootstrap/js/bootstrap.min.js', type: 'text/javascript', defer: true },
+    { src: '/adm/plugins/counterup/jquery.waypoints.min.js', type: 'text/javascript', defer: true },
+    { src: '/adm/plugins/counterup/jquery.counterup.min.js', type: 'text/javascript', defer: true },
+    { src: '/adm/js/app.js', type: 'text/javascript', defer: true },
+    { src: '/adm/js/layout.js', type: 'text/javascript', defer: true },
+    { src: '/adm/js/theme-color.js', type: 'text/javascript', defer: true },
+    { src: '/adm/plugins/datatables/jquery.dataTables.min.js', type: 'text/javascript', defer: true },
+    { src: '/adm/plugins/datatables/plugins/bootstrap/dataTables.bootstrap4.min.js', type: 'text/javascript', defer: true },
+    { src: '/adm/js/pages/table/table_data.js', type: 'text/javascript', defer: true },
+    { src: '/adm/plugins/material/material.min.js', type: 'text/javascript', defer: true },
+    { src: '/adm/js/pages/material_select/getmdl-select.js', type: 'text/javascript', defer: true },
+    { src: '/adm/plugins/sweet-alert/sweetalert.min.js', type: 'text/javascript', defer: true },
+    { src: '/adm/js/pages/sweet-alert/sweet-alert-data.js', type: 'text/javascript', defer: true },
+    { src: '/adm/js/pages/ui/animations.js', type: 'text/javascript', defer: true },
     // { src: '/plugins/sparkline/jquery.sparkline.min.js', type: 'text/javascript', defer: true },
     // { src: '/js/pages/sparkline/sparkline-data.js', type: 'text/javascript', defer: true },
   ],
@@ -52,4 +48,22 @@ useHead({
 onMounted(() => {
   console.log('Scripts are loaded and DOM is ready');
 });
+</script>
+<script>
+export default {
+  data() {
+    return {
+        title: '', // ค่าเริ่มต้น
+    };
+  },
+  computed: {
+  },
+  created() {
+    // this.title = this.$t('slide-title', { name: 'vue-i18n' });
+	// Layout.init();
+  },
+  mounted() {
+	Layout.init();
+  },
+};
 </script>

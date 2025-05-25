@@ -44,13 +44,13 @@
                           <span>-- Main</span>
                         </li> -->
 						            <li class="nav-item start">
-                          <a href="/index" class="nav-link nav-toggle"> <i class="material-icons">dashboard</i>
+                          <!-- <a href="/index" class="nav-link nav-toggle"> <i class="material-icons">dashboard</i>
                             <span class="title">Dashboard</span>
-                          </a>
-                          <!-- <NuxtLink to="/index"  @click="triggerGlobalFunction($event, 'click')">
+                          </a> -->
+                          <NuxtLink to="/index"  @click="triggerGlobalFunction($event, 'click')">
                             <i class="material-icons">dashboard</i>
                             <span class="title">Dashboard</span>
-                          </NuxtLink> -->
+                          </NuxtLink>
                         </li>
                         <!-- <li class="nav-item">
                           <a href="#" class="nav-link nav-toggle">
@@ -76,22 +76,34 @@
                             <i class="material-icons">home</i>
                             <span class="title"> Banner</span>
                           </NuxtLink> -->
-                          <a href="/manage-banner/banner-list" class="nav-link ">
+                          <!-- <a href="/manage-banner/banner-list" class="nav-link ">
                             <i class="material-icons">business_center</i>
                             <span class="title"> Banner</span>
-                          </a>
+                          </a> -->
+                          <NuxtLink to="/manage-banner/banner-list"  @click="triggerGlobalFunction($event, 'click')">
+                            <i class="material-icons">business_center</i>
+                            <span class="title"> Banner</span>
+                          </NuxtLink>
                         </li>
                         <li class="nav-item">
-                          <a href="/manage-upload/upload-list" class="nav-link ">
+                          <!-- <a href="/manage-upload/upload-list" class="nav-link ">
                             <i class="material-icons">business_center</i>
                             <span class="title"> Gallery</span>
-                          </a>
+                          </a> -->
+                          <NuxtLink to="/manage-upload/upload-list"  @click="triggerGlobalFunction($event, 'click')">
+                            <i class="material-icons">business_center</i>
+                            <span class="title"> Gallery</span>
+                          </NuxtLink>
                         </li>
                         <li class="nav-item">
-                          <a href="/manage-rooms/room-list" class="nav-link ">
+                          <!-- <a href="/manage-rooms/room-list" class="nav-link ">
                             <i class="material-icons">vpn_key</i>
                             <span class="title"> Rooms</span>
-                          </a>
+                          </a> -->
+                          <NuxtLink to="/manage-rooms/room-list"  @click="triggerGlobalFunction($event, 'click')">
+                            <i class="material-icons">vpn_key</i>
+                            <span class="title"> Rooms</span>
+                          </NuxtLink>
                           <!-- <NuxtLink to="/manage-rooms/room-list"  @click="triggerGlobalFunction($event, 'click')"  class="nav-link ">
                             <i class="material-icons">vpn_key</i>
                             <span class="title"> Rooms</span>
@@ -234,7 +246,7 @@
         const element = event.target;
         // เรียกใช้ global function
         if (typeof handleSidebarMenuActiveLink === "function") {
-          handleSidebarMenuActiveLink(mode, element);
+          // handleSidebarMenuActiveLink(mode, element);
         } else {
           console.error("handleSidebarMenuActiveLink ไม่ถูกประกาศใน global scope");
         }

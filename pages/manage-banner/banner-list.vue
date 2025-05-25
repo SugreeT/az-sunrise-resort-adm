@@ -206,7 +206,7 @@ export default {
   },
   async mounted() {
     // this.initPage()
-
+	Layout.init();
 	await this.callServicePageInfo()
     await this.callServiceMain()
 
@@ -218,7 +218,7 @@ export default {
 			[ 10, 25, 50, 100]
 		]
 	} );
-	Layout.init();
+
   },
   methods: {
 	async callServicePageInfo() {
