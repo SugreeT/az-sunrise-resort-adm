@@ -15,7 +15,7 @@ COPY . .
 RUN npm run build
 
 # เปิดพอร์ต 3000 สำหรับ Nuxt.js
-EXPOSE 3000
+EXPOSE 3001
 
 # รันโปรเจคในโหมด production
 CMD ["npm", "run", "start"]

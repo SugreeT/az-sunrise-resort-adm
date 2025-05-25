@@ -363,22 +363,11 @@ import Footer from '@/components/Footer.vue';
 
 
 import apiService from '@/services/apiService'
+import { useRoute } from 'vue-router';
 
-// เพิ่ม Script ที่จำเป็นใน <head>
-useHead({
-    link: [
-        {
-        media:"screen",
-        rel: 'stylesheet',
-        href: '/plugins/dropzone/dropzone.css', // ชี้ไปยังไฟล์ CSS เฉพาะเพจ
-        },
-    ],
-    script: [
-        { src: '/js/pages/material_select/getmdl-select.js', type: 'text/javascript', defer: true },
-        // { src: '/plugins/dropzone/dropzone.js', type: 'text/javascript', defer: true },
-        // { src: '/plugins/dropzone/dropzone-call.js', type: 'text/javascript', defer: true },
-    ],
-});
+
+const route = useRoute();
+const routeId = route.params.id;
 
 // ใช้ onMounted เพื่อจัดการ script ที่ต้องการ DOM พร้อมใช้งาน
 onMounted(() => {
@@ -437,20 +426,48 @@ export default {
       }
     };
   },
-  mounted() {
+  async mounted() {
     // this.initPage()
 
-    this.callServiceMain()
+	await this.callServiceInfo();
+    await this.callServiceMain();
+
+	Layout.init();
   },
   methods: {
+	async callServiceInfo() {
+		const response = await apiService.get('/api/page-info/search')
+		this.pages = response;
+	},
 	async callServiceMain() {
-        try {
-			const response = await apiService.get('/api/page-info/search')
-			this.pages = response;
-        } catch (err) {
-            console.error('Error loading landing page:', err)
-        }
-    },
+		try {
+			const id = this.$route.params.id;
+			const response = await apiService.get(`/api/page-info/content/section1/` + id)
+
+			const t = this.banner.translations;
+			 t.en.title = response.title;
+			 t.en.description = response.title_mini;
+ 			 t.zh.title = response.title_cn;
+			 t.zh.description = response.title_mini_cn;
+			 t.ru.title = response.title_ru;
+			 t.ru.description = response.title_mini_ru;
+
+			 this.imagePath = {
+				bannerName: response.banner?.name,
+				bannerPath: response.banner?.path
+			 }
+
+			// 3. กำหนด pageId จาก selectedPageId (ถ้ามี)
+			console.log('response.page_id >>> ', response.page_id)
+			console.log('this.pages>>> ', this.pages)
+			const page = this.pages.find(p => p.id === response.page_id);
+			console.log('page >>> ', page)
+			this.selectedPage = page
+			this.selectedStatus = 'A'
+		} catch (err) {
+			console.error('Error loading landing page:', err)
+		}
+	},
     async handleFiles(event) {
       this.errorMessage = '';
       const selectedFiles = Array.from(event.target.files);
@@ -495,35 +512,45 @@ export default {
       return `${mbSize} MB`;
     },
 	async saveSections() {
-      try {
+		try {
 
- 	   // 2. flatten translations
- 	  const t = this.banner.translations;
-      this.requestLandingPage.section1.title     = t.en.title;
-      this.requestLandingPage.section1.title_mini = t.en.description;
+			// 2. flatten translations
+			const t = this.banner.translations;
+			this.requestLandingPage.section1.title     = t.en.title;
+			this.requestLandingPage.section1.title_mini = t.en.description;
 
-      this.requestLandingPage.section1.title_cn     = t.zh.title;
-      this.requestLandingPage.section1.title_mini_cn = t.zh.description;
+			this.requestLandingPage.section1.title_cn     = t.zh.title;
+			this.requestLandingPage.section1.title_mini_cn = t.zh.description;
 
-      this.requestLandingPage.section1.title_ru     = t.ru.title;
-      this.requestLandingPage.section1.title_mini_ru = t.ru.description;
+			this.requestLandingPage.section1.title_ru     = t.ru.title;
+			this.requestLandingPage.section1.title_mini_ru = t.ru.description;
 
-      // 3. กำหนด pageId จาก selectedPageId (ถ้ามี)
-      this.requestLandingPage.section1.page_id = this.selectedPage?.id
+			// 3. กำหนด pageId จาก selectedPageId (ถ้ามี)
+			this.requestLandingPage.section1.page_id = this.selectedPage?.id
 
-	  this.requestLandingPage.section1.status = this.selectedStatus
+			this.requestLandingPage.section1.status = this.selectedStatus
 
-	  console.log('section1.banner:', this.requestLandingPage.section1);
-        const resp = await apiService.post(
-          `/landingpage/update/page/${this.selectedPage?.name}/sections`,
-          this.requestLandingPage
-        );
-        console.log('Update sections success:', resp);
-      } catch (err) {
-        console.error('Update sections error:', err);
-      }
-  	}
-  },
+			console.log('section1.banner:', this.requestLandingPage.section1);
+			const resp = await apiService.post(
+				`/landingpage/update/page/${this.selectedPage?.name}/sections`,
+				this.requestLandingPage
+			);
+				console.log('Update sections success:', resp);
+				swal({
+					title: "Save Success",
+					// text: "You will not be able to recover this imaginary file!",
+					type: "success",
+					showCancelButton: false,
+					// confirmButtonColor: "#DD6B55",
+					confirmButtonText: "OK"
+				}, () => {
+					navigateTo('/manage-banner/banner-list')
+				});
+			} catch (err) {
+				console.error('Update sections error:', err);
+			}
+		}
+	},
   beforeUnmount() {
     // Revoke preview URLs to free up memory
     this.images.forEach((image) => URL.revokeObjectURL(image.preview));
