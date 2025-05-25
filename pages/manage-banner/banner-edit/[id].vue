@@ -255,21 +255,6 @@ const route = useRoute();
 const routeId = route.params.id;
 
 // เพิ่ม Script ที่จำเป็นใน <head>
-useHead({
-	link: [
-	{
-	media:"screen",
-	rel: 'stylesheet',
-	href: '/plugins/dropzone/dropzone.css', // ชี้ไปยังไฟล์ CSS เฉพาะเพจ
-	},
-	],
-	script: [
-	{ src: '/js/pages/material_select/getmdl-select.js', type: 'text/javascript', defer: true },
-	// { src: '/plugins/dropzone/dropzone.js', type: 'text/javascript', defer: true },
-	// { src: '/plugins/dropzone/dropzone-call.js', type: 'text/javascript', defer: true },
-	],
-});
-
 // ใช้ onMounted เพื่อจัดการ script ที่ต้องการ DOM พร้อมใช้งาน
 onMounted(() => {
 	console.log('Scripts are loaded and DOM is ready');

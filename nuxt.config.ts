@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     baseURL: '/adm/', // หรือ '/subfolder/' หากใช้ Subdirectory
     buildAssetsDir: '/adm/_nuxt/', // Path สำหรับ Static Assets
     head: {
+      base: { href: '/adm/' },
       link: [
         {
           rel: 'stylesheet',
