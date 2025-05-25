@@ -10,59 +10,59 @@ export default defineNuxtConfig({
       link: [
         {
           rel: 'stylesheet',
-          href: '/plugins/simple-line-icons/simple-line-icons.min.css', //icons
+          href: '/adm/plugins/simple-line-icons/simple-line-icons.min.css', //icons
         },
         {
           rel: 'stylesheet',
-          href: '/plugins/font-awesome/css/font-awesome.min.css', //icons
+          href: '/adm/plugins/font-awesome/css/font-awesome.min.css', //icons
         },
         {
           rel: 'stylesheet',
-          href: '/plugins/bootstrap/css/bootstrap.min.css', // bootstrap
+          href: '/adm/plugins/bootstrap/css/bootstrap.min.css', // bootstrap
         },
         {
           rel: 'stylesheet',
-          href: '/plugins/summernote/summernote.css', // bootstrap
+          href: '/adm/plugins/summernote/summernote.css', // bootstrap
         },
         {
           rel: 'stylesheet',
-          href: '/plugins/material/material.min.css', // Material Design Lite CSS
+          href: '/adm/plugins/material/material.min.css', // Material Design Lite CSS
         },
         {
           rel: 'stylesheet',
-          href: '/css/material_style.css', // Material Design Lite CSS
+          href: '/adm/css/material_style.css', // Material Design Lite CSS
         },
         {
           rel: 'stylesheet',
-          href: '/plugins/datatables/plugins/bootstrap/dataTables.bootstrap4.min.css', // datatable
+          href: '/adm/plugins/datatables/plugins/bootstrap/dataTables.bootstrap4.min.css', // datatable
         },
         {
           rel: 'stylesheet',
-          href: '/css/pages/animate_page.css', // animation
+          href: '/adm/css/pages/animate_page.css', // animation
         },
         {
           rel: 'stylesheet',
-          href: '/plugins/sweet-alert/sweetalert.min.css', // animation
+          href: '/adm/plugins/sweet-alert/sweetalert.min.css', // animation
         },
         {
           rel: 'stylesheet',
-          href: '/css/style.css', // Template Styles
+          href: '/adm/css/style.css', // Template Styles
         },
         {
           rel: 'stylesheet',
-          href: '/css/plugins.min.css', // Template Styles
+          href: '/adm/css/plugins.min.css', // Template Styles
         },
         {
           rel: 'stylesheet',
-          href: '/css/responsive.css', // Template Styles
+          href: '/adm/css/responsive.css', // Template Styles
         },
         {
           rel: 'stylesheet',
-          href: '/css/theme-color.css', // Template Styles
+          href: '/adm/css/theme-color.css', // Template Styles
         },
         {
           rel: 'stylesheet',
-          href: '/css/pages/formlayout.css', // Template Styles
+          href: '/adm/css/pages/formlayout.css', // Template Styles
         },
       ],
     },
