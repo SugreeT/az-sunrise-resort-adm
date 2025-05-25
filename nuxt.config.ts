@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   pages: true, // เปิดใช้งานระบบ Pages
   app: {
     baseURL: '/adm/', // หรือ '/subfolder/' หากใช้ Subdirectory
-    buildAssetsDir: '/_nuxt/adm/', // Path สำหรับ Static Assets
+    buildAssetsDir: '/adm/_nuxt/', // Path สำหรับ Static Assets
     head: {
       link: [
         {
