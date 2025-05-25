@@ -13,7 +13,7 @@
 						</li>
 						<li><a class="parent-item" href="">Banner</a>&nbsp;<i class="fa fa-angle-right"></i>
 						</li>
-						<li class="active">Edit Banner Details</li>
+						<li class="active">Edit Upload Details</li>
 					</ol>
 				</div>
 			</div>
