@@ -1,104 +1,128 @@
 <template>
-
-
-    			<!-- start page content -->
-			<div class="page-content-wrapper">
-				<div class="page-content">
-					<div class="page-bar">
-						<div class="page-title-breadcrumb">
-							<div class=" pull-left">
-								<div class="page-title">Manage Banner</div>
-							</div>
-							<ol class="breadcrumb page-breadcrumb pull-right">
-								<li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
-										href="index">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
-								</li>
-								<li><a class="parent-item" href="">Banner</a>&nbsp;<i class="fa fa-angle-right"></i>
-								</li>
-								<li class="active">All Banners</li>
-							</ol>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="card card-box">
-								<div class="card-head">
-									<header>All Banners</header>
-									<div class="tools">
-										<a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
-										<a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
-										<a class="t-close btn-color fa fa-times" href="javascript:;"></a>
-									</div>
-								</div>
-								<div class="card-body ">
-									<div class="row p-b-20">
-										<div class="col-md-6 col-sm-6 col-6">
-											<div class="btn-group">
-												<!-- <a href="/manage-banner/banner-add" id="addRow" class="btn btn-info">
+  <!-- start page content -->
+  <div class="page-content-wrapper">
+    <div class="page-content">
+      <div class="page-bar">
+        <div class="page-title-breadcrumb">
+          <div class="pull-left">
+            <div class="page-title">Manage Banner</div>
+          </div>
+          <ol class="breadcrumb page-breadcrumb pull-right">
+            <li>
+              <i class="fa fa-home"></i>&nbsp;<a
+                class="parent-item"
+                href="index"
+                >Home</a
+              >&nbsp;<i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+              <a class="parent-item" href="">Banner</a>&nbsp;<i
+                class="fa fa-angle-right"
+              ></i>
+            </li>
+            <li class="active">All Banners</li>
+          </ol>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-box">
+            <div class="card-head">
+              <header>All Banners</header>
+              <div class="tools">
+                <a
+                  class="fa fa-repeat btn-color box-refresh"
+                  href="javascript:;"
+                ></a>
+                <a
+                  class="t-collapse btn-color fa fa-chevron-down"
+                  href="javascript:;"
+                ></a>
+                <a
+                  class="t-close btn-color fa fa-times"
+                  href="javascript:;"
+                ></a>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row p-b-20">
+                <div class="col-md-6 col-sm-6 col-6">
+                  <div class="btn-group">
+                    <!-- <a href="/manage-banner/banner-add" id="addRow" class="btn btn-info">
 												Add New <i class="fa fa-plus"></i>
 												</a> -->
-												<!-- <NuxtLink to="/manage-banner/banner-add"  >
+                    <!-- <NuxtLink to="/manage-banner/banner-add"  >
 												<button type="button"  class="btn btn-info">	Add New <i class="fa fa-plus"></i></button>
 													</NuxtLink> -->
-											</div>
-										</div>
-									</div>
-									<div class="table-scrollable">
-										<table class="table table-hover table-checkable order-column full-width" id="tableBanner">
-											<thead>
-												<tr>
-													<th class="center"> No </th>
-													<th class="center"> Banner </th>
-													<th class="center"> Page </th>
-													<th class="center"> Main Title </th>
-													<th class="center"> Description </th>
-													<th class="center"> Main Title(CN) </th>
-													<th class="center"> Description(CN) </th>
-													<th class="center"> Main Title(RU) </th>
-													<th class="center"> Description(RU) </th>
-													<!-- <th class="center"> Create Date </th> -->
-													<!-- <th class="center"> Status </th> -->
-													<th class="center"> Action </th>
-												</tr>
-											</thead>
-											<tbody>
-												 <!-- loop data จาก mediaItems -->
-												<tr
-													v-for="(item, idx) in responseData"
-													:key="item.id"
-													class="odd gradeX"
-												>
-													<td class="center">{{ idx + 1 }}</td>
+                  </div>
+                </div>
+              </div>
+              <div class="table-scrollable">
+                <table
+                  class="table table-hover table-checkable order-column full-width"
+                  id="tableBanner"
+                >
+                  <thead>
+                    <tr>
+                      <th class="center">No</th>
+                      <th class="center">Banner</th>
+                      <th class="center">Page</th>
+                      <th class="center">Main Title</th>
+                      <th class="center">Description</th>
+                      <th class="center">Main Title(CN)</th>
+                      <th class="center">Description(CN)</th>
+                      <th class="center">Main Title(RU)</th>
+                      <th class="center">Description(RU)</th>
+                      <!-- <th class="center"> Create Date </th> -->
+                      <!-- <th class="center"> Status </th> -->
+                      <th class="center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- loop data จาก mediaItems -->
+                    <tr
+                      v-for="(item, idx) in responseData"
+                      :key="item.id"
+                      class="odd gradeX"
+                    >
+                      <td class="center">{{ idx + 1 }}</td>
 
-													<!-- Image Name -->
-													<td class="center">
-														  <!-- item.banner.path และ item.banner.name มาจาก API -->
-															<img width="150" height="150"
-															:src="apiService.getImageUrl(item.banner?.path, item.banner?.name)" 
-															alt="Banner image" 
-														/>
-													</td>
+                      <!-- Image Name -->
+                      <td class="center">
+                        <!-- item.banner.path และ item.banner.name มาจาก API -->
+                        <img
+                          width="150"
+                          height="150"
+                          :src="
+                            apiService.getImageUrl(
+                              item.banner?.path,
+                              item.banner?.name
+                            )
+                          "
+                          alt="Banner image"
+                        />
+                      </td>
 
-													<!-- Page (path หรือ name ตาม DTO) -->
-													<td class="text-left">{{ item.pageName }}</td>
+                      <!-- Page (path หรือ name ตาม DTO) -->
+                      <td class="text-center">{{ item.pageName }}</td>
 
-													<td class="text-left">{{ item.title }}</td>
+                      <td class="text-left">{{ item.title }}</td>
 
-													<td class="text-left">{{ item.title_mini }}</td>
+                      <td class="text-left">{{ item.title_mini }}</td>
 
-													<td class="text-left">{{ item.title_cn }}</td>
+                      <td class="text-left">{{ item.title_cn }}</td>
 
-													<td class="text-left">{{ item.title_mini_cn }}</td>
+                      <td class="text-left">{{ item.title_mini_cn }}</td>
 
-													<td class="text-left">{{ item.title_ru }}</td>
+                      <td class="text-left">{{ item.title_ru }}</td>
 
-													<td class="text-left">{{ item.title_mini_ru }}</td>
+                      <td class="text-left">{{ item.title_mini_ru }}</td>
 
-													<!-- Create Date format -->
-													<!-- <td class="center">{{ formatDate(item.created_at) }}</td> -->
+                      <!-- Create Date format -->
+                      <!-- <td class="center">{{ formatDate(item.created_at) }}</td> -->
 
-													<!-- Status -->
-													<!-- <td class="center">
+                      <!-- Status -->
+                      <!-- <td class="center">
 													<span
 														class="label label-sm"
 														:class="item.status === 'active'
@@ -109,28 +133,28 @@
 													</span>
 													</td> -->
 
-													<!-- Action -->
-													<td class="center">
-													<NuxtLink
-														:to="`/manage-banner/banner-edit/${item.id}`"
-														class="btn btn-tbl-edit btn-xs"
-													>
-														<i class="fa fa-pencil"></i>
-													</NuxtLink>
-													<!-- <button
+                      <!-- Action -->
+                      <td class="center">
+                        <NuxtLink
+                          :to="`/manage-banner/banner-edit/${item.page_id}`"
+                          class="btn btn-tbl-edit btn-xs"
+                        >
+                          <i class="fa fa-pencil"></i>
+                        </NuxtLink>
+                        <!-- <button
 														class="btn btn-tbl-delete btn-xs"
 														@click="deleteBanner(item.id)"
 													>
 														<i class="fa fa-trash-o"></i>
 													</button> -->
-													</td>
-												</tr>
+                      </td>
+                    </tr>
 
-												<!-- กรณีไม่มีข้อมูล -->
-												<tr v-if="!responseData.length">
-													<td class="center" colspan="11">No data found</td>
-												</tr>
-												<!-- <tr class="odd gradeX">
+                    <!-- กรณีไม่มีข้อมูล -->
+                    <tr v-if="!responseData.length">
+                      <td class="center" colspan="11">No data found</td>
+                    </tr>
+                    <!-- <tr class="odd gradeX">
 													<td class="center">1</td>
 													<td class="center">Main1</td>
 													<td class="center">Home</td>
@@ -165,20 +189,19 @@
 														</a>
 													</td>
 												</tr> -->
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- end page content -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end page content -->
 </template>
 
 <script setup>
-
 // เพิ่ม Script ที่จำเป็นใน <head>
 useHead({
   script: [
@@ -188,97 +211,96 @@ useHead({
 
 // ใช้ onMounted เพื่อจัดการ script ที่ต้องการ DOM พร้อมใช้งาน
 onMounted(() => {
-  console.log('Scripts are loaded and DOM is ready');
+  console.log("Scripts are loaded and DOM is ready");
 });
 </script>
 
 <script>
-
-
-import apiService from '@/services/apiService'
+import apiService from "@/services/apiService";
 
 export default {
   data() {
     return {
-	  pages: [],
+      pages: [],
       responseData: [], // Store selected images and previews
     };
   },
   async mounted() {
     // this.initPage()
-	Layout.init();
-	await this.callServicePageInfo()
-    await this.callServiceMain()
+    Layout.init();
+    await this.callServicePageInfo();
+    await this.callServiceMain();
 
-	$('#tableBanner').DataTable( {
-		"scrollX": true,
-		pageLength: 10,               // เริ่มต้นแสดง 5 รายการ
-		lengthMenu: [                // กำหนดตัวเลือกใน dropdown
-			[ 10, 25, 50, 100],
-			[ 10, 25, 50, 100]
-		]
-	} );
-
+    $("#tableBanner").DataTable({
+      scrollX: true,
+      pageLength: 10, // เริ่มต้นแสดง 5 รายการ
+      lengthMenu: [
+        // กำหนดตัวเลือกใน dropdown
+        [10, 25, 50, 100],
+        [10, 25, 50, 100],
+      ],
+    });
   },
   methods: {
-	async callServicePageInfo() {
-		const response = await apiService.get('/api/page-info/search')
-		this.pages = response;
+    async callServicePageInfo() {
+      const response = await apiService.get("/api/page-info/search");
+      this.pages = response;
     },
-	async callServiceMain() {
-        try {
-			const response = await apiService.get('/api/page-info/content/section1')
-		
-			this.responseData = response;
-		// สมมติ this.pages เป็น array ของ { id, name, ... }
-				console.log('this.pages >', this.pages);
+    async callServiceMain() {
+      try {
+        const response = await apiService.get(
+          "/api/page-info/content/section1"
+        );
 
-			for (let i = 0; i < this.responseData.length; i++) {
-			const res = this.responseData[i];
+        this.responseData = response;
+        // สมมติ this.pages เป็น array ของ { id, name, ... }
+        console.log("this.pages >", this.pages);
 
-			// หา page object ตัวเดียวที่ id ตรงกับ res.page_id
-			const page = this.pages.find(p => p.id === res.page_id);
+        for (let i = 0; i < this.responseData.length; i++) {
+          const res = this.responseData[i];
 
-			// ถ้าเจอ ก็เซ็ต pageName ให้เป็นชื่อของมัน
-			res.pageName = page ? page.description : null;
-			}
+          // หา page object ตัวเดียวที่ id ตรงกับ res.page_id
+          const page = this.pages.find((p) => p.id === res.page_id);
 
-			console.log('res >', this.responseData);
-			// setTimeout(() => {
-			// 	console.log('2222222222222222222222222 >')
-			//   $('#tableBanner').DataTable( {
-			// 	"scrollX": true
-			// } );
-			// }, 1000);
-			
-        } catch (err) {
-            console.error('Error loading landing page:', err)
+          // ถ้าเจอ ก็เซ็ต pageName ให้เป็นชื่อของมัน
+          res.pageName = page ? page.description : null;
         }
+
+        console.log("res >", this.responseData);
+        // setTimeout(() => {
+        // 	console.log('2222222222222222222222222 >')
+        //   $('#tableBanner').DataTable( {
+        // 	"scrollX": true
+        // } );
+        // }, 1000);
+      } catch (err) {
+        console.error("Error loading landing page:", err);
+      }
     },
-	 /** format วันที่ ให้สวยงาม */
-	 formatDate(dt) {
-      if (!dt) return '-';
+    /** format วันที่ ให้สวยงาม */
+    formatDate(dt) {
+      if (!dt) return "-";
       const d = new Date(dt);
-      return d.toLocaleString('en-GB', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
+      return d.toLocaleString("en-GB", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
       });
     },
 
     /** ลบ banner ตาม id */
     async deleteBanner(id) {
-      if (!confirm('Are you sure to delete this banner?')) return;
+      if (!confirm("Are you sure to delete this banner?")) return;
       try {
         await apiService.delete(`/banners/${id}`);
         // หลังลบเสร็จ โหลดใหม่
         await this.loadMedia();
       } catch (err) {
-        console.error('Delete failed:', err);
+        console.error("Delete failed:", err);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
