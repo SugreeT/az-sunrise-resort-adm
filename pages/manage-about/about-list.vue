@@ -62,7 +62,7 @@
                     <tr>
                       <th class="center">No</th>
                       <!-- <th class="center">Fitness</th> -->
-                      <!-- <th class="center">Page</th> -->
+                      <th class="center">Image</th>
                       <th class="center fix-width-header1">Main Title(EN)</th>
                       <th class="center fix-width-header2">Description(EN)</th>
                       <th class="center fix-width-header1">Main Title(CN)</th>
@@ -85,34 +85,34 @@
                       <td class="center">{{ idx + 1 }}</td>
 
                       <!-- Image Name -->
-                      <!-- <td class="center">
+                      <td class="center">
                         <img
-                          width="150"
-                          height="150"
+                          width="200"
+                          height="200"
                           :src="
                             apiService.getImageUrl(
-                              item.banner?.path,
-                              item.banner?.name
+                              item.image?.path,
+                              item.image?.thumbnail_name
                             )
                           "
-                          alt="Fitness image"
+                          alt=""
                         />
-                      </td> -->
+                      </td>
 
                       <!-- Page (path หรือ name ตาม DTO) -->
                       <!-- <td class="text-center">{{ item.pageName }}</td> -->
 
-                      <td class="text-left">{{ item.title_en }}</td>
+                      <td class="text-center">{{ item.title_en }}</td>
 
-                      <td class="text-left">{{ item.description_en }}</td>
+                      <td class="text-center">{{ item.description_en }}</td>
 
-                      <td class="text-left">{{ item.title_cn }}</td>
+                      <td class="text-center">{{ item.title_cn }}</td>
 
-                      <td class="text-left">{{ item.description_cn }}</td>
+                      <td class="text-center">{{ item.description_cn }}</td>
 
-                      <td class="text-left">{{ item.title_ru }}</td>
+                      <td class="text-center">{{ item.title_ru }}</td>
 
-                      <td class="text-left">{{ item.description_ru }}</td>
+                      <td class="text-center">{{ item.description_ru }}</td>
 
                       <!-- Create Date format -->
                       <!-- <td class="center">{{ formatDate(item.created_at) }}</td> -->

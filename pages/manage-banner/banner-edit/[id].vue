@@ -159,9 +159,6 @@
                 <div class="form-group">
                   <label for="pages" class="form-label">Choose a Page</label>
                   <select id="pages" class="form-select" v-model="selectedPage">
-                    <!-- ค่าดีฟอลต์ -->
-                    <!-- <option disabled value="">-- กรุณาเลือกหน้า --</option> -->
-                    <!-- วนลูป pages ที่มาจาก API -->
                     <option v-for="page in pages" :key="page.id" :value="page">
                       {{ page.description }}
                     </option>

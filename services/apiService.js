@@ -10,8 +10,8 @@ const apiClient = axios.create({
   withCredentials: true,    
   headers: {
     'Content-Type': 'application/json',
-    // 'x-access-keY': 'X-ACCESS-KEY-VALUE-TEST',
-    'x-access-keY': 'FKqDHmj767ywY9mUhTqeDjdFC',
+    // 'x-access-key': 'X-ACCESS-KEY-VALUE-TEST',
+    'x-access-key': 'FKqDHmj767ywY9mUhTqeDjdFC',
     
   },
 });

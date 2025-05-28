@@ -14,7 +14,7 @@
       <!-- logo end -->
       <!-- <ul class="nav navbar-nav navbar-left in">
         <li>
-          <a href="javascript:;" class="menu-toggler sidebar-toggler"
+          <a href="#" class="menu-toggler sidebar-toggler"
             ><i class="icon-menu"></i
           ></a>
         </li>

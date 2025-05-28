@@ -86,7 +86,7 @@
                       </div>
                     </div>
 
-                    <div>
+                    <div v-show="schedulesFlag">
                       <label class="font-weight-bold">Schedules</label>
                       <div
                         v-for="(sched, idx) in content.translations.en
@@ -157,7 +157,7 @@
                       </div>
                     </div>
                     <!-- ถ้าต้องการ schedules ในภาษาจีน ก็ใส่เหมือน EN ได้เลย -->
-                    <div>
+                    <div v-show="schedulesFlag">
                       <label class="font-weight-bold">Schedules</label>
                       <div
                         v-for="(sched, idx) in content.translations.cn
@@ -228,7 +228,7 @@
                       </div>
                     </div>
                     <!-- ถ้าต้องการ schedules ในภาษารัสเซีย ก็ใส่เหมือน EN ได้เลย -->
-                    <div>
+                    <div v-show="schedulesFlag">
                       <label class="font-weight-bold">Schedules</label>
                       <div
                         v-for="(sched, idx) in content.translations.ru
@@ -276,6 +276,74 @@
               </div>
 
               <div class="row">
+                <div class="col-lg-6 p-t-20">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label for="images" class="form-label"
+                          >Select Image</label
+                        >
+                        <input
+                          type="file"
+                          class="form-control"
+                          id="images1"
+                          accept="image/*"
+                          @change="handleFilesSc2"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <div v-if="errorMessage" class="alert alert-danger">
+                        {{ errorMessage }}
+                      </div>
+                      <div v-if="imagesContent.length > 0">
+                        <h5>Selected Image Temp:</h5>
+                        <div class="row">
+                          <div
+                            class="col-md-3 mb-3"
+                            v-for="(image, index) in imagesContent"
+                            :key="index"
+                          >
+                            <div class="card">
+                              <img
+                                :src="image.preview"
+                                class="card-img-top"
+                                alt="Preview"
+                              />
+                              <div class="card-body p-2">
+                                <p class="card-text text-truncate">
+                                  {{ image.file.name }}
+                                </p>
+                                <p class="card-text text-muted">
+                                  {{ formatSize(image.file.size) }}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 p-t-20">
+                  <h5>Image Content:</h5>
+                  <div v-if="imagePath.bannerName">
+                    <img
+                      width="200"
+                      height="200"
+                      :src="
+                        apiService.getImageUrl(
+                          imagePath.bannerPath,
+                          imagePath.bannerName
+                        )
+                      "
+                      alt="Banner image"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
                 <div class="col-lg-6">
                   <div class="row">
                     <div class="col-lg-6 p-t-20">
@@ -286,10 +354,10 @@
                         <input
                           type="file"
                           class="form-control"
-                          id="images"
+                          id="images2"
                           accept="image/*"
                           multiple
-                          @change="handleFiles"
+                          @change="handleFilesSc3"
                         />
                       </div>
                     </div>
@@ -298,12 +366,12 @@
                         <div v-if="errorMessage" class="alert alert-danger">
                           {{ errorMessage }}
                         </div>
-                        <div v-if="images.length > 0">
-                          <h5>Selected Gallery:</h5>
+                        <div v-if="imagesGallery.length > 0">
+                          <h5>Selected Gallery Temp:</h5>
                           <div class="row">
                             <div
                               class="col-md-2 mb-3"
-                              v-for="(image, index) in images"
+                              v-for="(image, index) in imagesGallery"
                               :key="index"
                             >
                               <div class="card">
@@ -396,7 +464,7 @@
 										<button type="button"
 										class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-default">Cancel</button>
 									</a> -->
-                <NuxtLink to="/manage-fitness/fitness-list">
+                <NuxtLink to="/manage-about/about-list">
                   <button
                     type="button"
                     class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-default"
@@ -444,10 +512,12 @@ onMounted(() => {
 export default {
   data() {
     return {
-      images: [], // Store selected images and previews
+      imagesContent: [], // Store selected images and previews
+      imagesGallery: [], // Store selected images and previews
       pageId: 9,
       pageName: "",
       bannerTemp: {},
+      schedulesFlag: false,
       imagePath: {},
       languages: ["en", "cn", "ru"],
       langLabels: {
@@ -479,18 +549,7 @@ export default {
       isUploading: false,
       uploadSuccess: false,
       maxSize: 100 * 1024 * 1024, // 50MB in bytes,
-      pages: [
-        "Home",
-        "Room",
-        "Bar & Restaurant",
-        "Fitness Club",
-        "Tour",
-        "Transportation",
-        "Diving",
-        "Spa",
-        "About",
-        "Contact Us",
-      ],
+      pages: [],
       selectedPage: "", // เก็บค่าที่ผู้ใช้เลือก
       statusOptions: {
         A: "Active",
@@ -562,6 +621,11 @@ export default {
         t.ru.title = response.title_ru;
         t.ru.description = response.description_ru;
 
+        this.imagePath = {
+          bannerName: response.image?.name,
+          bannerPath: response.image?.path,
+        };
+
         // console.log("response.page_id >>> ", response.page_id);
         // console.log("this.pages>>> ", this.pages);
         const page = this.pages.find((p) => p.id === response.page_id);
@@ -584,25 +648,68 @@ export default {
         console.error("Error loading landing page:", err);
       }
     },
-    async handleFiles(event) {
+    async handleFilesSc2(event) {
       this.errorMessage = "";
       const selectedFiles = Array.from(event.target.files);
+
       const totalSize = selectedFiles.reduce((acc, f) => acc + f.size, 0);
 
       if (totalSize > this.maxSize) {
         this.errorMessage = "Total file size exceeds 100MB!";
-        this.images = [];
+        this.imagesContent = [];
         return;
       }
 
       // สร้าง preview
-      this.images = selectedFiles.map((f) => ({
+      this.imagesContent = selectedFiles.map((f) => ({
         file: f,
         preview: URL.createObjectURL(f),
       }));
 
       // upload แต่ละไฟล์เลย
-      for (const { file } of this.images) {
+      for (const { file } of this.imagesContent) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("page_name", this.selectedPage?.name);
+        formData.append("category", "banner");
+
+        try {
+          const resp = await apiService.post(
+            "/media/create", // หรือ path ที่คุณแม็ปใน Spring
+            formData,
+            { headers: { "Content-Type": "multipart/form-data" } }
+          );
+          console.log("Upload success:", resp);
+          const { id, name, path } = resp.data;
+          this.requestLandingPage.image_id = id;
+
+          console.log("requestSection2:", this.requestLandingPage);
+        } catch (err) {
+          console.error("Upload error:", err);
+          this.errorMessage = "Upload failed: " + (err.message || err);
+        }
+      }
+    },
+    async handleFilesSc3(event) {
+      this.errorMessage = "";
+      const selectedFiles = Array.from(event.target.files);
+
+      const totalSize = selectedFiles.reduce((acc, f) => acc + f.size, 0);
+
+      if (totalSize > this.maxSize) {
+        this.errorMessage = "Total file size exceeds 100MB!";
+        this.imagesGallery = [];
+        return;
+      }
+
+      // สร้าง preview
+      this.imagesGallery = selectedFiles.map((f) => ({
+        file: f,
+        preview: URL.createObjectURL(f),
+      }));
+
+      // upload แต่ละไฟล์เลย
+      for (const { file } of this.imagesGallery) {
         const formData = new FormData();
         formData.append("file", file);
         formData.append("page_name", this.selectedPage?.name);
@@ -710,7 +817,7 @@ export default {
             confirmButtonText: "OK",
           },
           () => {
-            navigateTo("/manage-fitness/fitness-list");
+            navigateTo("/manage-about/about-list");
           }
         );
       } catch (err) {
@@ -774,7 +881,8 @@ export default {
   },
   beforeUnmount() {
     // Revoke preview URLs to free up memory
-    this.images.forEach((image) => URL.revokeObjectURL(image.preview));
+    this.imagesGallery.forEach((image) => URL.revokeObjectURL(image.preview));
+    this.imagesContent.forEach((image) => URL.revokeObjectURL(image.preview));
   },
 };
 </script>
