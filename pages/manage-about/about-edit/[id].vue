@@ -649,7 +649,7 @@ export default {
         const formData = new FormData();
         formData.append("file", file);
         formData.append("page_name", this.selectedPage?.name);
-
+        formData.append("category", "gallery");
         try {
           const resp = await apiService.post(
             "/media/create", // หรือ path ที่คุณแม็ปใน Spring

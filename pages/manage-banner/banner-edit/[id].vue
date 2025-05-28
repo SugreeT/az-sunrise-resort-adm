@@ -411,6 +411,7 @@ export default {
         const formData = new FormData();
         formData.append("file", file);
         formData.append("page_name", this.selectedPage?.name);
+        formData.append("category", "banner");
 
         try {
           const resp = await apiService.post(
