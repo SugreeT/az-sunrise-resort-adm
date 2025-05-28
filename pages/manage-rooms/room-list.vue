@@ -56,7 +56,7 @@
               <div class="table-scrollable">
                 <table
                   class="table table-hover table-checkable order-column full-width"
-                  id="tableFitness"
+                  id="tableRoom"
                 >
                   <thead>
                     <tr>
@@ -132,7 +132,7 @@
                       <!-- Action -->
                       <td class="center">
                         <NuxtLink
-                          :to="`/manage-fitness/fitness-edit/${item.id}`"
+                          :to="`/manage-rooms/room-edit/${item.id}`"
                           class="btn btn-tbl-edit btn-xs"
                         >
                           <i class="fa fa-pencil"></i>
@@ -229,7 +229,7 @@ export default {
     await this.callServicePageInfo();
     await this.callServiceMain();
 
-    $("#tableFitness").DataTable({
+    $("#tableRoom").DataTable({
       scrollX: true,
       pageLength: 10, // เริ่มต้นแสดง 5 รายการ
       lengthChange: false, // ปิด dropdown “Show entries”

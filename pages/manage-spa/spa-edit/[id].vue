@@ -339,52 +339,21 @@
                           ) in responseDataSection3.galleries"
                           :key="idx"
                           class="image-container"
-                          style="
-                            /* ปรับขนาดกล่องตามต้องการ */
-                            overflow: hidden;
-                            position: relative;
-                          "
                         >
-                          <!-- skeleton -->
-                          <div
-                            v-if="!resizedUrls[idx]"
-                            class="image-skeleton"
-                            style="width: 100%; height: 100%; background: #eee"
-                          ></div>
-
-                          <!-- ภาพย่อ -->
+                          <!-- 2) ใช้ gallery.image.path & gallery.image.name -->
                           <img
-                            v-else
-                            :src="resizedUrls[idx]"
-                            alt="Gallery image"
-                            loading="lazy"
-                            style="
-                              /* ขยายให้เต็มกล่อง และครอปเท่าที่เกิน */
-                              width: 100%;
-                              height: 100%;
-                              object-fit: cover;
-                              display: block;
+                            :src="
+                              apiService.getImageUrl(
+                                gallery.image.path,
+                                gallery.image.thumbnail_name
+                              )
                             "
+                            alt="Gallery image"
                           />
-
                           <button
                             class="delete-btn"
                             @click="confirmRemove(idx)"
                             aria-label="Delete image"
-                            style="
-                              position: absolute;
-                              top: 8px;
-                              right: 8px;
-                              background: rgba(0, 0, 0, 0.5);
-                              color: white;
-                              border: none;
-                              border-radius: 50%;
-                              width: 24px;
-                              height: 24px;
-                              line-height: 20px;
-                              text-align: center;
-                              cursor: pointer;
-                            "
                           >
                             ×
                           </button>
@@ -427,7 +396,7 @@
 										<button type="button"
 										class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-default">Cancel</button>
 									</a> -->
-                <NuxtLink to="/manage-fitness/fitness-list">
+                <NuxtLink to="/manage-spa/spa-list">
                   <button
                     type="button"
                     class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-default"
@@ -479,7 +448,6 @@ export default {
       pageId: 7,
       pageName: "",
       bannerTemp: {},
-      resizedUrls: [],
       imagePath: {},
       languages: ["en", "cn", "ru"],
       langLabels: {
@@ -511,18 +479,7 @@ export default {
       isUploading: false,
       uploadSuccess: false,
       maxSize: 100 * 1024 * 1024, // 50MB in bytes,
-      pages: [
-        "Home",
-        "Room",
-        "Bar & Restaurant",
-        "Fitness Club",
-        "Tour",
-        "Transportation",
-        "Diving",
-        "Spa",
-        "About",
-        "Contact Us",
-      ],
+      pages: [],
       selectedPage: "", // เก็บค่าที่ผู้ใช้เลือก
       statusOptions: {
         A: "Active",
@@ -569,16 +526,6 @@ export default {
     await this.callServiceSection2();
     await this.callServiceSection3();
     this.mapSchedulesFromDB();
-    const galleries = this.responseDataSection3.galleries || [];
-    this.resizedUrls = await Promise.all(
-      galleries.map((g) =>
-        this.resizeImage(
-          apiService.getImageUrl(g.image.path, g.image.name),
-          300, // ความกว้างสูงสุดใน px
-          0.9 // คุณภาพ JPEG 0.0–1.0
-        )
-      )
-    );
   },
   methods: {
     async callServicePageInfo() {
@@ -621,7 +568,6 @@ export default {
           `/api/page-info/content/section3/` + this.pageId
         );
         this.responseDataSection3 = response;
-
         console.log("callServiceSection3 >>> ", this.responseDataSection3);
       } catch (err) {
         console.error("Error loading landing page:", err);
@@ -753,7 +699,7 @@ export default {
             confirmButtonText: "OK",
           },
           () => {
-            navigateTo("/manage-fitness/fitness-list");
+            navigateTo("/manage-spa/spa-list");
           }
         );
       } catch (err) {
@@ -814,34 +760,6 @@ export default {
       //   data: { name: removed.banner.name, path: removed.banner.path }
       // })
     },
-    resizeImage(srcUrl, maxWidth, quality = 1) {
-      return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.onload = () => {
-          const ratio = maxWidth / img.width;
-          const w = maxWidth;
-          const h = img.height * ratio;
-
-          const canvas = document.createElement("canvas");
-          canvas.width = w;
-          canvas.height = h;
-          const ctx = canvas.getContext("2d");
-          ctx.drawImage(img, 0, 0, w, h);
-
-          canvas.toBlob(
-            (blob) => {
-              if (!blob) return reject(new Error("Canvas toBlob failed"));
-              resolve(URL.createObjectURL(blob));
-            },
-            "image/jpeg",
-            quality
-          );
-        };
-        img.onerror = () => reject(new Error("Image load error: " + srcUrl));
-        img.src = srcUrl;
-      });
-    },
   },
   beforeUnmount() {
     // Revoke preview URLs to free up memory
@@ -857,14 +775,10 @@ export default {
     gap: 12px;
   }
 
-  /* .image-skeleton {
-    width: 300px;
-    height: 300px;
-    background: #f0f0f0;
-  } */
-
   .image-container {
     position: relative;
+    width: 200px;
+    height: 180px;
     border: 1px solid #ddd;
     border-radius: 4px;
     overflow: hidden;
