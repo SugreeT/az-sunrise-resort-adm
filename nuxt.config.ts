@@ -98,19 +98,21 @@ export default defineNuxtConfig({
       pages.push({
         name: 'home',
         path: '/',
-        file: '~/pages/index.vue',
+        file: '~/pages/manage-banner/banner-list.vue',
         meta: { layout: 'default' }, // กำหนด layout ที่นี่
       },{
         name: 'index',
         path: '/index',
-        file: '~/pages/index.vue',
+        file: '~/pages/manage-banner/banner-list.vue',
         meta: { layout: 'default' }, // กำหนด layout ที่นี่
-      },{
+      }
+      ,{
         name: 'login',
         path: '/login',
         file: '~/pages/login.vue',
         meta: { layout: 'default-blank' }, // กำหนด layout ที่นี่
-      })
+      }
+    )
 
       // remove routes
       function removePagesMatching (pattern: RegExp, pages: NuxtPage[] = []) {

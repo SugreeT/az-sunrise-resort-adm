@@ -60,7 +60,7 @@
               <div class="table-scrollable">
                 <table
                   class="table table-hover table-checkable order-column full-width"
-                  id="tableBanner"
+                  id="tableUpload"
                 >
                   <thead>
                     <tr>
@@ -252,7 +252,7 @@ export default {
     await this.callServicePageInfo();
     await this.callServiceMain();
 
-    $("#tableBanner").DataTable({
+    $("#tableUpload").DataTable({
       scrollX: true,
       pageLength: 10, // เริ่มต้นแสดง 5 รายการ
       lengthMenu: [

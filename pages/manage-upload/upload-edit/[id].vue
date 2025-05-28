@@ -20,7 +20,7 @@
                 class="fa fa-angle-right"
               ></i>
             </li>
-            <li class="active">Edit Gallery Details</li>
+            <li class="active">Gallery Details</li>
           </ol>
         </div>
       </div>
@@ -110,19 +110,6 @@
                 <div class="col-lg-6 p-t-20">
                   <div>
                     <h5>All Images:</h5>
-                    <!-- <div class="col-lg-2">
-                      <img
-                        width="200"
-                        height="200"
-                        :src="
-                          apiService.getImageUrl(
-                            imagePath.bannerPath,
-                            imagePath.bannerName
-                          )
-                        "
-                        alt="Gallery image"
-                      />
-                    </div> -->
                     <div class="preview-section">
                       <div class="gallery-preview">
                         <div
@@ -160,7 +147,7 @@
                   @click="saveSections"
                   class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink"
                 >
-                  Submit
+                  Save
                 </button>
 
                 <!-- <a href="/manage-banner/banner-list"  >
@@ -177,7 +164,7 @@
                 </NuxtLink>
                 <!-- <NuxtLink to="/manage-banner/banner-list"  >
 										<button type="button"
-									class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Submit</button>
+									class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Save</button>
 									</NuxtLink>
 						
 									<NuxtLink to="/manage-banner/banner-list"  >

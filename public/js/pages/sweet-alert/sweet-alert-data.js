@@ -128,7 +128,7 @@ function showPromptMessage() {
 function showAjaxLoaderMessage() {
     swal({
         title: "Ajax request example",
-        text: "Submit to run ajax request",
+        text: "Save to run ajax request",
         type: "info",
         showCancelButton: true,
         closeOnConfirm: false,

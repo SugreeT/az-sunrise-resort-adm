@@ -67,12 +67,12 @@
                       <th class="center">No</th>
                       <th class="center">Banner</th>
                       <th class="center">Page</th>
-                      <th class="center">Main Title</th>
-                      <th class="center">Description</th>
-                      <th class="center">Main Title(CN)</th>
-                      <th class="center">Description(CN)</th>
-                      <th class="center">Main Title(RU)</th>
-                      <th class="center">Description(RU)</th>
+                      <th class="center fix-width-header1">Main Title</th>
+                      <th class="center fix-width-header2">Description</th>
+                      <th class="center fix-width-header1">Main Title(CN)</th>
+                      <th class="center fix-width-header2">Description(CN)</th>
+                      <th class="center fix-width-header1">Main Title(RU)</th>
+                      <th class="center fix-width-header2">Description(RU)</th>
                       <!-- <th class="center"> Create Date </th> -->
                       <!-- <th class="center"> Status </th> -->
                       <th class="center">Action</th>
@@ -106,9 +106,9 @@
                       <!-- Page (path หรือ name ตาม DTO) -->
                       <td class="text-center">{{ item.pageName }}</td>
 
-                      <td class="text-left">{{ item.title }}</td>
+                      <td class="text-left">{{ item.title_en }}</td>
 
-                      <td class="text-left">{{ item.title_mini }}</td>
+                      <td class="text-left">{{ item.title_mini_en }}</td>
 
                       <td class="text-left">{{ item.title_cn }}</td>
 
@@ -240,6 +240,7 @@ export default {
         [10, 25, 50, 100],
       ],
     });
+    Layout.init();
   },
   methods: {
     async callServicePageInfo() {
@@ -304,3 +305,11 @@ export default {
   },
 };
 </script>
+<style scoped>
+.fix-width-header1 {
+  max-width: 200px;
+}
+.fix-width-header2 {
+  max-width: 200px;
+}
+</style>

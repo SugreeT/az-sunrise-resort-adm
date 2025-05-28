@@ -184,7 +184,7 @@
                   {{ errorMessage }}
                 </div>
                 <div v-if="images.length > 0">
-                  <h5>Selected Images:</h5>
+                  <h5>Selected Banner:</h5>
                   <div class="row">
                     <div
                       class="col-md-3 mb-3"
@@ -224,7 +224,7 @@
                 </div>
               </div>
 
-              <div class="col-lg-6 p-t-20">
+              <!-- <div class="col-lg-6 p-t-20">
                 <div class="form-group">
                   <label for="status" class="form-label">Status</label>
                   <select
@@ -241,7 +241,7 @@
                     </option>
                   </select>
                 </div>
-              </div>
+              </div> -->
 
               <div class="col-lg-12 p-t-20 text-center">
                 <button
@@ -249,7 +249,7 @@
                   @click="saveSections"
                   class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink"
                 >
-                  Submit
+                  Save
                 </button>
 
                 <!-- <a href="/manage-banner/banner-list"  >
@@ -266,7 +266,7 @@
                 </NuxtLink>
                 <!-- <NuxtLink to="/manage-banner/banner-list"  >
 										<button type="button"
-									class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Submit</button>
+									class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">Save</button>
 									</NuxtLink>
 						
 									<NuxtLink to="/manage-banner/banner-list"  >
@@ -305,7 +305,7 @@ export default {
   data() {
     return {
       images: [], // Store selected images and previews
-      bannerNo: "",
+      bannerTemp: {},
       imagePath: {},
       banner: {
         translations: {
@@ -318,18 +318,7 @@ export default {
       isUploading: false,
       uploadSuccess: false,
       maxSize: 50 * 1024 * 1024, // 50MB in bytes,
-      pages: [
-        "Home",
-        "Room",
-        "Bar & Restaurant",
-        "Fitness Club",
-        "Tour",
-        "Transportation",
-        "Diving",
-        "Spa",
-        "About",
-        "Contact Us",
-      ],
+      pages: [],
       selectedPage: "", // เก็บค่าที่ผู้ใช้เลือก
       statusOptions: {
         A: "Active",
@@ -337,33 +326,37 @@ export default {
       },
       selectedStatus: "A", // เก็บคีย์ที่ผู้ใช้เลือก
       requestLandingPage: {
-        section1: {
-          // ฟิลด์อื่น ๆ ของ section1 …
-          banner: {}, // <--- ตรงนี้จะเก็บ { name, path }
-          titleMini: "",
-          title: "",
-          titleMiniCn: "",
-          titleCn: "",
-          titleMiniRu: "",
-          titleRu: "",
-          // …
-        },
+        // ฟิลด์อื่น ๆ ของ section1 …
+        banner: {}, // <--- ตรงนี้จะเก็บ { name, path }
+        galleries: [],
+        title_mini_en: "",
+        title_en: "",
+        title_mini_cn: "",
+        title_cn: "",
+        title_mini_ru: "",
+        title_rn: "",
+        // …
         // section2–section5 …
       },
+      responseData: {},
     };
   },
   async mounted() {
     // this.initPage()
 
-    await this.callServiceInfo();
+    await this.callServicePageInfo();
     await this.callServiceMain();
 
     Layout.init();
   },
   methods: {
-    async callServiceInfo() {
-      const response = await apiService.get("/api/page-info/search");
-      this.pages = response;
+    async callServicePageInfo() {
+      const response = await apiService.callServiceInfo();
+      if (response) {
+        this.pages = response;
+        const data = this.pages.find((p) => p.id === this.pageId);
+        this.pageName = data?.description;
+      }
     },
     async callServiceMain() {
       try {
@@ -371,10 +364,10 @@ export default {
         const response = await apiService.get(
           `/api/page-info/content/section1/` + id
         );
-
+        this.responseData = response;
         const t = this.banner.translations;
-        t.en.title = response.title;
-        t.en.description = response.title_mini;
+        t.en.title = response.title_en;
+        t.en.description = response.title_mini_en;
         t.zh.title = response.title_cn;
         t.zh.description = response.title_mini_cn;
         t.ru.title = response.title_ru;
@@ -417,22 +410,30 @@ export default {
       for (const { file } of this.images) {
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("pageName", this.selectedPage?.name);
+        formData.append("page_name", this.selectedPage?.name);
 
         try {
           const resp = await apiService.post(
-            "/media/upsert", // หรือ path ที่คุณแม็ปใน Spring
+            "/media/create", // หรือ path ที่คุณแม็ปใน Spring
             formData,
             { headers: { "Content-Type": "multipart/form-data" } }
           );
           console.log("Upload success:", resp);
-          const { name, path } = resp.data;
-          this.requestLandingPage.section1.banner = { name, path };
+          const { id, name, path } = resp.data;
+          this.requestLandingPage.banner = { id };
 
-          console.log(
-            "section1.banner:",
-            this.requestLandingPage.section1.banner
-          );
+          this.requestLandingPage.galleries.push({
+            content_id: this.responseData.id,
+            banner_id: id,
+            title_mini_en: "",
+            title_en: "",
+            title_mini_cn: "",
+            title_cn: "",
+            title_mini_ru: "",
+            title_rn: "",
+          });
+
+          console.log("section1.banner:", this.requestLandingPage.banner);
         } catch (err) {
           console.error("Upload error:", err);
           this.errorMessage = "Upload failed: " + (err.message || err);
@@ -447,23 +448,23 @@ export default {
       try {
         // 2. flatten translations
         const t = this.banner.translations;
-        this.requestLandingPage.section1.title = t.en.title;
-        this.requestLandingPage.section1.title_mini = t.en.description;
+        this.requestLandingPage.title_en = t.en.title;
+        this.requestLandingPage.title_mini_en = t.en.description;
 
-        this.requestLandingPage.section1.title_cn = t.zh.title;
-        this.requestLandingPage.section1.title_mini_cn = t.zh.description;
+        this.requestLandingPage.title_cn = t.zh.title;
+        this.requestLandingPage.title_mini_cn = t.zh.description;
 
-        this.requestLandingPage.section1.title_ru = t.ru.title;
-        this.requestLandingPage.section1.title_mini_ru = t.ru.description;
+        this.requestLandingPage.title_ru = t.ru.title;
+        this.requestLandingPage.title_mini_ru = t.ru.description;
 
         // 3. กำหนด pageId จาก selectedPageId (ถ้ามี)
-        this.requestLandingPage.section1.page_id = this.selectedPage?.id;
+        this.requestLandingPage.page_id = this.selectedPage?.id;
 
-        this.requestLandingPage.section1.status = this.selectedStatus;
+        this.requestLandingPage.status = this.selectedStatus;
 
         console.log("section1.banner:", this.requestLandingPage.section1);
         const resp = await apiService.post(
-          `/landingpage/update/page/${this.selectedPage?.name}/sections`,
+          `/landingpage/update/page/${this.selectedPage?.name}/section/1`,
           this.requestLandingPage
         );
         console.log("Update sections success:", resp);
