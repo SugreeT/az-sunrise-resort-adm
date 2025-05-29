@@ -460,6 +460,16 @@ export default {
 
         this.requestLandingPage.status = this.selectedStatus;
 
+        console.log(
+          "this.requestLandingPage.banner?.id >> ",
+          this.requestLandingPage.banner?.id
+        );
+        if (!this.requestLandingPage.banner?.id) {
+          this.requestLandingPage.banner = {
+            id: this.responseData.banner?.id,
+          };
+        }
+
         console.log("section1.banner:", this.requestLandingPage.section1);
         const resp = await apiService.post(
           `/landingpage/update/page/${this.selectedPage?.name}/section/1`,
