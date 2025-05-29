@@ -396,7 +396,7 @@
 										<button type="button"
 										class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-default">Cancel</button>
 									</a> -->
-                <NuxtLink to="/manage-fitness/fitness-list">
+                <NuxtLink to="/manage-restaurant/restaurant-list">
                   <button
                     type="button"
                     class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-default"
@@ -479,18 +479,7 @@ export default {
       isUploading: false,
       uploadSuccess: false,
       maxSize: 100 * 1024 * 1024, // 50MB in bytes,
-      pages: [
-        "Home",
-        "Room",
-        "Bar & Restaurant",
-        "Fitness Club",
-        "Tour",
-        "Transportation",
-        "Diving",
-        "Spa",
-        "About",
-        "Contact Us",
-      ],
+      pages: [],
       selectedPage: "", // เก็บค่าที่ผู้ใช้เลือก
       statusOptions: {
         A: "Active",
@@ -710,7 +699,7 @@ export default {
             confirmButtonText: "OK",
           },
           () => {
-            navigateTo("/manage-fitness/fitness-list");
+            navigateTo("/manage-restaurant/restaurant-list");
           }
         );
       } catch (err) {
