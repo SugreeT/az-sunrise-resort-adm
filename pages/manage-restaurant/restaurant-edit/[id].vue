@@ -455,7 +455,7 @@
                               v-model="item.material"
                             />
                           </div>
-                          <div class="col-sm-2">
+                          <!-- <div class="col-sm-2">
                             <div class="input-group">
                               <input
                                 v-show="!item.previewName"
@@ -492,7 +492,7 @@
                                 <i class="fa fa-search"></i>
                               </button>
                             </div>
-                          </div>
+                          </div> -->
                           <div class="col-sm-1">
                             <button
                               v-if="cat.food_menus.length > 1"
@@ -678,7 +678,7 @@
                               v-model="item.material"
                             />
                           </div>
-                          <div class="col-sm-2">
+                          <!-- <div class="col-sm-2">
                             <div class="input-group">
                               <input
                                 v-show="!item.previewName"
@@ -715,7 +715,7 @@
                                 <i class="fa fa-search"></i>
                               </button>
                             </div>
-                          </div>
+                          </div> -->
                           <div class="col-sm-1">
                             <button
                               v-if="cat.food_menus.length > 1"
@@ -1407,39 +1407,84 @@ export default {
         this.requestSection3.id = this.responseDataSection3.id || "";
         this.requestSection3.page_id = this.selectedPage?.id;
         // 1. เรียก array ของหมวด (menu_categories) จากภาษาปัจจุบัน
-        const categories =
-          this.contentRestaurant.tabs[this.currentLang].menu_categories || [];
+        // 1. เรียก array ของหมวดหมู่ (menu_categories) ทั้ง 3 ภาษา
+        //    สมมติว่า contentRestaurant.tabs มี key เป็น 'en', 'zh-CN', 'ru'
 
-        // 2. ทำการ map ให้ได้โครงที่ backend ต้องการ
-        const payloadTabs = categories.map((tab) => {
+        //  menu_categories: [
+        //       {
+        //         categoryName: "", // ชื่อหมวด
+        //         food_menus: [
+        //           // รายการอาหารในหมวด
+        //           {
+        //             name: "",
+        //             price: "",
+        //             material: "",
+        //             image_id: "",
+        //             preview: "",
+        //           },
+        //         ],
+        //       },
+        //     ],
+        const catsEn = this.contentRestaurant.tabs.en?.menu_categories || [];
+        const catsCn = this.contentRestaurant.tabs.cn?.menu_categories || [];
+        const catsRu = this.contentRestaurant.tabs.ru?.menu_categories || [];
+
+        // 2. ทำการ map ให้ได้โครงที่ Backend ต้องการ (payloadTabs)
+        const payloadTabs = catsEn.map((enTab) => {
+          // หา category ที่ตรงกันในแต่ละภาษาด้วย id จาก enTab
+          const cnTab = catsCn.find((t) => t.id === enTab.id) || {};
+          const ruTab = catsRu.find((t) => t.id === enTab.id) || {};
+
           return {
-            // ถ้า tab.id มีค่าอยู่แล้ว (คือดึงมาจาก database) ก็เอา id นั้น ถ้าไม่มี (แทบสร้างใหม่) ส่งเป็น null
-            id: tab.id || null,
-            image_id: tab.image_id || null,
-            // สมมติชื่อหมวดส่งเป็น name_en, name_cn, name_ru (ขึ้นกับแต่ละภาษา)
-            name_en: tab.categoryName || "",
-            name_cn: tab.categoryName_cn || "",
-            name_ru: tab.categoryName_ru || "",
-            content_id: this.requestSection3.id,
-            // … ถ้าต้องการเก็บภาษาอื่นใน tab เพิ่มเติม เช่น title, description ฯลฯ ก็ใส่เหมือนกัน
+            // ถ้า enTab.id มีค่า (มาจาก DB) ก็เอาไปใช้งาน ส่วนถ้าเป็นรายการใหม่ก็ null
+            id: enTab.id || null,
+            image_id: enTab.image_id || null,
 
-            // ดึงเมนูภายใน tab นี้ แล้ว map ให้มี property ตามที่ backend ต้องการ
-            food_menus: (tab.food_menus || []).map((menu) => {
+            // ดึงชื่อหมวดหมู่จากแต่ละภาษาตาม key ใน JSON
+            name_en: enTab.categoryName || "",
+            name_cn: cnTab.categoryName || "",
+            name_ru: ruTab.categoryName || "",
+
+            // ผูกกับ Section ปัจจุบัน
+            content_id: this.requestSection3.id,
+
+            // ดึงเมนูภายในแต่ละหมวด (food_menus) แล้ว map ทุกภาษาย่อยอีกที
+            food_menus: (enTab.food_menus || []).map((enMenu) => {
+              // หาเมนูที่ตรงกัน (รหัส id) ในภาษาจีนและรัสเซีย
+              const cnMenu =
+                (cnTab.food_menus || []).find((m) => m.id === enMenu.id) || {};
+              const ruMenu =
+                (ruTab.food_menus || []).find((m) => m.id === enMenu.id) || {};
+
               return {
-                id: menu.id || null,
-                image_id: menu.image_id || null,
-                name_en: menu.name || "",
-                price_en: menu.price || "",
-                material_en: menu.material || "",
-                tab_id: tab.id || null,
-                // ถ้ามีภาษาอื่นของเมนู เช่น name_cn, price_cn ให้ใส่เพิ่มได้เช่นกัน
+                id: enMenu.id || null,
+                image_id: enMenu.image_id || null,
+
+                // ชื่อเมนูแต่ละภาษา
+                name_en: enMenu.name || "",
+                name_cn: cnMenu.name || "",
+                name_ru: ruMenu.name || "",
+
+                // ราคาแต่ละภาษา (แม้ค่าอาจเท่ากันก็ map ไปเลย)
+                price_en: enMenu.price || "",
+                price_cn: cnMenu.price || "",
+                price_ru: ruMenu.price || "",
+
+                // วัสดุ (material) แต่ละภาษา
+                material_en: enMenu.material || "",
+                material_cn: cnMenu.material || "",
+                material_ru: ruMenu.material || "",
+
+                // อ้างอิงกลับไปที่ tab_id (คือ enTab.id)
+                tab_id: enTab.id || null,
               };
             }),
           };
         });
 
-        // push array ทั้งก้อนด้วย spread
-        this.requestSection3.tabs.push(...payloadTabs);
+        // 3. นำ payloadTabs ที่ได้ไป push เข้า requestSection3.tabs
+        //    (หากต้องการ replace ทั้งหมดก็สามารถเขียนเป็น this.requestSection3.tabs = payloadTabs; เลยได้)
+        this.requestSection3.tabs = payloadTabs;
 
         const mapped = (this.responseDataSection3.galleries ?? []).map(
           ({ id, content_id, image }) => ({
@@ -1451,7 +1496,7 @@ export default {
 
         // push array ทั้งก้อนด้วย spread
         this.requestSection3.galleries.push(...mapped);
-
+        console.log("Update requestSection3:", this.requestSection3);
         const resp = await apiService.post(
           `/landingpage/update/page/${this.selectedPage?.name}/section/3`,
           this.requestSection3
