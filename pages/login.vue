@@ -110,7 +110,7 @@ export default {
       ].join("; ");
 
       // ไปหน้า index (หรือใช้ this.$router.push('/') ก็ได้)
-      window.location.href = "/index";
+      window.location.href = "/adm/index";
     },
 
     generateUUID() {

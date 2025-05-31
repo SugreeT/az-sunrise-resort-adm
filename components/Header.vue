@@ -92,7 +92,7 @@ function logout() {
   if (key) {
     key.value = null;
 
-    window.location.href = "/login";
+    window.location.href = "/adm/login";
     // navigateTo("/login");
   }
 }

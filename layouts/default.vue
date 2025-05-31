@@ -33,6 +33,7 @@ const { start, done, isLoading } = useLoading();
 const key = useCookie("keygen");
 if (!key.value) {
   navigateTo("/login");
+  // window.location.href = "/adm/login";
 }
 // if (!sessionStorage.getItem("keygen")) {
 //   window.location.href = "/login";
