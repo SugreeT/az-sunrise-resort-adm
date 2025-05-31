@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     head: {
       base: { href: '/adm/' },
       link: [
+           { rel: 'icon', type: 'image/x-icon', href: '/adm/favicon.ico' },
         {
           rel: 'stylesheet',
           href: '/adm/plugins/simple-line-icons/simple-line-icons.min.css', //icons
