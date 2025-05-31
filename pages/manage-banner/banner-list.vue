@@ -15,12 +15,12 @@
                 >Home</a
               >&nbsp;<i class="fa fa-angle-right"></i>
             </li>
-            <li>
+            <!-- <li>
               <a class="parent-item" href="">Banner</a>&nbsp;<i
                 class="fa fa-angle-right"
               ></i>
-            </li>
-            <li class="active">All Banners</li>
+            </li> -->
+            <li class="active">Banners</li>
           </ol>
         </div>
       </div>
@@ -96,7 +96,7 @@
                           :src="
                             apiService.getImageUrl(
                               item.banner?.path,
-                              item.banner?.name
+                              item.banner?.thumbnail_name
                             )
                           "
                           alt="Banner image"

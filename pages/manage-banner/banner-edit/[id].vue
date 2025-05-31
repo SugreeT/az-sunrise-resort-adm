@@ -341,6 +341,7 @@ export default {
   async mounted() {
     // this.initPage()
 
+    Layout.init();
     await this.callServicePageInfo();
     await this.callServiceMain();
 
@@ -371,7 +372,7 @@ export default {
         t.ru.description = response.title_mini_ru;
 
         this.imagePath = {
-          bannerName: response.banner?.name,
+          bannerName: response.banner?.thumbnail_name,
           bannerPath: response.banner?.path,
         };
 

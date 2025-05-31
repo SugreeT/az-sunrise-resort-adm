@@ -21,11 +21,24 @@
 import Header from "@/components/Header.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import Footer from "@/components/Footer.vue";
-
 // ดึงสถานะ loading มาจาก composable
 import { useLoading } from "@/composables/useLoading";
-const { isLoading } = useLoading();
+import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { useCookie } from "#app";
+const router = useRouter();
 
+const { start, done, isLoading } = useLoading();
+
+const key = useCookie("keygen");
+if (!key.value) {
+  navigateTo("/login");
+}
+// if (!sessionStorage.getItem("keygen")) {
+//   window.location.href = "/login";
+// }
+
+start();
 // เพิ่ม Script ที่จำเป็นใน <head>
 useHead({
   script: [

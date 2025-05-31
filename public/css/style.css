@@ -6231,11 +6231,11 @@ h4.media-heading {
   border-radius: 10px;
 }
 .card-box:hover {
-  -webkit-transform: translateY(-6px);
+  /* -webkit-transform: translateY(-6px);
   transform: translateY(-6px);
   -moz-box-shadow: 0 20px 20px rgba(0, 0, 0, 0.1);
   webkit-box-shadow: 0 0 25px -5px #9e9c9e;
-  box-shadow: 0 0 25px -5px #9e9c9e;
+  box-shadow: 0 0 25px -5px #9e9c9e; */
 }
 .vehicle-box {
   padding: 10px 20px;

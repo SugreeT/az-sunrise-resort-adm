@@ -68,7 +68,9 @@
 									</a>
 								</li> -->
               <li>
-                <a href="/login"> <i class="icon-logout"></i> Log Out </a>
+                <a href="javascript:void(0);" @click="logout">
+                  <i class="icon-logout"></i> Log Out
+                </a>
               </li>
             </ul>
           </li>
@@ -78,3 +80,20 @@
   </div>
   <!-- end header -->
 </template>
+emplate>
+
+<script setup>
+import { useRouter } from "vue-router";
+import { useCookie } from "#app";
+const router = useRouter();
+
+function logout() {
+  const key = useCookie("keygen");
+  if (key) {
+    key.value = null;
+
+    window.location.href = "/login";
+    // navigateTo("/login");
+  }
+}
+</script>

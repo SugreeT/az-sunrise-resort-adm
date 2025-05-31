@@ -44,9 +44,27 @@
 							</ul> -->
             </div>
             <div class="card-body row">
-              <div class="col-lg-12 p-t-20">
+              <!-- <div
+                class="d-flex justify-content-center align-items-center py-4"
+              >
+                <div class="me-5 d-flex align-items-center">
+                  <span class="toggle-label">Content</span>
+                  <label class="switchToggle ms-2">
+                    <input type="checkbox" v-model="showContent" />
+                    <span class="slider green round"></span>
+                  </label>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="toggle-label">Gallery</span>
+                  <label class="switchToggle ms-2">
+                    <input type="checkbox" v-model="showGallery" />
+                    <span class="slider green round"></span>
+                  </label>
+                </div>
+              </div> -->
+              <div class="col-lg-12 border rounded">
                 <!-- ─── Tabs ภาษา ─────────────────────────────── -->
-                <ul class="nav nav-tabs mb-3" role="tablist">
+                <ul class="nav nav-tabs mb-3 mt-3" role="tablist">
                   <li class="nav-item" v-for="lang in languages" :key="lang">
                     <a
                       class="nav-link"
@@ -59,7 +77,7 @@
                   </li>
                 </ul>
 
-                <div class="tab-content">
+                <div class="tab-content mb-3 mt-3">
                   <!-- EN -->
                   <div
                     class="tab-pane"
@@ -86,48 +104,200 @@
                       </div>
                     </div>
 
-                    <div>
-                      <label class="font-weight-bold">Schedules</label>
+                    <div class="pb-3">
+                      <div class="text-center">
+                        <label
+                          class="font-weight-bold"
+                          style="font-size: 20px; font-weight: bold"
+                          >Schedules</label
+                        >
+                      </div>
+                      <div class="p-3 border rounded">
+                        <div
+                          v-for="(sched, idx) in content.translations.en
+                            .schedules"
+                          :key="idx"
+                          class="align-items-center mb-2"
+                        >
+                          <div class="row mb-1">
+                            <div class="col-sm-5">
+                              <input
+                                v-model="sched.title"
+                                placeholder="e.g. Opening Hours"
+                                class="form-control mr-2"
+                              />
+                            </div>
+                            <div class="col-sm-5">
+                              <input
+                                v-model="sched.time"
+                                placeholder="e.g. 7:00am – 10:00pm"
+                                class="form-control mr-2"
+                              />
+                            </div>
+                            <div class="col-sm-1">
+                              <button
+                                v-if="
+                                  content.translations.en.schedules.length > 1
+                                "
+                                class="btn btn-outline-danger"
+                                @click="removeSchedule(idx)"
+                              >
+                                –
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          class="btn btn-outline-primary"
+                          @click="addSchedule"
+                        >
+                          + Add Schedule
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="pb-3">
+                      <div class="text-center">
+                        <label
+                          class="font-weight-bold"
+                          style="font-size: 20px; font-weight: bold"
+                          >Restaurant Menu</label
+                        >
+                      </div>
+                      <!-- loop แต่ละหมวด -->
                       <div
-                        v-for="(sched, idx) in content.translations.en
-                          .schedules"
-                        :key="idx"
-                        class="align-items-center mb-2"
+                        v-for="(cat, catIdx) in contentRestaurant.tabs[
+                          currentLang
+                        ].menu_categories"
+                        :key="catIdx"
+                        class="mb-4 p-3 border rounded"
                       >
-                        <div class="row mb-1">
-                          <div class="col-sm-5">
+                        <!-- แถวกรอกชื่อหมวด + ปุ่มลบหมวด -->
+                        <div class="row align-items-center mb-3">
+                          <div class="col-sm-10">
+                            <label class="form-label">Category</label>
                             <input
-                              v-model="sched.title"
-                              placeholder="e.g. Opening Hours"
-                              class="form-control mr-2"
+                              class="form-control form-control-lg"
+                              placeholder="e.g.  Starters, Main Dishes, Desserts, Drinks"
+                              v-model="cat.categoryName"
                             />
                           </div>
-                          <div class="col-sm-5">
+                          <div class="col-sm-2 text-end">
+                            <button
+                              v-if="
+                                contentRestaurant.tabs[currentLang]
+                                  .menu_categories.length > 1
+                              "
+                              class="btn btn-outline-danger"
+                              @click="removeCategory(catIdx)"
+                            >
+                              – Remove Category
+                            </button>
+                          </div>
+                        </div>
+
+                        <!-- หัวตารางคอลัมน์ -->
+                        <div class="row mb-2">
+                          <div class="col-sm-3">Menu Name</div>
+                          <div class="col-sm-2">Menu Price</div>
+                          <div class="col-sm-4">Menu Material</div>
+                          <div class="col-sm-2">Picture</div>
+                          <div class="col-sm-2"></div>
+                        </div>
+
+                        <!-- loop รายการอาหารในหมวด -->
+                        <div
+                          v-for="(item, menuIdx) in cat.food_menus"
+                          :key="menuIdx"
+                          class="row align-items-center mb-2"
+                        >
+                          <div class="col-sm-3">
                             <input
-                              v-model="sched.time"
-                              placeholder="e.g. 7:00am – 10:00pm"
-                              class="form-control mr-2"
+                              class="form-control"
+                              placeholder="e.g. Soft shell crab"
+                              v-model="item.name"
                             />
+                          </div>
+                          <div class="col-sm-2">
+                            <input
+                              class="form-control"
+                              placeholder="e.g. $14"
+                              v-model="item.price"
+                            />
+                          </div>
+                          <div class="col-sm-4">
+                            <input
+                              class="form-control"
+                              placeholder="e.g. Chicken, Potato, Salad"
+                              v-model="item.material"
+                            />
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="input-group">
+                              <input
+                                v-show="!item.previewName"
+                                type="file"
+                                class="form-control"
+                                id="imagesMenu"
+                                accept="image/*"
+                                @change="
+                                  handleFileImageMenu($event, catIdx, menuIdx)
+                                "
+                              />
+                              <label
+                                class="form-label"
+                                v-show="item.previewName"
+                                >{{ item.previewName }}</label
+                              >
+                              <button
+                                v-show="item.previewName"
+                                class="btn btn-outline-secondary btn-sm ms-2"
+                                @click="
+                                  item.previewName = '';
+                                  item.preview = '';
+                                "
+                                title="Preview Image"
+                              >
+                                <i class="fa fa-pencil"></i>
+                              </button>
+                              <button
+                                v-show="item.preview"
+                                class="btn btn-outline-secondary btn-sm ms-2"
+                                @click="openPreview(item.preview)"
+                                title="Preview Image"
+                              >
+                                <i class="fa fa-search"></i>
+                              </button>
+                            </div>
                           </div>
                           <div class="col-sm-1">
                             <button
-                              v-if="
-                                content.translations.en.schedules.length > 1
-                              "
+                              v-if="cat.food_menus.length > 1"
                               class="btn btn-outline-danger"
-                              @click="removeSchedule(idx)"
+                              @click="removeRestaurantMenu(catIdx, menuIdx)"
                             >
                               –
                             </button>
                           </div>
                         </div>
+
+                        <!-- ปุ่มเพิ่มเมนูในหมวดนี้ -->
+                        <div class="text-start">
+                          <button
+                            class="btn btn-outline-primary"
+                            @click="addRestaurantMenu(catIdx)"
+                          >
+                            + Add Menu
+                          </button>
+                        </div>
                       </div>
-                      <button
-                        class="btn btn-outline-primary"
-                        @click="addSchedule"
-                      >
-                        + Add Schedule
-                      </button>
+
+                      <!-- ปุ่มเพิ่มหมวด -->
+                      <div class="text-center">
+                        <button class="btn btn-primary" @click="addCategory">
+                          + Add Category
+                        </button>
+                      </div>
                     </div>
                   </div>
 
@@ -157,48 +327,200 @@
                       </div>
                     </div>
                     <!-- ถ้าต้องการ schedules ในภาษาจีน ก็ใส่เหมือน EN ได้เลย -->
-                    <div>
-                      <label class="font-weight-bold">Schedules</label>
+                    <div class="pb-3">
+                      <div class="text-center">
+                        <label
+                          class="font-weight-bold"
+                          style="font-size: 20px; font-weight: bold"
+                          >Schedules</label
+                        >
+                      </div>
+                      <div class="p-3 border rounded">
+                        <div
+                          v-for="(sched, idx) in content.translations.cn
+                            .schedules"
+                          :key="idx"
+                          class="align-items-center mb-2"
+                        >
+                          <div class="row mb-1">
+                            <div class="col-sm-5">
+                              <input
+                                v-model="sched.title"
+                                placeholder="e.g. Opening Hours"
+                                class="form-control mr-2"
+                              />
+                            </div>
+                            <div class="col-sm-5">
+                              <input
+                                v-model="sched.time"
+                                placeholder="e.g. 7:00am – 10:00pm"
+                                class="form-control mr-2"
+                              />
+                            </div>
+                            <div class="col-sm-1">
+                              <button
+                                v-if="
+                                  content.translations.cn.schedules.length > 1
+                                "
+                                class="btn btn-outline-danger"
+                                @click="removeSchedule(idx)"
+                              >
+                                –
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          class="btn btn-outline-primary"
+                          @click="addSchedule"
+                        >
+                          + Add Schedule
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="pb-3">
+                      <div class="text-center">
+                        <label
+                          class="font-weight-bold"
+                          style="font-size: 20px; font-weight: bold"
+                          >Restaurant Menu</label
+                        >
+                      </div>
+                      <!-- loop แต่ละหมวด -->
                       <div
-                        v-for="(sched, idx) in content.translations.cn
-                          .schedules"
-                        :key="idx"
-                        class="align-items-center mb-2"
+                        v-for="(cat, catIdx) in contentRestaurant.tabs[
+                          currentLang
+                        ].menu_categories"
+                        :key="catIdx"
+                        class="mb-4 p-3 border rounded"
                       >
-                        <div class="row mb-1">
-                          <div class="col-sm-5">
+                        <!-- แถวกรอกชื่อหมวด + ปุ่มลบหมวด -->
+                        <div class="row align-items-center mb-3">
+                          <div class="col-sm-10">
+                            <label class="form-label">Category</label>
                             <input
-                              v-model="sched.title"
-                              placeholder="e.g. Opening Hours"
-                              class="form-control mr-2"
+                              class="form-control form-control-lg"
+                              placeholder="e.g.  Starters, Main Dishes, Desserts, Drinks"
+                              v-model="cat.categoryName"
                             />
                           </div>
-                          <div class="col-sm-5">
+                          <div class="col-sm-2 text-end">
+                            <button
+                              v-if="
+                                contentRestaurant.tabs[currentLang]
+                                  .menu_categories.length > 1
+                              "
+                              class="btn btn-outline-danger"
+                              @click="removeCategory(catIdx)"
+                            >
+                              – Remove Category
+                            </button>
+                          </div>
+                        </div>
+
+                        <!-- หัวตารางคอลัมน์ -->
+                        <div class="row mb-2">
+                          <div class="col-sm-3">Menu Name</div>
+                          <div class="col-sm-2">Menu Price</div>
+                          <div class="col-sm-4">Menu Material</div>
+                          <div class="col-sm-2">Picture</div>
+                          <div class="col-sm-2"></div>
+                        </div>
+
+                        <!-- loop รายการอาหารในหมวด -->
+                        <div
+                          v-for="(item, menuIdx) in cat.food_menus"
+                          :key="menuIdx"
+                          class="row align-items-center mb-2"
+                        >
+                          <div class="col-sm-3">
                             <input
-                              v-model="sched.time"
-                              placeholder="e.g. 7:00am – 10:00pm"
-                              class="form-control mr-2"
+                              class="form-control"
+                              placeholder="e.g. Soft shell crab"
+                              v-model="item.name"
                             />
+                          </div>
+                          <div class="col-sm-2">
+                            <input
+                              class="form-control"
+                              placeholder="e.g. $14"
+                              v-model="item.price"
+                            />
+                          </div>
+                          <div class="col-sm-4">
+                            <input
+                              class="form-control"
+                              placeholder="e.g. Chicken, Potato, Salad"
+                              v-model="item.material"
+                            />
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="input-group">
+                              <input
+                                v-show="!item.previewName"
+                                type="file"
+                                class="form-control"
+                                id="imagesMenu"
+                                accept="image/*"
+                                @change="
+                                  handleFileImageMenu($event, catIdx, menuIdx)
+                                "
+                              />
+                              <label
+                                class="form-label"
+                                v-show="item.previewName"
+                                >{{ item.previewName }}</label
+                              >
+                              <button
+                                v-show="item.previewName"
+                                class="btn btn-outline-secondary btn-sm ms-2"
+                                @click="
+                                  item.previewName = '';
+                                  item.preview = '';
+                                "
+                                title="Preview Image"
+                              >
+                                <i class="fa fa-pencil"></i>
+                              </button>
+                              <button
+                                v-show="item.preview"
+                                class="btn btn-outline-secondary btn-sm ms-2"
+                                @click="openPreview(item.preview)"
+                                title="Preview Image"
+                              >
+                                <i class="fa fa-search"></i>
+                              </button>
+                            </div>
                           </div>
                           <div class="col-sm-1">
                             <button
-                              v-if="
-                                content.translations.cn.schedules.length > 1
-                              "
+                              v-if="cat.food_menus.length > 1"
                               class="btn btn-outline-danger"
-                              @click="removeSchedule(idx)"
+                              @click="removeRestaurantMenu(catIdx, menuIdx)"
                             >
                               –
                             </button>
                           </div>
                         </div>
+
+                        <!-- ปุ่มเพิ่มเมนูในหมวดนี้ -->
+                        <div class="text-start">
+                          <button
+                            class="btn btn-outline-primary"
+                            @click="addRestaurantMenu(catIdx)"
+                          >
+                            + Add Menu
+                          </button>
+                        </div>
                       </div>
-                      <button
-                        class="btn btn-outline-primary"
-                        @click="addSchedule"
-                      >
-                        + Add Schedule
-                      </button>
+
+                      <!-- ปุ่มเพิ่มหมวด -->
+                      <div class="text-center">
+                        <button class="btn btn-primary" @click="addCategory">
+                          + Add Category
+                        </button>
+                      </div>
                     </div>
                   </div>
 
@@ -228,97 +550,250 @@
                       </div>
                     </div>
                     <!-- ถ้าต้องการ schedules ในภาษารัสเซีย ก็ใส่เหมือน EN ได้เลย -->
-                    <div>
-                      <label class="font-weight-bold">Schedules</label>
+                    <div class="pb-3">
+                      <div class="text-center">
+                        <label
+                          class="font-weight-bold"
+                          style="font-size: 20px; font-weight: bold"
+                          >Schedules</label
+                        >
+                      </div>
+                      <div class="p-3 border rounded">
+                        <div
+                          v-for="(sched, idx) in content.translations.ru
+                            .schedules"
+                          :key="idx"
+                          class="align-items-center mb-2"
+                        >
+                          <div class="row mb-1">
+                            <div class="col-sm-5">
+                              <input
+                                v-model="sched.title"
+                                placeholder="e.g. Opening Hours"
+                                class="form-control mr-2"
+                              />
+                            </div>
+                            <div class="col-sm-5">
+                              <input
+                                v-model="sched.time"
+                                placeholder="e.g. 7:00am – 10:00pm"
+                                class="form-control mr-2"
+                              />
+                            </div>
+                            <div class="col-sm-1">
+                              <button
+                                v-if="
+                                  content.translations.ru.schedules.length > 1
+                                "
+                                class="btn btn-outline-danger"
+                                @click="removeSchedule(idx)"
+                              >
+                                –
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          class="btn btn-outline-primary"
+                          @click="addSchedule"
+                        >
+                          + Add Schedule
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="pb-3">
+                      <div class="text-center">
+                        <label
+                          class="font-weight-bold"
+                          style="font-size: 20px; font-weight: bold"
+                          >Restaurant Menu</label
+                        >
+                      </div>
+                      <!-- loop แต่ละหมวด -->
                       <div
-                        v-for="(sched, idx) in content.translations.ru
-                          .schedules"
-                        :key="idx"
-                        class="align-items-center mb-2"
+                        v-for="(cat, catIdx) in contentRestaurant.tabs[
+                          currentLang
+                        ].menu_categories"
+                        :key="catIdx"
+                        class="mb-4 p-3 border rounded"
                       >
-                        <div class="row mb-1">
-                          <div class="col-sm-5">
+                        <!-- แถวกรอกชื่อหมวด + ปุ่มลบหมวด -->
+                        <div class="row align-items-center mb-3">
+                          <div class="col-sm-10">
+                            <label class="form-label">Category</label>
                             <input
-                              v-model="sched.title"
-                              placeholder="e.g. Opening Hours"
-                              class="form-control mr-2"
+                              class="form-control form-control-lg"
+                              placeholder="e.g.  Starters, Main Dishes, Desserts, Drinks"
+                              v-model="cat.categoryName"
                             />
                           </div>
-                          <div class="col-sm-5">
+                          <div class="col-sm-2 text-end">
+                            <button
+                              v-if="
+                                contentRestaurant.tabs[currentLang]
+                                  .menu_categories.length > 1
+                              "
+                              class="btn btn-outline-danger"
+                              @click="removeCategory(catIdx)"
+                            >
+                              – Remove Category
+                            </button>
+                          </div>
+                        </div>
+
+                        <!-- หัวตารางคอลัมน์ -->
+                        <div class="row mb-2">
+                          <div class="col-sm-3">Menu Name</div>
+                          <div class="col-sm-2">Menu Price</div>
+                          <div class="col-sm-4">Menu Material</div>
+                          <div class="col-sm-2">Picture</div>
+                          <div class="col-sm-2"></div>
+                        </div>
+
+                        <!-- loop รายการอาหารในหมวด -->
+                        <div
+                          v-for="(item, menuIdx) in cat.food_menus"
+                          :key="menuIdx"
+                          class="row align-items-center mb-2"
+                        >
+                          <div class="col-sm-3">
                             <input
-                              v-model="sched.time"
-                              placeholder="e.g. 7:00am – 10:00pm"
-                              class="form-control mr-2"
+                              class="form-control"
+                              placeholder="e.g. Soft shell crab"
+                              v-model="item.name"
                             />
+                          </div>
+                          <div class="col-sm-2">
+                            <input
+                              class="form-control"
+                              placeholder="e.g. $14"
+                              v-model="item.price"
+                            />
+                          </div>
+                          <div class="col-sm-4">
+                            <input
+                              class="form-control"
+                              placeholder="e.g. Chicken, Potato, Salad"
+                              v-model="item.material"
+                            />
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="input-group">
+                              <input
+                                v-show="!item.previewName"
+                                type="file"
+                                class="form-control"
+                                id="imagesMenu"
+                                accept="image/*"
+                                @change="
+                                  handleFileImageMenu($event, catIdx, menuIdx)
+                                "
+                              />
+                              <label
+                                class="form-label"
+                                v-show="item.previewName"
+                                >{{ item.previewName }}</label
+                              >
+                              <button
+                                v-show="item.previewName"
+                                class="btn btn-outline-secondary btn-sm ms-2"
+                                @click="
+                                  item.previewName = '';
+                                  item.preview = '';
+                                "
+                                title="Preview Image"
+                              >
+                                <i class="fa fa-pencil"></i>
+                              </button>
+                              <button
+                                v-show="item.preview"
+                                class="btn btn-outline-secondary btn-sm ms-2"
+                                @click="openPreview(item.preview)"
+                                title="Preview Image"
+                              >
+                                <i class="fa fa-search"></i>
+                              </button>
+                            </div>
                           </div>
                           <div class="col-sm-1">
                             <button
-                              v-if="
-                                content.translations.ru.schedules.length > 1
-                              "
+                              v-if="cat.food_menus.length > 1"
                               class="btn btn-outline-danger"
-                              @click="removeSchedule(idx)"
+                              @click="removeRestaurantMenu(catIdx, menuIdx)"
                             >
                               –
                             </button>
                           </div>
                         </div>
+
+                        <!-- ปุ่มเพิ่มเมนูในหมวดนี้ -->
+                        <div class="text-start">
+                          <button
+                            class="btn btn-outline-primary"
+                            @click="addRestaurantMenu(catIdx)"
+                          >
+                            + Add Menu
+                          </button>
+                        </div>
                       </div>
-                      <button
-                        class="btn btn-outline-primary"
-                        @click="addSchedule"
-                      >
-                        + Add Schedule
-                      </button>
+
+                      <!-- ปุ่มเพิ่มหมวด -->
+                      <div class="text-center">
+                        <button class="btn btn-primary" @click="addCategory">
+                          + Add Category
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="row">
-                    <div class="col-lg-6 p-t-20">
-                      <div class="form-group">
-                        <label for="images" class="form-label"
-                          >Select Gallery</label
-                        >
-                        <input
-                          type="file"
-                          class="form-control"
-                          id="images"
-                          accept="image/*"
-                          multiple
-                          @change="handleFiles"
-                        />
-                      </div>
-                    </div>
+              <div class="col-lg-12 border rounded mt-3">
+                <div class="row">
+                  <div class="col-lg-6">
                     <div class="row">
-                      <div class="col-lg-12 p-t-20">
-                        <div v-if="errorMessage" class="alert alert-danger">
-                          {{ errorMessage }}
+                      <div class="col-lg-6 p-t-20 pb-2">
+                        <div class="form-group">
+                          <label for="images" class="form-label"
+                            >Select Gallery</label
+                          >
+                          <input
+                            type="file"
+                            class="form-control"
+                            id="images"
+                            accept="image/*"
+                            multiple
+                            @change="handleFiles"
+                          />
                         </div>
-                        <div v-if="images.length > 0">
-                          <h5>Selected Gallery:</h5>
-                          <div class="row">
-                            <div
-                              class="col-md-2 mb-3"
-                              v-for="(image, index) in images"
-                              :key="index"
-                            >
-                              <div class="card">
-                                <img
-                                  :src="image.preview"
-                                  class="card-img-top"
-                                  alt="Preview"
-                                />
-                                <div class="card-body p-2">
-                                  <p class="card-text text-truncate">
-                                    {{ image.file.name }}
-                                  </p>
-                                  <p class="card-text text-muted">
-                                    {{ formatSize(image.file.size) }}
-                                  </p>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-12 p-t-20">
+                          <div v-if="errorMessage" class="alert alert-danger">
+                            {{ errorMessage }}
+                          </div>
+                          <div v-if="images.length > 0">
+                            <h5>Selected Gallery:</h5>
+                            <div class="row">
+                              <div
+                                class="col-md-2 mb-3"
+                                v-for="(image, index) in images"
+                                :key="index"
+                              >
+                                <div class="card">
+                                  <img
+                                    :src="image.preview"
+                                    class="card-img-top"
+                                    alt="Preview"
+                                  />
+                                  <div class="card-body p-2">
+                                    <p class="card-text text-truncate">
+                                      {{ image.file.name }}
+                                    </p>
+                                    <p class="card-text text-muted">
+                                      {{ formatSize(image.file.size) }}
+                                    </p>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -327,43 +802,42 @@
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-6 p-t-20">
-                  <div>
-                    <h5>All Gallery:</h5>
-                    <div class="preview-section">
-                      <div class="gallery-preview">
-                        <div
-                          v-for="(
-                            gallery, idx
-                          ) in responseDataSection3.galleries"
-                          :key="idx"
-                          class="image-container"
-                        >
-                          <!-- 2) ใช้ gallery.image.path & gallery.image.name -->
-                          <img
-                            :src="
-                              apiService.getImageUrl(
-                                gallery.image.path,
-                                gallery.image.thumbnail_name
-                              )
-                            "
-                            alt="Gallery image"
-                          />
-                          <button
-                            class="delete-btn"
-                            @click="confirmRemove(idx)"
-                            aria-label="Delete image"
+                  <div class="col-lg-6 p-t-20">
+                    <div>
+                      <h5>All Gallery:</h5>
+                      <div class="preview-section">
+                        <div class="gallery-preview">
+                          <div
+                            v-for="(
+                              gallery, idx
+                            ) in responseDataSection3.galleries"
+                            :key="idx"
+                            class="image-container"
                           >
-                            ×
-                          </button>
+                            <!-- 2) ใช้ gallery.image.path & gallery.image.name -->
+                            <img
+                              :src="
+                                apiService.getImageUrl(
+                                  gallery.image.path,
+                                  gallery.image.thumbnail_name
+                                )
+                              "
+                              alt="Gallery image"
+                            />
+                            <button
+                              class="delete-btn"
+                              @click="confirmRemove(idx)"
+                              aria-label="Delete image"
+                            >
+                              ×
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-
               <!-- <div class="col-lg-6 p-t-20">
                 <div class="form-group">
                   <label for="status" class="form-label">Status</label>
@@ -382,6 +856,53 @@
                   </select>
                 </div>
               </div> -->
+
+              <div
+                class="modal fade"
+                id="exampleModalCenter"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalCenterTitle"
+                aria-hidden="true"
+                @click.self="closePreview"
+              >
+                <div
+                  class="modal-dialog modal-fluid modal-dialog-centered"
+                  role="document"
+                >
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Image Preview</h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        @click="closePreview"
+                      ></button>
+                    </div>
+                    <div class="modal-body text-center">
+                      <img
+                        :src="modalImageUrl"
+                        alt="Preview"
+                        class="img-fluid"
+                      />
+                    </div>
+                    <!-- <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button type="button" class="btn btn-primary">
+                        Save changes
+                      </button>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
 
               <div class="col-lg-12 p-t-20 text-center">
                 <button
@@ -444,11 +965,14 @@ onMounted(() => {
 export default {
   data() {
     return {
+      imagesMenu: [],
       images: [], // Store selected images and previews
       pageId: 2,
       pageName: "",
       bannerTemp: {},
       imagePath: {},
+      showContent: true, // เริ่มต้นให้โชว์ทั้งคู่
+      showGallery: true,
       languages: ["en", "cn", "ru"],
       langLabels: {
         en: "English",
@@ -475,6 +999,63 @@ export default {
           },
         },
       },
+      contentRestaurant: {
+        tabs: {
+          en: {
+            menu_categories: [
+              {
+                categoryName: "", // ชื่อหมวด
+                food_menus: [
+                  // รายการอาหารในหมวด
+                  {
+                    name: "",
+                    price: "",
+                    material: "",
+                    image_id: "",
+                    preview: "",
+                  },
+                ],
+              },
+            ],
+          },
+          cn: {
+            menu_categories: [
+              {
+                categoryName: "", // ชื่อหมวด
+                food_menus: [
+                  // รายการอาหารในหมวด
+                  {
+                    name: "",
+                    price: "",
+                    material: "",
+                    image_id: "",
+                    preview: "",
+                  },
+                ],
+              },
+            ],
+          },
+          ru: {
+            menu_categories: [
+              {
+                categoryName: "", // ชื่อหมวด
+                food_menus: [
+                  // รายการอาหารในหมวด
+                  {
+                    name: "",
+                    price: "",
+                    material: "",
+                    image_id: "",
+                    preview: "",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      },
+      showModal: false,
+      modalImageUrl: "",
       errorMessage: "",
       isUploading: false,
       uploadSuccess: false,
@@ -504,6 +1085,7 @@ export default {
       },
       requestSection3: {
         // ฟิลด์อื่น ๆ ของ section1 …
+        id: "",
         banner: {}, // <--- ตรงนี้จะเก็บ { name, path }
         galleries: [],
         title_mini_en: "",
@@ -512,6 +1094,7 @@ export default {
         title_cn: "",
         title_mini_ru: "",
         title_rn: "",
+        tabs: [],
         // …
         // section2–section5 …
       },
@@ -568,9 +1151,155 @@ export default {
           `/api/page-info/content/section3/` + this.pageId
         );
         this.responseDataSection3 = response;
+
+        // 3. ทำการแมปค่าจาก responseDataSection3.tabs → contentRestaurant.tabs.en.menu_categories
+        const tabsFromApi = this.responseDataSection3.tabs || [];
+        const mappedCategories = tabsFromApi.map((tab) => ({
+          // เก็บค่า id ของ tab ถ้ามี (ใช้ตอน update)
+          id: tab.id,
+          // เก็บชื่อหมวด (ใช้ property ที่คุณตั้งไว้ใน form)
+          categoryName: tab.name_en || "",
+          // เก็บ image_id ของ tab (ถ้าใช้หมวดละรูป)
+          image_id: tab.image_id || null,
+
+          // สร้าง array ของ food_menus ภายในหมวด
+          food_menus: (tab.food_menus || []).map((menu) => ({
+            // แมปค่าจาก API → field ที่ฟอร์มใช้ bind
+            id: menu.id,
+            image_id: menu.image_id,
+            name: menu.name_en || "",
+            price: menu.price_en || "",
+            material: menu.material_en || "",
+            // สร้าง preview จาก path ของ image (ถ้ามี)
+            // สมมติว่า menu.image.path มี URL ของรูป เช่น "/media/restaurant/abc.jpg"
+            preview: menu.image
+              ? apiService.getImageUrl(menu.image.path, menu.image.name)
+              : "",
+            previewName: menu.image ? menu.image.original_name : "",
+
+            // ถ้า backend ส่งมาเป็น full URL แล้วก็ใช้ menu.image.url แทน
+          })),
+        }));
+
+        // 4. เอา mappedCategories ไปเก็บใน contentRestaurant.tabs.en.menu_categories
+
+        this.contentRestaurant.tabs.en.menu_categories = mappedCategories;
+
+        // 5. ถ้าต้องการโหลดภาษาอื่น (cn, ru) ให้ทำ mapping คล้ายกัน:
+        //    สมมติ API ส่งชื่อหมวดเป็น tab.name_cn, tab.name_ru ด้วย
+        const mappedCategoriesCN = tabsFromApi.map((tab) => ({
+          id: tab.id,
+          categoryName: tab.name_cn || "",
+          image_id: tab.image_id || null,
+          food_menus: (tab.food_menus || []).map((menu) => ({
+            id: menu.id,
+            image_id: menu.image_id,
+            name: menu.name_cn || "",
+            price: menu.price_cn || "",
+            material: menu.material_cn || "",
+            preview: menu.image
+              ? apiService.getImageUrl(
+                  menu.image.path,
+                  menu.image.thumbnail_name
+                )
+              : "",
+            imageName: menu.image ? menu.image.name : "",
+          })),
+        }));
+
+        this.contentRestaurant.tabs.cn.menu_categories = mappedCategoriesCN;
+
+        const mappedCategoriesRU = tabsFromApi.map((tab) => ({
+          id: tab.id,
+          categoryName: tab.name_ru || "",
+          image_id: tab.image_id || null,
+          food_menus: (tab.food_menus || []).map((menu) => ({
+            id: menu.id,
+            image_id: menu.image_id,
+            name: menu.name_ru || "",
+            price: menu.price_ru || "",
+            material: menu.material_ru || "",
+            preview: menu.image
+              ? apiService.getImageUrl(
+                  menu.image.path,
+                  menu.image.thumbnail_name
+                )
+              : "",
+            imageName: menu.image ? menu.image.name : "",
+          })),
+        }));
+        this.contentRestaurant.tabs.ru.menu_categories = mappedCategoriesRU;
+
         console.log("callServiceSection3 >>> ", this.responseDataSection3);
       } catch (err) {
         console.error("Error loading landing page:", err);
+      }
+    },
+    openPreview(previewUrl) {
+      this.modalImageUrl = previewUrl;
+      // this.showModal = true;
+      $("#exampleModalCenter").modal("show");
+    },
+    closePreview() {
+      // this.showModal = false;
+      $("#exampleModalCenter").modal("hide");
+      this.modalImageUrl = "";
+    },
+    async handleFileImageMenu(event, catIdx, menuIdx) {
+      this.errorMessage = "";
+      const selectedFiles = Array.from(event.target.files);
+      const totalSize = selectedFiles.reduce((acc, f) => acc + f.size, 0);
+
+      if (totalSize > this.maxSize) {
+        this.errorMessage = "Total file size exceeds 100MB!";
+        this.imagesMenu = [];
+        return;
+      }
+
+      const file = event.target.files[0];
+      // สร้าง URL ชั่วคราว สำหรับ preview
+      const previewUrl = URL.createObjectURL(file);
+      // สร้าง preview
+      this.imagesMenu = selectedFiles.map((f) => ({
+        file: f,
+        preview: URL.createObjectURL(f),
+      }));
+
+      // เก็บ preview ไว้ในเมนูนั้น ๆ
+      this.contentRestaurant.tabs[this.currentLang].menu_categories[
+        catIdx
+      ].food_menus[menuIdx].preview = previewUrl;
+
+      // upload แต่ละไฟล์เลย
+      for (const { file } of this.imagesMenu) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("page_name", this.selectedPage?.name);
+        formData.append("category", "image");
+
+        try {
+          const resp = await apiService.post(
+            "/media/create", // หรือ path ที่คุณแม็ปใน Spring
+            formData,
+            { headers: { "Content-Type": "multipart/form-data" } }
+          );
+          console.log("Upload success:", resp);
+          const { id, name, path } = resp.data;
+
+          this.contentRestaurant.tabs[this.currentLang].menu_categories[
+            catIdx
+          ].food_menus[menuIdx].image_id = id;
+          // let param = {
+          //   content_id: this.responseDataSection3.id,
+          //   image_id: id,
+          // };
+          // this.requestSection3.galleries.push(param);
+
+          // console.log("requestSection3:", this.requestSection3);
+        } catch (err) {
+          console.error("Upload error:", err);
+          this.errorMessage = "Upload failed: " + (err.message || err);
+        }
       }
     },
     async handleFiles(event) {
@@ -675,6 +1404,43 @@ export default {
       try {
         console.log("this.requestSection3:", this.requestSection3);
 
+        this.requestSection3.id = this.responseDataSection3.id || "";
+        this.requestSection3.page_id = this.selectedPage?.id;
+        // 1. เรียก array ของหมวด (menu_categories) จากภาษาปัจจุบัน
+        const categories =
+          this.contentRestaurant.tabs[this.currentLang].menu_categories || [];
+
+        // 2. ทำการ map ให้ได้โครงที่ backend ต้องการ
+        const payloadTabs = categories.map((tab) => {
+          return {
+            // ถ้า tab.id มีค่าอยู่แล้ว (คือดึงมาจาก database) ก็เอา id นั้น ถ้าไม่มี (แทบสร้างใหม่) ส่งเป็น null
+            id: tab.id || null,
+            image_id: tab.image_id || null,
+            // สมมติชื่อหมวดส่งเป็น name_en, name_cn, name_ru (ขึ้นกับแต่ละภาษา)
+            name_en: tab.categoryName || "",
+            name_cn: tab.categoryName_cn || "",
+            name_ru: tab.categoryName_ru || "",
+            content_id: this.requestSection3.id,
+            // … ถ้าต้องการเก็บภาษาอื่นใน tab เพิ่มเติม เช่น title, description ฯลฯ ก็ใส่เหมือนกัน
+
+            // ดึงเมนูภายใน tab นี้ แล้ว map ให้มี property ตามที่ backend ต้องการ
+            food_menus: (tab.food_menus || []).map((menu) => {
+              return {
+                id: menu.id || null,
+                image_id: menu.image_id || null,
+                name_en: menu.name || "",
+                price_en: menu.price || "",
+                material_en: menu.material || "",
+                tab_id: tab.id || null,
+                // ถ้ามีภาษาอื่นของเมนู เช่น name_cn, price_cn ให้ใส่เพิ่มได้เช่นกัน
+              };
+            }),
+          };
+        });
+
+        // push array ทั้งก้อนด้วย spread
+        this.requestSection3.tabs.push(...payloadTabs);
+
         const mapped = (this.responseDataSection3.galleries ?? []).map(
           ({ id, content_id, image }) => ({
             id,
@@ -715,6 +1481,28 @@ export default {
     removeSchedule(idx) {
       this.content.translations[this.currentLang].schedules.splice(idx, 1);
     },
+    addCategory() {
+      this.contentRestaurant.tabs[this.currentLang].menu_categories.push({
+        categoryName: "",
+        food_menus: [{ name: "", price: "", material: "", image_id: "" }],
+      });
+    },
+    removeCategory(catIdx) {
+      this.contentRestaurant.tabs[this.currentLang].menu_categories.splice(
+        catIdx,
+        1
+      );
+    },
+    addRestaurantMenu(catIdx) {
+      this.contentRestaurant.tabs[this.currentLang].menu_categories[
+        catIdx
+      ].food_menus.push({ name: "", price: "", material: "", image_id: "" });
+    },
+    removeRestaurantMenu(catIdx, idx) {
+      this.contentRestaurant.tabs[this.currentLang].menu_categories[
+        catIdx
+      ].food_menus.splice(idx, 1);
+    },
     mapSchedulesFromDB() {
       const langs = ["en", "cn", "ru"];
       langs.forEach((lang) => {
@@ -734,31 +1522,12 @@ export default {
     },
     // ยืนยันก่อนลบ
     confirmRemove(index) {
-      //   swal(
-      //     {
-      //       title: "Are you sure?",
-      //       text: "You will not be able to recover this imaginary file!",
-      //       type: "warning",
-      //       showCancelButton: true,
-      //       confirmButtonColor: "#DD6B55",
-      //       confirmButtonText: "Yes",
-      //       cancelButtonText: "No",
-      //       closeOnConfirm: false,
-      //     },
-      //     () => {
-      //       // swal("Deleted!", "Your imaginary file has been deleted.", "success");
-      //     }
-      //   );
       const removed = this.responseDataSection3.galleries.splice(index, 1)[0];
     },
 
     // ลบออกจาก array และเรียก API ฝั่ง server ถ้าต้องการ
     async removeImage(index) {
       const removed = this.responseDataSection3.galleries.splice(index, 1)[0];
-      // ถ้าต้องการ sync กับ backend:
-      // await this.$axios.$delete('/api/gallery/image', {
-      //   data: { name: removed.banner.name, path: removed.banner.path }
-      // })
     },
   },
   beforeUnmount() {
@@ -806,5 +1575,41 @@ export default {
       cursor: pointer;
     }
   }
+}
+
+/* ปรับฟ้อนท์ให้สวยงามขึ้น */
+.toggle-label {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+/* ปรับสีเมื่อ active */
+.switchToggle input:checked + .slider {
+  background-color: #28a745;
+}
+
+/* เนื้อหา modal (body) */
+.modal-body {
+  padding: 1rem;
+}
+
+/* ให้รูปปรับขนาดตามกล่อง modal */
+.modal-body img {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+/* ใส่ใน <style scoped> หรือไฟล์ CSS ของโปรเจ็ค */
+.border {
+  border: 1px solid #e0e0e0 !important;
+}
+.rounded {
+  border-radius: 8px !important;
+}
+.fw-bold {
+  font-weight: 600 !important;
 }
 </style>
