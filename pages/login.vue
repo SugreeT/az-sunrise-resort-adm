@@ -61,27 +61,27 @@ useHead({
   link: [
     {
       rel: "stylesheet",
-      href: "/plugins/font-awesome/css/font-awesome.min.css", // ชี้ไปยังไฟล์ CSS เฉพาะเพจ
+      href: "/adm/plugins/font-awesome/css/font-awesome.min.css", // ชี้ไปยังไฟล์ CSS เฉพาะเพจ
     },
     {
       rel: "stylesheet",
-      href: "/plugins/iconic/css/material-design-iconic-font.min.css", // ชี้ไปยังไฟล์ CSS เฉพาะเพจ
+      href: "/adm/plugins/iconic/css/material-design-iconic-font.min.css", // ชี้ไปยังไฟล์ CSS เฉพาะเพจ
     },
     {
       rel: "stylesheet",
-      href: "/css/pages/extra_pages.css", // ชี้ไปยังไฟล์ CSS เฉพาะเพจ
+      href: "/adm/css/pages/extra_pages.css", // ชี้ไปยังไฟล์ CSS เฉพาะเพจ
     },
   ],
   script: [
     {
-      src: "/plugins/jquery/jquery.min.js",
+      src: "/adm/plugins/jquery/jquery.min.js",
       type: "text/javascript",
       defer: true,
     },
     // { src: '/js/common_functions.js', type: 'text/javascript', defer: true  },
     // { src: '/phpmailer/validate.js', type: 'text/javascript', defer: true  },
     {
-      src: "/js/pages/extra_pages/login.js",
+      src: "/adm/js/pages/extra_pages/login.js",
       type: "text/javascript",
       defer: true,
     },
