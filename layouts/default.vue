@@ -191,4 +191,13 @@ export default {
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 767.98px) {
+  ::v-deep .dataTables_length {
+    display: none !important;
+  }
+  ::v-deep .dataTables_filter {
+    display: none !important;
+  }
+}
 </style>

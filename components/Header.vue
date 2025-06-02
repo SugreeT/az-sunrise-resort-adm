@@ -1,39 +1,40 @@
 <template>
   <!-- start header -->
   <div class="page-header navbar navbar-fixed-top">
-    <div class="page-header-inner">
-      <!-- logo start -->
+    <div
+      class="page-header-inner d-flex justify-content-between align-items-center px-2"
+    >
+      <!-- ====================
+         1) บล็อกโลโก้: ไม่มี d-none
+         ==================== -->
       <div class="page-logo">
-        <img
-          src="~assets/img/logo/AZ-sunrise-logo-h2.png"
-          width="180"
-          height="45"
-          alt=""
-        />
+        <a href="/">
+          <img
+            src="~assets/img/logo/AZ-sunrise-logo-h2.png"
+            alt="A.Z. Sunrise"
+            style="max-height: 40px; max-width: 160px"
+          />
+        </a>
       </div>
-      <!-- logo end -->
-      <!-- <ul class="nav navbar-nav navbar-left in">
-        <li>
-          <a href="#" class="menu-toggler sidebar-toggler"
-            ><i class="icon-menu"></i
-          ></a>
-        </li>
-      </ul> -->
-      <!-- start mobile menu -->
+
+      <!-- ==============================
+         2) ปุ่ม Hamburger (เฉพาะมือถือ) – ใช้ Font Awesome bars
+         ============================== -->
       <a
         href="javascript:;"
-        class="menu-toggler responsive-toggler"
+        class="menu-toggler d-block d-md-none"
         data-bs-toggle="collapse"
         data-bs-target=".navbar-collapse"
+        style="color: #97a0b3; padding-right: 15px"
       >
-        <span></span>
+        <i class="fa fa-bars" style="font-size: 1.5rem"></i>
       </a>
-      <!-- end mobile menu -->
-      <!-- start header menu -->
-      <div class="top-menu">
+
+      <!-- ============================================
+         3) ส่วน Top-Menu (Admin dropdown) เฉพาะเดสก์ท็อป
+         ============================================ -->
+      <div class="top-menu d-none d-md-block">
         <ul class="nav navbar-nav pull-right">
-          <!-- end message dropdown -->
-          <!-- start manage user dropdown -->
           <li class="dropdown dropdown-user">
             <a
               href="javascript:;"
@@ -42,31 +43,10 @@
               data-hover="dropdown"
               data-close-others="true"
             >
-              <!-- <img alt="" class="img-circle" src="/img/dp.jpg" /> -->
-              <span class="username username-hide-on-mobile"> Admin </span>
+              <span class="username">Admin</span>
               <i class="fa fa-angle-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-default animated jello">
-              <!-- <li>
-									<a href="user_profile.html">
-										<i class="icon-user"></i> Profile </a>
-								</li>
-								<li>
-									<a href="#">
-										<i class="icon-settings"></i> Settings
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<i class="icon-directions"></i> Help
-									</a>
-								</li>
-								<li class="divider"> </li>
-								<li>
-									<a href="lock_screen.html">
-										<i class="icon-lock"></i> Lock
-									</a>
-								</li> -->
               <li>
                 <a href="javascript:void(0);" @click="logout">
                   <i class="icon-logout"></i> Log Out
@@ -78,6 +58,7 @@
       </div>
     </div>
   </div>
+
   <!-- end header -->
 </template>
 
@@ -96,3 +77,21 @@ function logout() {
   }
 }
 </script>
+
+<style scoped>
+/* ลดความสูงของ .page-header-inner บนมือถือ */
+@media (max-width: 767.98px) {
+  /* ยืนยันว่า .page-logo ไม่ถูกซ่อน */
+  .page-logo {
+    display: block !important;
+  }
+  /* ลด padding ของ header ให้โลโก้ไม่กินพื้นที่สูงเกินไป */
+  .page-header .page-header-inner {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+  .page-logo img {
+    max-height: 35px; /* ปรับขนาดให้พอดีมือถือ */
+  }
+}
+</style>
