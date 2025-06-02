@@ -19,7 +19,7 @@
               <a class="parent-item" href="">{{ pageName }}</a
               >&nbsp;<i class="fa fa-angle-right"></i>
             </li>
-            <li class="active">Edit {{ pageName }} Details</li>
+            <li class="active">Edit {{ pageName }} Type Details</li>
           </ol>
         </div>
       </div>
@@ -27,7 +27,7 @@
         <div class="col-sm-12">
           <div class="card-box">
             <div class="card-head">
-              <header>Edit {{ pageName }} Details</header>
+              <header>Edit {{ pageName }} Type Details</header>
               <!-- <button id="panel-button"
 								class="mdl-button mdl-js-button mdl-button--icon pull-right"
 								data-upgraded=",MaterialButton">
@@ -66,6 +66,16 @@
                     :class="{ 'show active': currentLang === 'en' }"
                   >
                     <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label">Mini Title</label>
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="content.translations.en.titleMini"
+                        />
+                      </div>
+                    </div>
+                    <div class="row mb-3">
                       <label class="col-sm-2 col-form-label">Main Title</label>
                       <div class="col-sm-10">
                         <input
@@ -85,6 +95,40 @@
                         ></textarea>
                       </div>
                     </div>
+
+                    <div class="row mb-4">
+                      <label class="col-sm-2 col-form-label">Facilities</label>
+                      <div class="col-sm-10">
+                        <div class="row">
+                          <div
+                            class="col-md-6 d-flex align-items-center mb-2"
+                            v-for="(opt, idx) in facilityOptions"
+                            :key="`en-${idx}`"
+                          >
+                            <!-- Checkbox -->
+                            <div class="form-check me-2">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                :id="`fac-en-${idx}`"
+                                v-model="facilityState.en[idx]"
+                              />
+                              <label
+                                class="form-check-label"
+                                :for="`fac-en-${idx}`"
+                              >
+                                {{ opt.name }}
+                              </label>
+                            </div>
+                            <!-- แสดงไอคอนข้างขวา -->
+                            <i
+                              :class="['ms-2', 'icon-size', opt.icon]"
+                              aria-hidden="true"
+                            ></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   <!-- ZH-CN -->
@@ -92,6 +136,16 @@
                     class="tab-pane"
                     :class="{ 'show active': currentLang === 'cn' }"
                   >
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label">Mini Title</label>
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="content.translations.cn.titleMini"
+                        />
+                      </div>
+                    </div>
                     <div class="row mb-3">
                       <label class="col-sm-2 col-form-label">Main Title</label>
                       <div class="col-sm-10">
@@ -103,13 +157,49 @@
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label class="col-sm-2 col-form-label">Description</label>
+                      <label class="col-sm-2 col-form-label"
+                        >Mini Description</label
+                      >
                       <div class="col-sm-10">
                         <textarea
                           class="form-control"
                           rows="5"
                           v-model="content.translations.cn.description"
                         ></textarea>
+                      </div>
+                    </div>
+
+                    <div class="row mb-4">
+                      <label class="col-sm-2 col-form-label">Facilities</label>
+                      <div class="col-sm-10">
+                        <div class="row">
+                          <div
+                            class="col-md-6 d-flex align-items-center mb-2"
+                            v-for="(opt, idx) in facilityOptions"
+                            :key="`cn-${idx}`"
+                          >
+                            <!-- Checkbox -->
+                            <div class="form-check me-2">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                :id="`fac-cn-${idx}`"
+                                v-model="facilityState.cn[idx]"
+                              />
+                              <label
+                                class="form-check-label"
+                                :for="`fac-cn-${idx}`"
+                              >
+                                {{ opt.name }}
+                              </label>
+                            </div>
+                            <!-- แสดงไอคอนข้างขวา -->
+                            <i
+                              :class="['ms-2', 'icon-size', opt.icon]"
+                              aria-hidden="true"
+                            ></i>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <!-- ถ้าต้องการ schedules ในภาษาจีน ก็ใส่เหมือน EN ได้เลย -->
@@ -120,6 +210,16 @@
                     class="tab-pane"
                     :class="{ 'show active': currentLang === 'ru' }"
                   >
+                    <div class="row mb-3">
+                      <label class="col-sm-2 col-form-label">Mini Title</label>
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="content.translations.ru.titleMini"
+                        />
+                      </div>
+                    </div>
                     <div class="row mb-3">
                       <label class="col-sm-2 col-form-label">Main Title</label>
                       <div class="col-sm-10">
@@ -140,11 +240,46 @@
                         ></textarea>
                       </div>
                     </div>
+
+                    <div class="row mb-4">
+                      <label class="col-sm-2 col-form-label">Facilities</label>
+                      <div class="col-sm-10">
+                        <div class="row">
+                          <div
+                            class="col-md-6 d-flex align-items-center mb-2"
+                            v-for="(opt, idx) in facilityOptions"
+                            :key="`ru-${idx}`"
+                          >
+                            <!-- Checkbox -->
+                            <div class="form-check me-2">
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                                :id="`fac-ru-${idx}`"
+                                v-model="facilityState.ru[idx]"
+                              />
+                              <label
+                                class="form-check-label"
+                                :for="`fac-ru-${idx}`"
+                              >
+                                {{ opt.name }}
+                              </label>
+                            </div>
+                            <!-- แสดงไอคอนข้างขวา -->
+                            <i
+                              :class="['ms-2', 'icon-size', opt.icon]"
+                              aria-hidden="true"
+                            ></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- ถ้าต้องการ schedules ในภาษารัสเซีย ก็ใส่เหมือน EN ได้เลย -->
                   </div>
                 </div>
               </div>
 
-              <!-- <div class="row">
+              <div class="row">
                 <div class="col-lg-6">
                   <div class="row">
                     <div class="col-lg-6 p-t-20">
@@ -203,13 +338,13 @@
                     <div class="preview-section">
                       <div class="gallery-preview">
                         <div
-                          v-for="(
-                            gallery, idx
-                          ) in responseDataSection3.galleries"
+                          v-for="(gallery, idx) in responseRoomType.galleries"
                           :key="idx"
                           class="image-container"
                         >
+                          <!-- 2) ใช้ gallery.image.path & gallery.image.name -->
                           <img
+                            v-if="gallery.image"
                             :src="
                               apiService.getImageUrl(
                                 gallery.image.path,
@@ -219,6 +354,7 @@
                             alt="Gallery image"
                           />
                           <button
+                            v-if="gallery.image"
                             class="delete-btn"
                             @click="confirmRemove(idx)"
                             aria-label="Delete image"
@@ -230,7 +366,7 @@
                     </div>
                   </div>
                 </div>
-              </div> -->
+              </div>
 
               <!-- <div class="col-lg-6 p-t-20">
                 <div class="form-group">
@@ -300,7 +436,8 @@ import apiService from "@/services/apiService";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-const routeId = route.params.id;
+const routeId = route.params.content_id;
+const dataId = route.params.id;
 
 // ใช้ onMounted เพื่อจัดการ script ที่ต้องการ DOM พร้อมใช้งาน
 onMounted(() => {
@@ -324,23 +461,52 @@ export default {
         ru: "Russian",
       },
       currentLang: "en",
+
+      facilityOptions: [
+        { icon: "icon-hotel-double_bed_2", name: "King Size Bed" },
+        { icon: "icon-hotel-safety_box", name: "Safety Box" },
+        { icon: "icon-hotel-patio", name: "Balcony" },
+        { icon: "icon-hotel-tv", name: "32 Inch TV" },
+        { icon: "icon-hotel-disable", name: "Disable Access" },
+        { icon: "icon-hotel-dog", name: "Pet Allowed" },
+        { icon: "icon-hotel-bottle", name: "Welcome Bottle" },
+        { icon: "icon-hotel-wifi", name: "Wifi / Netflix access" },
+        { icon: "icon-hotel-hairdryer", name: "Air Dryer" },
+        { icon: "icon-hotel-condition", name: "Air Condition" },
+        { icon: "icon-hotel-loundry", name: "Loundry Service" },
+      ],
+
+      // สถานะของ checkbox แต่ละตัวในแต่ละภาษา (true/false)
+      // เมื่อต้องการดึงข้อมูลจาก API มา แมปให้ facilityState.en[i] = true ถ้า status === 'Y'
+      facilityState: {
+        en: [], // array ของ boolean, length เท่ากับ facilityOptions.length
+        cn: [],
+        ru: [],
+      },
       content: {
         translations: {
           en: {
+            titleMini: "",
             title: "",
             description: "",
-            schedules: [{ title: "", time: "" }],
+            facilitiesJson: [],
           },
           cn: {
+            titleMini: "",
             title: "",
             description: "",
-            schedules: [{ title: "", time: "" }],
+
+            facilitiesJson: [],
           },
           ru: {
+            titleMini: "",
             title: "",
             description: "",
-            schedules: [{ title: "", time: "" }],
+
+            facilitiesJson: [],
           },
+          // ถ้าต้องการเก็บ id ของ room type ด้วย ก็ใส่เพิ่มที่นี่
+          id: null,
         },
       },
       errorMessage: "",
@@ -370,6 +536,13 @@ export default {
         // …
         // section2–section5 …
       },
+      roomTypeId: "",
+      requestSection2Roomtype: {
+        id: "",
+        galleries: [],
+        content_id: "",
+      },
+      responseRoomType: {},
       requestSection3: {
         // ฟิลด์อื่น ๆ ของ section1 …
         banner: {}, // <--- ตรงนี้จะเก็บ { name, path }
@@ -390,12 +563,21 @@ export default {
   async mounted() {
     // this.initPage()
     Layout.init();
+    await this.initializeFacilityState(); // สร้าง array ของ facilityState.en = [false,false,...]
+
     await this.callServicePageInfo();
     await this.callServiceSection2();
-    await this.callServiceSection3();
-    this.mapSchedulesFromDB();
+    // await this.callServiceSection3();
+    // this.mapSchedulesFromDB();
   },
   methods: {
+    initializeFacilityState() {
+      const len = this.facilityOptions.length;
+      this.facilityState.en = Array(len).fill(false);
+      this.facilityState.cn = Array(len).fill(false);
+      this.facilityState.ru = Array(len).fill(false);
+    },
+
     async callServicePageInfo() {
       const response = await apiService.callServiceInfo();
       if (response) {
@@ -408,35 +590,63 @@ export default {
       try {
         const id = this.$route.params.id;
         const response = await apiService.get(
-          `/api/page-info/content/section2/` + this.pageId + "/" + id
+          `/api/page-info/content/section2/` + this.pageId
         );
-        this.responseDataSection2 = response;
-        const t = this.content.translations;
-        t.en.title = response.title_en;
-        t.en.description = response.description_en;
-        t.cn.title = response.title_cn;
-        t.cn.description = response.description_cn;
-        t.ru.title = response.title_ru;
-        t.ru.description = response.description_ru;
 
-        // console.log("response.page_id >>> ", response.page_id);
-        // console.log("this.pages>>> ", this.pages);
-        const page = this.pages.find((p) => p.id === response.page_id);
-        console.log("page >>> ", page);
-        this.selectedPage = page;
-        this.selectedStatus = "A";
-      } catch (err) {
-        console.error("Error loading landing page:", err);
-      }
-    },
-    async callServiceSection3() {
-      try {
-        const id = this.$route.params.id;
-        const response = await apiService.get(
-          `/api/page-info/content/section3/` + this.pageId
-        );
-        this.responseDataSection3 = response;
-        console.log("callServiceSection3 >>> ", this.responseDataSection3);
+        if (response) {
+          console.log("this.dataId >> ", this.$route.params.id);
+          this.responseDataSection2 = response;
+          const dataRoomType = response.room_types.find(
+            (p) => Number(p.id) === Number(this.$route.params.id)
+          );
+
+          this.responseRoomType = dataRoomType;
+          this.roomTypeId = dataRoomType.id;
+          const t = this.content.translations;
+          t.en.titleMini = dataRoomType.title_mini_en;
+          t.en.title = dataRoomType.title_en;
+          t.en.description = dataRoomType.details_en;
+          t.cn.titleMini = dataRoomType.title_mini_cn;
+          t.cn.title = dataRoomType.title_cn;
+          t.cn.description = dataRoomType.details_cn;
+          t.ru.titleMini = dataRoomType.title_mini_ru;
+          t.ru.title = dataRoomType.title_ru;
+          t.ru.description = dataRoomType.details_ru;
+
+          const fe = dataRoomType.facilities_en || [];
+          const fc = dataRoomType.facilities_cn || [];
+          const fr = dataRoomType.facilities_ru || [];
+
+          // ให้ facilityState.en[i] = true ถ้าใน fe มี object.icon === facilityOptions[i].icon
+          this.facilityState.en = this.facilityOptions.map((opt) => {
+            // หาใน fe ว่ามี object ที่ icon ตรงกันและ status === 'Y' หรือไม่
+            const found = fe.find(
+              (f) => f.icon === opt.icon && f.status === "Y"
+            );
+            return !!found;
+          });
+          // ทำซ้ำกับภาษาจีน
+          this.facilityState.cn = this.facilityOptions.map((opt) => {
+            const found = fc.find(
+              (f) => f.icon === opt.icon && f.status === "Y"
+            );
+            return !!found;
+          });
+          // ทำซ้ำกับภาษารัสเซีย
+          this.facilityState.ru = this.facilityOptions.map((opt) => {
+            const found = fr.find(
+              (f) => f.icon === opt.icon && f.status === "Y"
+            );
+            return !!found;
+          });
+
+          // console.log("response.page_id >>> ", response.page_id);
+          // console.log("this.pages>>> ", this.pages);
+          const page = this.pages.find((p) => p.id === response.page_id);
+          console.log("page >>> ", page);
+          this.selectedPage = page;
+          // this.selectedStatus = "A";
+        }
       } catch (err) {
         console.error("Error loading landing page:", err);
       }
@@ -474,10 +684,10 @@ export default {
           console.log("Upload success:", resp);
           const { id, name, path } = resp.data;
           let param = {
-            content_id: this.responseDataSection3.id,
+            room_type_id: this.roomTypeId,
             image_id: id,
           };
-          this.requestSection3.galleries.push(param);
+          this.requestSection2Roomtype.galleries.push(param);
 
           console.log("requestSection3:", this.requestSection3);
         } catch (err) {
@@ -492,49 +702,93 @@ export default {
     },
     async saveSections() {
       await this.saveSection2();
-      await this.saveSection3();
+      // await this.saveSection3();
     },
     async saveSection2() {
       try {
+        const requestSection2 = this.responseDataSection2;
+        const dataRoomType = this.responseRoomType;
+
         // 2. flatten translations
         const t = this.content.translations;
-
         // 1. Flatten title / description
-        this.requestLandingPage.title_en = t.en.title;
-        this.requestLandingPage.description_en = t.en.description;
+        dataRoomType.title_mini_en = t.en.titleMini;
+        dataRoomType.title_en = t.en.title;
+        dataRoomType.details_en = t.en.description;
+        dataRoomType.title_mini_cn = t.cn.titleMini;
+        dataRoomType.title_cn = t.cn.title;
+        dataRoomType.details_cn = t.cn.description;
+        dataRoomType.title_mini_ru = t.ru.titleMini;
+        dataRoomType.title_ru = t.ru.title;
+        dataRoomType.details_ru = t.ru.description;
 
-        this.requestLandingPage.title_cn = t.cn.title;
-        this.requestLandingPage.description_cn = t.cn.description;
+        ["en", "cn", "ru"].forEach((lng) => {
+          const arr = this.facilityOptions.map((opt, idx) => {
+            return {
+              icon: opt.icon,
+              name: opt.name,
+              status: this.facilityState[lng][idx] ? "Y" : "N",
+            };
+          });
+          // แปลงเป็น JSON string
+          this.content.translations[lng].facilitiesJson = JSON.stringify(arr);
+        });
 
-        this.requestLandingPage.title_ru = t.ru.title;
-        this.requestLandingPage.description_ru = t.ru.description;
+        dataRoomType.facilities_en =
+          this.content.translations.en.facilitiesJson;
+        dataRoomType.facilities_cn =
+          this.content.translations.cn.facilitiesJson;
+        dataRoomType.facilities_ru =
+          this.content.translations.ru.facilitiesJson;
 
-        // 2. Flatten schedules
-        this.requestLandingPage.schedules_en = t.en.schedules;
-        this.requestLandingPage.schedules_cn = t.cn.schedules;
-        this.requestLandingPage.schedules_ru = t.ru.schedules;
+        console.log("this.requestSection3:", this.requestSection2Roomtype);
 
-        // 3. page_id และ status
-        this.requestLandingPage.page_id = this.selectedPage?.id;
-        this.requestLandingPage.status = this.selectedStatus;
+        // const mapped = (dataRoomType.galleries ?? []).map(
+        //   ({ id, room_type_id, image }) => ({
+        //     id,
+        //     room_type_id,
+        //     image_id: image.id,
+        //   })
+        // );
 
-        console.log("this.requestLandingPage:", this.requestLandingPage);
+        // push array ทั้งก้อนด้วย spread
+        // dataRoomType.galleries.push(...mapped);
+        dataRoomType.galleries.push(...this.requestSection2Roomtype.galleries);
+
+        const dataOtherRoomTypes = this.responseDataSection2.room_types.filter(
+          (p) => Number(p.id) !== Number(this.$route.params.id)
+        );
+
+        // 3. วนลูปแต่ละ room_type แล้วแปลง facilities_* → JSON string
+        dataOtherRoomTypes.forEach((room) => {
+          ["en", "cn", "ru"].forEach((lang) => {
+            const fieldName = `facilities_${lang}`; // เช่น "facilities_en"
+            const arr = room[fieldName] ?? []; // ถ้าไม่มีให้เป็น array เปล่า
+            room[fieldName] = JSON.stringify(arr); // แปลง array → JSON string
+          });
+        });
+
+        // // 3. page_id และ status
+        // this.requestLandingPage.page_id = this.selectedPage?.id;
+        // this.requestLandingPage.status = this.selectedStatus;
+
+        console.log("this.requestSection2:", requestSection2);
         const resp = await apiService.post(
           `/landingpage/update/page/${this.selectedPage?.name}/section/2`,
-          this.requestLandingPage
+          requestSection2
         );
         console.log("Update sections success:", resp);
-        // swal(
-        //   {
-        //     title: "Save Success",
-        //     type: "success",
-        //     showCancelButton: false,
-        //     confirmButtonText: "OK",
-        //   },
-        //   () => {
-        //     navigateTo("/manage-fitness/fitness-list");
-        //   }
-        // );
+        swal(
+          {
+            title: "Save Success",
+            type: "success",
+            showCancelButton: false,
+            confirmButtonText: "OK",
+          },
+          () => {
+            navigateTo("/manage-rooms/room-list");
+          }
+        );
       } catch (err) {
         console.error("Update sections error:", err);
       }
@@ -574,32 +828,6 @@ export default {
         console.error("Update sections error:", err);
       }
     },
-    addSchedule() {
-      this.content.translations[this.currentLang].schedules.push({
-        title: "",
-        time: "",
-      });
-    },
-    removeSchedule(idx) {
-      this.content.translations[this.currentLang].schedules.splice(idx, 1);
-    },
-    mapSchedulesFromDB() {
-      const langs = ["en", "cn", "ru"];
-      langs.forEach((lang) => {
-        // key ใน requestLandingPage
-        const key = `schedules_${lang}`;
-        // ถ้า backend ให้มาจริง ๆ ให้ใช้ array นั้นเลย
-        const arr = this.responseDataSection2[key] || [];
-        // ถ้า arr ว่าง ให้ใส่ default 1 row เปล่า ๆ
-        this.content.translations[lang].schedules = arr.length
-          ? // คัดกรองเฉพาะ title+time (กัน field เกิน)
-            arr.map((item) => ({
-              title: item.title ?? "",
-              time: item.time ?? "",
-            }))
-          : [{ title: "", time: "" }];
-      });
-    },
     // ยืนยันก่อนลบ
     confirmRemove(index) {
       //   swal(
@@ -617,12 +845,12 @@ export default {
       //       // swal("Deleted!", "Your imaginary file has been deleted.", "success");
       //     }
       //   );
-      const removed = this.responseDataSection3.galleries.splice(index, 1)[0];
+      const removed = this.responseRoomType.galleries.splice(index, 1)[0];
     },
 
     // ลบออกจาก array และเรียก API ฝั่ง server ถ้าต้องการ
     async removeImage(index) {
-      const removed = this.responseDataSection3.galleries.splice(index, 1)[0];
+      const removed = this.responseRoomType.galleries.splice(index, 1)[0];
       // ถ้าต้องการ sync กับ backend:
       // await this.$axios.$delete('/api/gallery/image', {
       //   data: { name: removed.banner.name, path: removed.banner.path }
@@ -674,5 +902,10 @@ export default {
       cursor: pointer;
     }
   }
+}
+
+.icon-size {
+  font-size: 2.125rem;
+  color: #978667;
 }
 </style>

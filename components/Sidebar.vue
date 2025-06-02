@@ -217,6 +217,16 @@
               <span class="title"> Spa</span>
             </NuxtLink>
           </li>
+          <li class="nav-item">
+            <NuxtLink
+              to="/manage-contact/contact-list"
+              @click="triggerGlobalFunction($event, 'click')"
+              class="nav-link"
+            >
+              <i class="material-icons">business_center</i>
+              <span class="title"> Contact Us</span>
+            </NuxtLink>
+          </li>
         </ul>
       </div>
     </div>

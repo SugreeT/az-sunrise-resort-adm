@@ -65,6 +65,11 @@ export default defineNuxtConfig({
           rel: 'stylesheet',
           href: '/adm/css/pages/formlayout.css', // Template Styles
         },
+        {
+          rel: 'stylesheet',
+          href: '/adm/css/custom-icon/custom-icons.css', // Template Styles
+        },
+
       ],
     },
   },

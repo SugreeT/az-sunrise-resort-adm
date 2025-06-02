@@ -28,20 +28,41 @@
           <div class="card card-box">
             <div class="card-head">
               <header>{{ pageName }}</header>
-              <div class="tools"></div>
+              <div class="tools">
+                <!-- <a
+                  class="fa fa-repeat btn-color box-refresh"
+                  href="javascript:;"
+                ></a>
+                <a
+                  class="t-collapse btn-color fa fa-chevron-down"
+                  href="javascript:;"
+                ></a>
+                <a
+                  class="t-close btn-color fa fa-times"
+                  href="javascript:;"
+                ></a> -->
+              </div>
             </div>
             <div class="card-body">
-              <h3>Room About</h3>
+              <!-- <div class="row p-b-20">
+                <div class="col-md-6 col-sm-6 col-6">
+                  <div class="btn-group">
+                    <NuxtLink to="/manage-banner/banner-add"  >
+												<button type="button"  class="btn btn-info">	Add New <i class="fa fa-plus"></i></button>
+													</NuxtLink>
+                  </div>
+                </div>
+              </div> -->
               <div class="table-scrollable">
                 <table
                   class="table table-hover table-checkable order-column full-width"
-                  id="tableRoom"
+                  id="tableContact"
                 >
                   <thead>
                     <tr>
                       <th class="center">No</th>
                       <!-- <th class="center">Fitness</th> -->
-                      <!-- <th class="center">Page</th> -->
+                      <!-- <th class="center">Image</th> -->
                       <th class="center fix-width-header1">Main Title(EN)</th>
                       <th class="center fix-width-header2">Description(EN)</th>
                       <th class="center fix-width-header1">Main Title(CN)</th>
@@ -51,12 +72,7 @@
 
                       <!-- <th class="center"> Create Date </th> -->
                       <!-- <th class="center"> Status </th> -->
-                      <th
-                        class="center fix-width-header0"
-                        style="min-width: 100px"
-                      >
-                        Action
-                      </th>
+                      <th class="center">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -68,14 +84,27 @@
                     >
                       <td class="center">{{ idx + 1 }}</td>
 
+                      <!--
+                      <td class="center">
+                        <img
+                          width="200"
+                          height="200"
+                          :src="
+                            apiService.getImageUrl(
+                              item.image?.path,
+                              item.image?.thumbnail_name
+                            )
+                          "
+                          alt=""
+                        />
+                      </td> -->
+
+                      <!-- Page (path หรือ name ตาม DTO) -->
+                      <!-- <td class="text-center">{{ item.pageName }}</td> -->
+
                       <td class="text-center">{{ item.title_en }}</td>
 
-                      <td
-                        class="text-center desc-en"
-                        :title="item.description_en"
-                      >
-                        {{ item.description_en }}
-                      </td>
+                      <td class="text-center">{{ item.description_en }}</td>
 
                       <td class="text-center">{{ item.title_cn }}</td>
 
@@ -85,14 +114,35 @@
 
                       <td class="text-center">{{ item.description_ru }}</td>
 
+                      <!-- Create Date format -->
+                      <!-- <td class="center">{{ formatDate(item.created_at) }}</td> -->
+
+                      <!-- Status -->
+                      <!-- <td class="center">
+													<span
+														class="label label-sm"
+														:class="item.status === 'active'
+														? 'label-success'
+														: 'label-danger'"
+													>
+														{{ item.status === 'active' ? 'Active' : 'Inactive' }}
+													</span>
+													</td> -->
+
                       <!-- Action -->
-                      <td class="center" style="min-width: 100px">
+                      <td class="center">
                         <NuxtLink
-                          :to="`/manage-rooms/room-edit/${item.id}`"
+                          :to="`/manage-contact/contact-edit/${item.id}`"
                           class="btn btn-tbl-edit btn-xs"
                         >
                           <i class="fa fa-pencil"></i>
                         </NuxtLink>
+                        <!-- <button
+														class="btn btn-tbl-delete btn-xs"
+														@click="deleteBanner(item.id)"
+													>
+														<i class="fa fa-trash-o"></i>
+													</button> -->
                       </td>
                     </tr>
 
@@ -100,79 +150,41 @@
                     <tr v-if="!responseData.length">
                       <td class="center" colspan="11">No data found</td>
                     </tr>
-                  </tbody>
-                </table>
-              </div>
-              <h3>Room Type</h3>
-              <div class="table-scrollable">
-                <table
-                  class="table table-hover table-checkable order-column full-width my-table"
-                  id="tableRoomType"
-                >
-                  <thead>
-                    <tr>
-                      <th class="center">No</th>
-                      <!-- <th class="center">Fitness</th> -->
-                      <!-- <th class="center">Page</th> -->
-                      <th class="text-center title-en">Main Title (EN)</th>
-                      <th class="text-center desc-en">Description (EN)</th>
-                      <th class="text-center title-cn">Main Title (CN)</th>
-                      <th class="text-center desc-cn">Description (CN)</th>
-                      <th class="text-center title-ru">Main Title (RU)</th>
-                      <th class="text-center desc-ru">Description (RU)</th>
-
-                      <!-- <th class="center"> Create Date </th> -->
-                      <!-- <th class="center"> Status </th> -->
-                      <th
-                        class="center fix-width-header0"
-                        style="min-width: 100px"
-                      >
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- loop data จาก mediaItems -->
-                    <tr
-                      v-for="(item, idx) in responseDataRoomType"
-                      :key="item.id"
-                      class="odd gradeX"
-                    >
-                      <td class="center">{{ idx + 1 }}</td>
-
-                      <td class="text-center">{{ item.title_en }}</td>
-
-                      <td class="text-center desc-en" :title="item.details_en">
-                        {{ item.details_en }}
-                      </td>
-
-                      <td class="text-center">{{ item.title_cn }}</td>
-
-                      <td class="text-center desc-cn" :title="item.details_cn">
-                        {{ item.details_cn }}
-                      </td>
-
-                      <td class="text-center">{{ item.title_ru }}</td>
-
-                      <td class="text-center desc-ru" :title="item.details_ru">
-                        {{ item.details_ru }}
-                      </td>
-
-                      <!-- Action -->
-                      <td class="center" style="min-width: 100px">
-                        <NuxtLink
-                          :to="`/manage-rooms/room-type-edit/${item.content_id}/${item.id}`"
-                          class="btn btn-tbl-edit btn-xs"
-                        >
-                          <i class="fa fa-pencil"></i>
-                        </NuxtLink>
-                      </td>
-                    </tr>
-
-                    <!-- กรณีไม่มีข้อมูล -->
-                    <tr v-if="!responseData.length">
-                      <td class="center" colspan="11">No data found</td>
-                    </tr>
+                    <!-- <tr class="odd gradeX">
+													<td class="center">1</td>
+													<td class="center">Main1</td>
+													<td class="center">Home</td>
+													<td class="center">2024-12-24 20:01</td>
+													<td class="center">
+														<span class="label label-sm label-success">Active</span>
+													</td>
+													<td class="center">
+														<a href="/manage-rooms/room-edit" class="btn btn-tbl-edit btn-xs">
+															<i class="fa fa-pencil"></i>
+														</a>
+														<a class="btn btn-tbl-delete btn-xs">
+															<i class="fa fa-trash-o "></i>
+														</a>
+													</td>
+												</tr>
+												<tr class="odd gradeX">
+													<td class="center">2</td>
+													<td class="center">Main2</td>
+													<td class="center">Home</td>
+													<td class="center">2024-12-24 20:01</td>
+													<td class="center">
+														<span class="label label-sm label-danger"> InActive </span>
+													</td>
+													<td class="center">
+														<NuxtLink to="/manage-banner/banner-edit"  >
+															<button type="button" class="btn btn-tbl-edit btn-xs">
+																<i class="fa fa-pencil"></i></button>
+														</NuxtLink>
+														<a class="btn btn-tbl-delete btn-xs">
+															<i class="fa fa-trash-o "></i>
+														</a>
+													</td>
+												</tr> -->
                   </tbody>
                 </table>
               </div>
@@ -205,11 +217,10 @@ import apiService from "@/services/apiService";
 export default {
   data() {
     return {
-      pageId: 8,
-      pageName: "",
+      pageId: 10,
+      pageName: "contact",
       pages: [],
       responseData: [], // Store selected images and previews
-      responseDataRoomType: [], // Store selected images and previews
     };
   },
   async mounted() {
@@ -218,21 +229,7 @@ export default {
     await this.callServicePageInfo();
     await this.callServiceMain();
 
-    $("#tableRoom").DataTable({
-      scrollX: true,
-      pageLength: 10, // เริ่มต้นแสดง 5 รายการ
-      lengthChange: false, // ปิด dropdown “Show entries”
-      searching: false, // ปิดกล่อง Search ขวาบน
-      info: false, // ปิด “Showing … entries”
-      paging: false, // ปิด pagination bar (Previous / 1 / Next)
-      lengthMenu: [
-        // กำหนดตัวเลือกใน dropdown
-        [10, 25, 50, 100],
-        [10, 25, 50, 100],
-      ],
-    });
-
-    $("#tableRoomType").DataTable({
+    $("#tableContact").DataTable({
       scrollX: true,
       pageLength: 10, // เริ่มต้นแสดง 5 รายการ
       lengthChange: false, // ปิด dropdown “Show entries”
@@ -258,14 +255,10 @@ export default {
     async callServiceMain() {
       try {
         const response = await apiService.get(
-          "/api/page-info/content/section2/" + this.pageId
+          "/api/page-info/content/section5/" + this.pageId
         );
 
-        if (response) {
-          this.responseData.push(response);
-          this.responseDataRoomType = response.room_types;
-        }
-
+        this.responseData.push(response);
         // สมมติ this.pages เป็น array ของ { id, name, ... }
         console.log("this.pages >", this.pages);
 
@@ -318,65 +311,10 @@ export default {
 };
 </script>
 <style scoped>
-.fix-width-header0 {
-  max-width: 100px;
-}
 .fix-width-header1 {
   max-width: 200px;
 }
 .fix-width-header2 {
   max-width: 200px;
-}
-
-/* บังคับให้ตารางใช้การคำนวณความกว้างแบบตายตัว (fixed) */
-.my-table {
-  width: 100%;
-  table-layout: fixed;
-  /* border-collapse: collapse; ถ้าต้องการขจัดระยะขอบพับซ้อน */
-}
-
-/* กำหนดความกว้างของคอลัมน์ Description (EN/CN/RU) */
-/* ถ้าคุณใช้ <colgroup> ก็ใส่ class ตรง col, แต่ในตัวอย่างนี้ใช้ CSS เลือก td ตาม class */
-.my-table th,
-.my-table td {
-  /* border: 1px solid #ddd; */
-  padding: 8px;
-}
-
-/* สมมติให้คอลัมน์ Title (EN) กว้าง 150px, Description (EN) กว้าง 200px */
-/* ปรับให้ตรงกับจำนวนคอลัมน์จริงของคุณ */
-.my-table th.title-en,
-.my-table td.title-en {
-  width: 150px;
-}
-.my-table th.desc-en,
-.my-table td.desc-en {
-  width: 300px;
-}
-.my-table th.title-cn,
-.my-table td.title-cn {
-  width: 150px;
-}
-.my-table th.desc-cn,
-.my-table td.desc-cn {
-  width: 300px;
-}
-.my-table th.title-ru,
-.my-table td.title-ru {
-  width: 150px;
-}
-.my-table th.desc-ru,
-.my-table td.desc-ru {
-  width: 300px;
-}
-
-/* CSS สำหรับตัดคำ (ellipsis) โดยตรงบน <td> */
-/* ห้ามใช้ display:inline-block ในที่นี้! ให้เป็น default display: table-cell */
-.my-table td.desc-en,
-.my-table td.desc-cn,
-.my-table td.desc-ru {
-  white-space: nowrap; /* ห้ามขึ้นบรรทัดใหม่ */
-  overflow: hidden; /* ซ่อนส่วนเกินออกนอกเซลล์ */
-  text-overflow: ellipsis; /* ให้แสดง ... เมื่อข้อความยาวเกิน */
 }
 </style>

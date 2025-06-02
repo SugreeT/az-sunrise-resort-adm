@@ -80,7 +80,6 @@
   </div>
   <!-- end header -->
 </template>
-emplate>
 
 <script setup>
 import { useRouter } from "vue-router";

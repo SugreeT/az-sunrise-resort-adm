@@ -85,6 +85,52 @@
                         ></textarea>
                       </div>
                     </div>
+
+                    <div>
+                      <label class="font-weight-bold"
+                        >Frequently Questions</label
+                      >
+                      <div
+                        v-for="(sched, idx) in content.translations.en
+                          .schedules"
+                        :key="idx"
+                        class="align-items-center mb-2"
+                      >
+                        <div class="row mb-1">
+                          <div class="col-sm-5">
+                            <input
+                              v-model="sched.question"
+                              placeholder="e.g. Check In / Out Rules"
+                              class="form-control mr-2"
+                            />
+                          </div>
+                          <div class="col-sm-5">
+                            <textarea
+                              v-model="sched.answer"
+                              placeholder="e.g. description Check In / Out Rules"
+                              class="form-control mr-2"
+                            ></textarea>
+                          </div>
+                          <div class="col-sm-1">
+                            <button
+                              v-if="
+                                content.translations.en.schedules.length > 1
+                              "
+                              class="btn btn-outline-danger"
+                              @click="removeSchedule(idx)"
+                            >
+                              –
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        class="btn btn-outline-primary"
+                        @click="addSchedule"
+                      >
+                        + Add Frequently Questions
+                      </button>
+                    </div>
                   </div>
 
                   <!-- ZH-CN -->
@@ -113,6 +159,51 @@
                       </div>
                     </div>
                     <!-- ถ้าต้องการ schedules ในภาษาจีน ก็ใส่เหมือน EN ได้เลย -->
+                    <div>
+                      <label class="font-weight-bold"
+                        >Frequently Questions</label
+                      >
+                      <div
+                        v-for="(sched, idx) in content.translations.cn
+                          .schedules"
+                        :key="idx"
+                        class="align-items-center mb-2"
+                      >
+                        <div class="row mb-1">
+                          <div class="col-sm-5">
+                            <input
+                              v-model="sched.question"
+                              placeholder="e.g. Check In / Out Rules"
+                              class="form-control mr-2"
+                            />
+                          </div>
+                          <div class="col-sm-5">
+                            <textarea
+                              v-model="sched.answer"
+                              placeholder="e.g. description Check In / Out Rules"
+                              class="form-control mr-2"
+                            ></textarea>
+                          </div>
+                          <div class="col-sm-1">
+                            <button
+                              v-if="
+                                content.translations.cn.schedules.length > 1
+                              "
+                              class="btn btn-outline-danger"
+                              @click="removeSchedule(idx)"
+                            >
+                              –
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        class="btn btn-outline-primary"
+                        @click="addSchedule"
+                      >
+                        + Add Frequently Questions
+                      </button>
+                    </div>
                   </div>
 
                   <!-- RU -->
@@ -140,116 +231,55 @@
                         ></textarea>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- <div class="row">
-                <div class="col-lg-6">
-                  <div class="row">
-                    <div class="col-lg-6 p-t-20">
-                      <div class="form-group">
-                        <label for="images" class="form-label"
-                          >Select Gallery</label
-                        >
-                        <input
-                          type="file"
-                          class="form-control"
-                          id="images"
-                          accept="image/*"
-                          multiple
-                          @change="handleFiles"
-                        />
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-12 p-t-20">
-                        <div v-if="errorMessage" class="alert alert-danger">
-                          {{ errorMessage }}
-                        </div>
-                        <div v-if="images.length > 0">
-                          <h5>Selected Gallery:</h5>
-                          <div class="row">
-                            <div
-                              class="col-md-2 mb-3"
-                              v-for="(image, index) in images"
-                              :key="index"
+                    <!-- ถ้าต้องการ schedules ในภาษารัสเซีย ก็ใส่เหมือน EN ได้เลย -->
+                    <div>
+                      <label class="font-weight-bold"
+                        >Frequently Questions</label
+                      >
+                      <div
+                        v-for="(sched, idx) in content.translations.ru
+                          .schedules"
+                        :key="idx"
+                        class="align-items-center mb-2"
+                      >
+                        <div class="row mb-1">
+                          <div class="col-sm-5">
+                            <input
+                              v-model="sched.question"
+                              placeholder="e.g. Check In / Out Rules"
+                              class="form-control mr-2"
+                            />
+                          </div>
+                          <div class="col-sm-5">
+                            <textarea
+                              v-model="sched.answer"
+                              placeholder="e.g. description Check In / Out Rules"
+                              class="form-control mr-2"
+                            ></textarea>
+                          </div>
+                          <div class="col-sm-1">
+                            <button
+                              v-if="
+                                content.translations.ru.schedules.length > 1
+                              "
+                              class="btn btn-outline-danger"
+                              @click="removeSchedule(idx)"
                             >
-                              <div class="card">
-                                <img
-                                  :src="image.preview"
-                                  class="card-img-top"
-                                  alt="Preview"
-                                />
-                                <div class="card-body p-2">
-                                  <p class="card-text text-truncate">
-                                    {{ image.file.name }}
-                                  </p>
-                                  <p class="card-text text-muted">
-                                    {{ formatSize(image.file.size) }}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
+                              –
+                            </button>
                           </div>
                         </div>
                       </div>
+                      <button
+                        class="btn btn-outline-primary"
+                        @click="addSchedule"
+                      >
+                        + Add Frequently Questions
+                      </button>
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-6 p-t-20">
-                  <div>
-                    <h5>All Gallery:</h5>
-                    <div class="preview-section">
-                      <div class="gallery-preview">
-                        <div
-                          v-for="(
-                            gallery, idx
-                          ) in responseDataSection3.galleries"
-                          :key="idx"
-                          class="image-container"
-                        >
-                          <img
-                            :src="
-                              apiService.getImageUrl(
-                                gallery.image.path,
-                                gallery.image.thumbnail_name
-                              )
-                            "
-                            alt="Gallery image"
-                          />
-                          <button
-                            class="delete-btn"
-                            @click="confirmRemove(idx)"
-                            aria-label="Delete image"
-                          >
-                            ×
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
-
-              <!-- <div class="col-lg-6 p-t-20">
-                <div class="form-group">
-                  <label for="status" class="form-label">Status</label>
-                  <select
-                    id="status"
-                    class="form-select"
-                    v-model="selectedStatus"
-                  >
-                    <option
-                      v-for="(value, key) in statusOptions"
-                      :key="key"
-                      :value="key"
-                    >
-                      {{ value }}
-                    </option>
-                  </select>
-                </div>
-              </div> -->
+              </div>
 
               <div class="col-lg-12 p-t-20 text-center">
                 <button
@@ -264,7 +294,7 @@
 										<button type="button"
 										class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-default">Cancel</button>
 									</a> -->
-                <NuxtLink to="/manage-rooms/room-list">
+                <NuxtLink to="/manage-contact/contact-list">
                   <button
                     type="button"
                     class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-default"
@@ -313,7 +343,7 @@ export default {
   data() {
     return {
       images: [], // Store selected images and previews
-      pageId: 8,
+      pageId: 10,
       pageName: "",
       bannerTemp: {},
       imagePath: {},
@@ -329,17 +359,17 @@ export default {
           en: {
             title: "",
             description: "",
-            schedules: [{ title: "", time: "" }],
+            schedules: [{ question: "", answer: "" }],
           },
           cn: {
             title: "",
             description: "",
-            schedules: [{ title: "", time: "" }],
+            schedules: [{ question: "", answer: "" }],
           },
           ru: {
             title: "",
             description: "",
-            schedules: [{ title: "", time: "" }],
+            schedules: [{ question: "", answer: "" }],
           },
         },
       },
@@ -364,9 +394,9 @@ export default {
         title_cn: "",
         title_mini_ru: "",
         title_rn: "",
-        schedules_en: "",
-        schedules_cn: "",
-        schedules_ru: "",
+        questions_en: "",
+        questions_cn: "",
+        questions_ru: "",
         // …
         // section2–section5 …
       },
@@ -391,8 +421,8 @@ export default {
     // this.initPage()
     Layout.init();
     await this.callServicePageInfo();
-    await this.callServiceSection2();
-    await this.callServiceSection3();
+    await this.callServiceSection5();
+    // await this.callServiceSection3();
     this.mapSchedulesFromDB();
   },
   methods: {
@@ -404,11 +434,11 @@ export default {
         this.pageName = data?.description;
       }
     },
-    async callServiceSection2() {
+    async callServiceSection5() {
       try {
         const id = this.$route.params.id;
         const response = await apiService.get(
-          `/api/page-info/content/section2/` + this.pageId + "/" + id
+          `/api/page-info/content/section5/` + this.pageId + "/" + id
         );
         this.responseDataSection2 = response;
         const t = this.content.translations;
@@ -429,70 +459,9 @@ export default {
         console.error("Error loading landing page:", err);
       }
     },
-    async callServiceSection3() {
-      try {
-        const id = this.$route.params.id;
-        const response = await apiService.get(
-          `/api/page-info/content/section3/` + this.pageId
-        );
-        this.responseDataSection3 = response;
-        console.log("callServiceSection3 >>> ", this.responseDataSection3);
-      } catch (err) {
-        console.error("Error loading landing page:", err);
-      }
-    },
-    async handleFiles(event) {
-      this.errorMessage = "";
-      const selectedFiles = Array.from(event.target.files);
-      const totalSize = selectedFiles.reduce((acc, f) => acc + f.size, 0);
-
-      if (totalSize > this.maxSize) {
-        this.errorMessage = "Total file size exceeds 100MB!";
-        this.images = [];
-        return;
-      }
-
-      // สร้าง preview
-      this.images = selectedFiles.map((f) => ({
-        file: f,
-        preview: URL.createObjectURL(f),
-      }));
-
-      // upload แต่ละไฟล์เลย
-      for (const { file } of this.images) {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("page_name", this.selectedPage?.name);
-        formData.append("category", "gallery");
-
-        try {
-          const resp = await apiService.post(
-            "/media/create", // หรือ path ที่คุณแม็ปใน Spring
-            formData,
-            { headers: { "Content-Type": "multipart/form-data" } }
-          );
-          console.log("Upload success:", resp);
-          const { id, name, path } = resp.data;
-          let param = {
-            content_id: this.responseDataSection3.id,
-            image_id: id,
-          };
-          this.requestSection3.galleries.push(param);
-
-          console.log("requestSection3:", this.requestSection3);
-        } catch (err) {
-          console.error("Upload error:", err);
-          this.errorMessage = "Upload failed: " + (err.message || err);
-        }
-      }
-    },
-    formatSize(size) {
-      const mbSize = (size / (1024 * 1024)).toFixed(2);
-      return `${mbSize} MB`;
-    },
     async saveSections() {
       await this.saveSection2();
-      await this.saveSection3();
+      // await this.saveSection3();
     },
     async saveSection2() {
       try {
@@ -510,9 +479,9 @@ export default {
         this.requestLandingPage.description_ru = t.ru.description;
 
         // 2. Flatten schedules
-        this.requestLandingPage.schedules_en = t.en.schedules;
-        this.requestLandingPage.schedules_cn = t.cn.schedules;
-        this.requestLandingPage.schedules_ru = t.ru.schedules;
+        this.requestLandingPage.questions_en = t.en.schedules;
+        this.requestLandingPage.questions_cn = t.cn.schedules;
+        this.requestLandingPage.questions_ru = t.ru.schedules;
 
         // 3. page_id และ status
         this.requestLandingPage.page_id = this.selectedPage?.id;
@@ -520,43 +489,8 @@ export default {
 
         console.log("this.requestLandingPage:", this.requestLandingPage);
         const resp = await apiService.post(
-          `/landingpage/update/page/${this.selectedPage?.name}/section/2`,
+          `/landingpage/update/page/${this.selectedPage?.name}/section/5`,
           this.requestLandingPage
-        );
-        console.log("Update sections success:", resp);
-        // swal(
-        //   {
-        //     title: "Save Success",
-        //     type: "success",
-        //     showCancelButton: false,
-        //     confirmButtonText: "OK",
-        //   },
-        //   () => {
-        //     navigateTo("/manage-fitness/fitness-list");
-        //   }
-        // );
-      } catch (err) {
-        console.error("Update sections error:", err);
-      }
-    },
-    async saveSection3() {
-      try {
-        console.log("this.requestSection3:", this.requestSection3);
-
-        const mapped = (this.responseDataSection3.galleries ?? []).map(
-          ({ id, content_id, image }) => ({
-            id,
-            content_id,
-            image_id: image.id,
-          })
-        );
-
-        // push array ทั้งก้อนด้วย spread
-        this.requestSection3.galleries.push(...mapped);
-
-        const resp = await apiService.post(
-          `/landingpage/update/page/${this.selectedPage?.name}/section/3`,
-          this.requestSection3
         );
         console.log("Update sections success:", resp);
         swal(
@@ -567,7 +501,7 @@ export default {
             confirmButtonText: "OK",
           },
           () => {
-            navigateTo("/manage-rooms/room-list");
+            navigateTo("/manage-contact/contact-list");
           }
         );
       } catch (err) {
@@ -576,8 +510,8 @@ export default {
     },
     addSchedule() {
       this.content.translations[this.currentLang].schedules.push({
-        title: "",
-        time: "",
+        question: "",
+        answer: "",
       });
     },
     removeSchedule(idx) {
@@ -587,17 +521,17 @@ export default {
       const langs = ["en", "cn", "ru"];
       langs.forEach((lang) => {
         // key ใน requestLandingPage
-        const key = `schedules_${lang}`;
+        const key = `questions_${lang}`;
         // ถ้า backend ให้มาจริง ๆ ให้ใช้ array นั้นเลย
         const arr = this.responseDataSection2[key] || [];
         // ถ้า arr ว่าง ให้ใส่ default 1 row เปล่า ๆ
         this.content.translations[lang].schedules = arr.length
-          ? // คัดกรองเฉพาะ title+time (กัน field เกิน)
+          ? // คัดกรองเฉพาะ title+answer (กัน field เกิน)
             arr.map((item) => ({
-              title: item.title ?? "",
-              time: item.time ?? "",
+              question: item.question ?? "",
+              answer: item.answer ?? "",
             }))
-          : [{ title: "", time: "" }];
+          : [{ question: "", answer: "" }];
       });
     },
     // ยืนยันก่อนลบ

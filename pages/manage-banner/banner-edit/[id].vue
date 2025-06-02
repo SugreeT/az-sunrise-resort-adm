@@ -158,7 +158,12 @@
               <div class="col-lg-6 p-t-20">
                 <div class="form-group">
                   <label for="pages" class="form-label">Choose a Page</label>
-                  <select id="pages" class="form-select" v-model="selectedPage">
+                  <select
+                    id="pages"
+                    class="form-select"
+                    v-model="selectedPage"
+                    disabled
+                  >
                     <option v-for="page in pages" :key="page.id" :value="page">
                       {{ page.description }}
                     </option>
@@ -208,8 +213,8 @@
                 </div>
                 <div v-else>
                   <img
-                    width="200"
-                    height="200"
+                    width="500"
+                    height="300"
                     :src="
                       apiService.getImageUrl(
                         imagePath.bannerPath,
