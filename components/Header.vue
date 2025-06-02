@@ -8,7 +8,7 @@
          1) บล็อกโลโก้: ไม่มี d-none
          ==================== -->
       <div class="page-logo">
-        <a href="/">
+        <a href="/adm">
           <img
             src="~assets/img/logo/AZ-sunrise-logo-h2.png"
             alt="A.Z. Sunrise"
