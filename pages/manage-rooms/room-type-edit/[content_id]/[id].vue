@@ -706,8 +706,9 @@ export default {
     },
     async saveSection2() {
       try {
-        const requestSection2 = this.responseDataSection2;
-        const dataRoomType = this.responseRoomType;
+        const requestSection2 = this.responseDataSection2; //default section2 not change
+
+        const dataRoomType = this.responseRoomType; //set for section2 room type change
 
         // 2. flatten translations
         const t = this.content.translations;
@@ -755,6 +756,10 @@ export default {
         // dataRoomType.galleries.push(...mapped);
         dataRoomType.galleries.push(...this.requestSection2Roomtype.galleries);
 
+        if (dataRoomType.galleries) {
+          dataRoomType.image_id = dataRoomType.galleries[0].image_id; // set image 0 for banner
+        }
+
         const dataOtherRoomTypes = this.responseDataSection2.room_types.filter(
           (p) => Number(p.id) !== Number(this.$route.params.id)
         );
@@ -773,22 +778,22 @@ export default {
         // this.requestLandingPage.status = this.selectedStatus;
 
         console.log("this.requestSection2:", requestSection2);
-        const resp = await apiService.post(
-          `/landingpage/update/page/${this.selectedPage?.name}/section/2`,
-          requestSection2
-        );
-        console.log("Update sections success:", resp);
-        swal(
-          {
-            title: "Save Success",
-            type: "success",
-            showCancelButton: false,
-            confirmButtonText: "OK",
-          },
-          () => {
-            navigateTo("/manage-rooms/room-list");
-          }
-        );
+        // const resp = await apiService.post(
+        //   `/landingpage/update/page/${this.selectedPage?.name}/section/2`,
+        //   requestSection2
+        // );
+        // console.log("Update sections success:", resp);
+        // swal(
+        //   {
+        //     title: "Save Success",
+        //     type: "success",
+        //     showCancelButton: false,
+        //     confirmButtonText: "OK",
+        //   },
+        //   () => {
+        //     navigateTo("/manage-rooms/room-list");
+        //   }
+        // );
       } catch (err) {
         console.error("Update sections error:", err);
       }
