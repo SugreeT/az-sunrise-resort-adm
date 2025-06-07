@@ -1,9 +1,7 @@
 <template>
   <!-- start header -->
   <div class="page-header navbar navbar-fixed-top">
-    <div
-      class="page-header-inner d-flex justify-content-between align-items-center px-2"
-    >
+    <div class="page-header-inner d-flex justify-content-between align-items-center px-2">
       <!-- ====================
          1) บล็อกโลโก้: ไม่มี d-none
          ==================== -->
@@ -43,14 +41,12 @@
               data-hover="dropdown"
               data-close-others="true"
             >
-              <span class="username">Admin</span>
+              <span class="username">{{ userName }}</span>
               <i class="fa fa-angle-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-default animated jello">
               <li>
-                <a href="javascript:void(0);" @click="logout">
-                  <i class="icon-logout"></i> Log Out
-                </a>
+                <a href="javascript:void(0);" @click="logout"> <i class="icon-logout"></i> Log Out </a>
               </li>
             </ul>
           </li>
@@ -76,6 +72,20 @@ function logout() {
     // navigateTo("/login");
   }
 }
+</script>
+<script>
+import apiService from "@/services/apiService";
+
+export default {
+  data() {
+    return {
+      userName: "",
+    };
+  },
+  async mounted() {
+    this.userName = sessionStorage.getItem("user");
+  },
+};
 </script>
 
 <style scoped>

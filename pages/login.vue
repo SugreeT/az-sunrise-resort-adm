@@ -8,30 +8,12 @@
             <img src="~assets/img/logo/AZ-sunrise-logo.png" alt="" />
           </span>
           <span class="login100-form-title p-b-34 p-t-27"> Log in </span>
-          <div
-            class="wrap-input100 validate-input"
-            data-validate="Enter username"
-          >
-            <input
-              class="input100"
-              type="text"
-              name="runriseUser"
-              placeholder="Username"
-              value="admin"
-            />
+          <div class="wrap-input100 validate-input" data-validate="Enter username">
+            <input class="input100" type="text" name="runriseUser" placeholder="Username" v-model="user" />
             <span class="focus-input100" data-placeholder="&#xf207;"></span>
           </div>
-          <div
-            class="wrap-input100 validate-input"
-            data-validate="Enter password"
-          >
-            <input
-              class="input100"
-              type="password"
-              name="runrisePass"
-              placeholder="Password"
-              value="P@ssw0rd"
-            />
+          <div class="wrap-input100 validate-input" data-validate="Enter password">
+            <input class="input100" type="password" name="runrisePass" placeholder="Password" v-model="pass" />
             <span class="focus-input100" data-placeholder="&#xf191;"></span>
           </div>
           <!-- <div class="contact100-form-checkbox">
@@ -41,9 +23,7 @@
 						</label>
 					</div> -->
           <div class="container-login100-form-btn">
-            <button class="login100-form-btn" @click="handleSubmit">
-              Login
-            </button>
+            <button class="login100-form-btn" @click="handleSubmit">Login</button>
           </div>
           <!-- <div class="text-center p-t-90">
 						<a class="txt1" href="#">
@@ -90,27 +70,68 @@ useHead({
 </script>
 
 <script>
+import apiService from "@/services/apiService";
 export default {
+  data() {
+    return {
+      user: "",
+      pass: "",
+    };
+  },
   methods: {
-    handleSubmit() {
-      // สร้าง UUID
-      const uuid = this.generateUUID();
+    async handleSubmit() {
+      const data = {
+        username: this.user,
+        password: this.pass,
+      };
 
-      // กำหนดวันหมดอายุ (นี่คือ 1 วัน)
-      const expires = new Date();
-      expires.setDate(expires.getDate() + 1);
+      try {
+        const response = await apiService.post("/api/advice/login", data);
 
-      // เซ็ตคุกกี้ชื่อ keygen
-      document.cookie = [
-        `keygen=${uuid}`,
-        `expires=${expires.toUTCString()}`,
-        `path=/`, // ให้คุกกี้ใช้ได้ทุก path
-        `SameSite=Lax`, // ปรับตามต้องการ (Lax, Strict, None)
-        // `Secure`           // เปิดถ้าใช้ HTTPS อย่างเดียว
-      ].join("; ");
+        if (response && response.status?.code === "AZ_200") {
+          // สร้าง UUID
+          const uuid = this.generateUUID();
 
-      // ไปหน้า index (หรือใช้ this.$router.push('/') ก็ได้)
-      window.location.href = "/adm/index";
+          sessionStorage.setItem("user", this.user);
+
+          // กำหนดวันหมดอายุ (นี่คือ 1 วัน)
+          const expires = new Date();
+          expires.setDate(expires.getDate() + 1);
+
+          // เซ็ตคุกกี้ชื่อ keygen
+          document.cookie = [
+            `keygen=${uuid}`,
+            `expires=${expires.toUTCString()}`,
+            `path=/`, // ให้คุกกี้ใช้ได้ทุก path
+            `SameSite=Lax`, // ปรับตามต้องการ (Lax, Strict, None)
+            // `Secure`           // เปิดถ้าใช้ HTTPS อย่างเดียว
+          ].join("; ");
+
+          // ไปหน้า index (หรือใช้ this.$router.push('/') ก็ได้)
+          window.location.href = "/adm/index";
+        } else {
+          swal(
+            {
+              title: "Username or password is incorrect!",
+              type: "warning",
+              showCancelButton: false,
+              confirmButtonText: "OK",
+            },
+            () => {}
+          );
+        }
+      } catch (err) {
+        console.error("login error:", err);
+        swal(
+          {
+            title: "Username or password is incorrect!",
+            type: "warning",
+            showCancelButton: false,
+            confirmButtonText: "OK",
+          },
+          () => {}
+        );
+      }
     },
 
     generateUUID() {
