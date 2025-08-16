@@ -9,15 +9,11 @@
           </div>
           <ol class="breadcrumb page-breadcrumb pull-right">
             <li>
-              <i class="fa fa-home"></i>&nbsp;<a
-                class="parent-item"
-                href="index"
-                >Home</a
-              >&nbsp;<i class="fa fa-angle-right"></i>
+              <i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="index">Home</a>&nbsp;<i
+                class="fa fa-angle-right"></i>
             </li>
             <li>
-              <a class="parent-item" href="">{{ pageName }}</a
-              >&nbsp;<i class="fa fa-angle-right"></i>
+              <a class="parent-item" href="">{{ pageName }}</a>&nbsp;<i class="fa fa-angle-right"></i>
             </li>
             <li class="active">Edit {{ pageName }} Type Details</li>
           </ol>
@@ -48,12 +44,8 @@
                 <!-- ─── Tabs ภาษา ─────────────────────────────── -->
                 <ul class="nav nav-tabs mb-3" role="tablist">
                   <li class="nav-item" v-for="lang in languages" :key="lang">
-                    <a
-                      class="nav-link"
-                      :class="{ active: currentLang === lang }"
-                      href="#"
-                      @click.prevent="currentLang = lang"
-                    >
+                    <a class="nav-link" :class="{ active: currentLang === lang }" href="#"
+                      @click.prevent="currentLang = lang">
                       {{ langLabels[lang] }}
                     </a>
                   </li>
@@ -61,38 +53,24 @@
 
                 <div class="tab-content">
                   <!-- EN -->
-                  <div
-                    class="tab-pane"
-                    :class="{ 'show active': currentLang === 'en' }"
-                  >
+                  <div class="tab-pane" :class="{ 'show active': currentLang === 'en' }">
                     <div class="row mb-3">
                       <label class="col-sm-2 col-form-label">Mini Title</label>
                       <div class="col-sm-10">
-                        <input
-                          type="text"
-                          class="form-control"
-                          v-model="content.translations.en.titleMini"
-                        />
+                        <input type="text" class="form-control" v-model="content.translations.en.titleMini" />
                       </div>
                     </div>
                     <div class="row mb-3">
                       <label class="col-sm-2 col-form-label">Main Title</label>
                       <div class="col-sm-10">
-                        <input
-                          type="text"
-                          class="form-control"
-                          v-model="content.translations.en.title"
-                        />
+                        <input type="text" class="form-control" v-model="content.translations.en.title" />
                       </div>
                     </div>
                     <div class="row mb-3">
                       <label class="col-sm-2 col-form-label">Description</label>
                       <div class="col-sm-10">
-                        <textarea
-                          class="form-control"
-                          rows="5"
-                          v-model="content.translations.en.description"
-                        ></textarea>
+                        <textarea class="form-control" rows="5"
+                          v-model="content.translations.en.description"></textarea>
                       </div>
                     </div>
 
@@ -100,31 +78,18 @@
                       <label class="col-sm-2 col-form-label">Facilities</label>
                       <div class="col-sm-10">
                         <div class="row">
-                          <div
-                            class="col-md-6 d-flex align-items-center mb-2"
-                            v-for="(opt, idx) in facilityOptions"
-                            :key="`en-${idx}`"
-                          >
+                          <div class="col-md-6 d-flex align-items-center mb-2" v-for="(opt, idx) in facilityOptions"
+                            :key="`en-${idx}`">
                             <!-- Checkbox -->
                             <div class="form-check me-2">
-                              <input
-                                class="form-check-input"
-                                type="checkbox"
-                                :id="`fac-en-${idx}`"
-                                v-model="facilityState.en[idx]"
-                              />
-                              <label
-                                class="form-check-label"
-                                :for="`fac-en-${idx}`"
-                              >
+                              <input class="form-check-input" type="checkbox" :id="`fac-en-${idx}`"
+                                v-model="facilityState.en[idx]" />
+                              <label class="form-check-label" :for="`fac-en-${idx}`">
                                 {{ opt.name }}
                               </label>
                             </div>
                             <!-- แสดงไอคอนข้างขวา -->
-                            <i
-                              :class="['ms-2', 'icon-size', opt.icon]"
-                              aria-hidden="true"
-                            ></i>
+                            <i :class="['ms-2', 'icon-size', opt.icon]" aria-hidden="true"></i>
                           </div>
                         </div>
                       </div>
@@ -132,40 +97,24 @@
                   </div>
 
                   <!-- ZH-CN -->
-                  <div
-                    class="tab-pane"
-                    :class="{ 'show active': currentLang === 'cn' }"
-                  >
+                  <div class="tab-pane" :class="{ 'show active': currentLang === 'cn' }">
                     <div class="row mb-3">
                       <label class="col-sm-2 col-form-label">Mini Title</label>
                       <div class="col-sm-10">
-                        <input
-                          type="text"
-                          class="form-control"
-                          v-model="content.translations.cn.titleMini"
-                        />
+                        <input type="text" class="form-control" v-model="content.translations.cn.titleMini" />
                       </div>
                     </div>
                     <div class="row mb-3">
                       <label class="col-sm-2 col-form-label">Main Title</label>
                       <div class="col-sm-10">
-                        <input
-                          type="text"
-                          class="form-control"
-                          v-model="content.translations.cn.title"
-                        />
+                        <input type="text" class="form-control" v-model="content.translations.cn.title" />
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label class="col-sm-2 col-form-label"
-                        >Mini Description</label
-                      >
+                      <label class="col-sm-2 col-form-label">Mini Description</label>
                       <div class="col-sm-10">
-                        <textarea
-                          class="form-control"
-                          rows="5"
-                          v-model="content.translations.cn.description"
-                        ></textarea>
+                        <textarea class="form-control" rows="5"
+                          v-model="content.translations.cn.description"></textarea>
                       </div>
                     </div>
 
@@ -173,31 +122,18 @@
                       <label class="col-sm-2 col-form-label">Facilities</label>
                       <div class="col-sm-10">
                         <div class="row">
-                          <div
-                            class="col-md-6 d-flex align-items-center mb-2"
-                            v-for="(opt, idx) in facilityOptions"
-                            :key="`cn-${idx}`"
-                          >
+                          <div class="col-md-6 d-flex align-items-center mb-2" v-for="(opt, idx) in facilityOptions"
+                            :key="`cn-${idx}`">
                             <!-- Checkbox -->
                             <div class="form-check me-2">
-                              <input
-                                class="form-check-input"
-                                type="checkbox"
-                                :id="`fac-cn-${idx}`"
-                                v-model="facilityState.cn[idx]"
-                              />
-                              <label
-                                class="form-check-label"
-                                :for="`fac-cn-${idx}`"
-                              >
+                              <input class="form-check-input" type="checkbox" :id="`fac-cn-${idx}`"
+                                v-model="facilityState.cn[idx]" />
+                              <label class="form-check-label" :for="`fac-cn-${idx}`">
                                 {{ opt.name }}
                               </label>
                             </div>
                             <!-- แสดงไอคอนข้างขวา -->
-                            <i
-                              :class="['ms-2', 'icon-size', opt.icon]"
-                              aria-hidden="true"
-                            ></i>
+                            <i :class="['ms-2', 'icon-size', opt.icon]" aria-hidden="true"></i>
                           </div>
                         </div>
                       </div>
@@ -206,38 +142,24 @@
                   </div>
 
                   <!-- RU -->
-                  <div
-                    class="tab-pane"
-                    :class="{ 'show active': currentLang === 'ru' }"
-                  >
+                  <div class="tab-pane" :class="{ 'show active': currentLang === 'ru' }">
                     <div class="row mb-3">
                       <label class="col-sm-2 col-form-label">Mini Title</label>
                       <div class="col-sm-10">
-                        <input
-                          type="text"
-                          class="form-control"
-                          v-model="content.translations.ru.titleMini"
-                        />
+                        <input type="text" class="form-control" v-model="content.translations.ru.titleMini" />
                       </div>
                     </div>
                     <div class="row mb-3">
                       <label class="col-sm-2 col-form-label">Main Title</label>
                       <div class="col-sm-10">
-                        <input
-                          type="text"
-                          class="form-control"
-                          v-model="content.translations.ru.title"
-                        />
+                        <input type="text" class="form-control" v-model="content.translations.ru.title" />
                       </div>
                     </div>
                     <div class="row mb-3">
                       <label class="col-sm-2 col-form-label">Description</label>
                       <div class="col-sm-10">
-                        <textarea
-                          class="form-control"
-                          rows="5"
-                          v-model="content.translations.ru.description"
-                        ></textarea>
+                        <textarea class="form-control" rows="5"
+                          v-model="content.translations.ru.description"></textarea>
                       </div>
                     </div>
 
@@ -245,31 +167,18 @@
                       <label class="col-sm-2 col-form-label">Facilities</label>
                       <div class="col-sm-10">
                         <div class="row">
-                          <div
-                            class="col-md-6 d-flex align-items-center mb-2"
-                            v-for="(opt, idx) in facilityOptions"
-                            :key="`ru-${idx}`"
-                          >
+                          <div class="col-md-6 d-flex align-items-center mb-2" v-for="(opt, idx) in facilityOptions"
+                            :key="`ru-${idx}`">
                             <!-- Checkbox -->
                             <div class="form-check me-2">
-                              <input
-                                class="form-check-input"
-                                type="checkbox"
-                                :id="`fac-ru-${idx}`"
-                                v-model="facilityState.ru[idx]"
-                              />
-                              <label
-                                class="form-check-label"
-                                :for="`fac-ru-${idx}`"
-                              >
+                              <input class="form-check-input" type="checkbox" :id="`fac-ru-${idx}`"
+                                v-model="facilityState.ru[idx]" />
+                              <label class="form-check-label" :for="`fac-ru-${idx}`">
                                 {{ opt.name }}
                               </label>
                             </div>
                             <!-- แสดงไอคอนข้างขวา -->
-                            <i
-                              :class="['ms-2', 'icon-size', opt.icon]"
-                              aria-hidden="true"
-                            ></i>
+                            <i :class="['ms-2', 'icon-size', opt.icon]" aria-hidden="true"></i>
                           </div>
                         </div>
                       </div>
@@ -284,17 +193,9 @@
                   <div class="row">
                     <div class="col-lg-6 p-t-20">
                       <div class="form-group">
-                        <label for="images" class="form-label"
-                          >Select Gallery</label
-                        >
-                        <input
-                          type="file"
-                          class="form-control"
-                          id="images"
-                          accept="image/*"
-                          multiple
-                          @change="handleFiles"
-                        />
+                        <label for="images" class="form-label">Select Gallery</label>
+                        <input type="file" class="form-control" id="images" accept="image/*" multiple
+                          @change="handleFiles" />
                       </div>
                     </div>
                     <div class="row">
@@ -305,17 +206,9 @@
                         <div v-if="images.length > 0">
                           <h5>Selected Gallery:</h5>
                           <div class="row">
-                            <div
-                              class="col-md-2 mb-3"
-                              v-for="(image, index) in images"
-                              :key="index"
-                            >
+                            <div class="col-md-2 mb-3" v-for="(image, index) in images" :key="index">
                               <div class="card">
-                                <img
-                                  :src="image.preview"
-                                  class="card-img-top"
-                                  alt="Preview"
-                                />
+                                <img :src="image.preview" class="card-img-top" alt="Preview" />
                                 <div class="card-body p-2">
                                   <p class="card-text text-truncate">
                                     {{ image.file.name }}
@@ -337,28 +230,15 @@
                     <h5>All Gallery:</h5>
                     <div class="preview-section">
                       <div class="gallery-preview">
-                        <div
-                          v-for="(gallery, idx) in responseRoomType.galleries"
-                          :key="idx"
-                          class="image-container"
-                        >
+                        <div v-for="(gallery, idx) in responseRoomType.galleries" :key="idx" class="image-container">
                           <!-- 2) ใช้ gallery.image.path & gallery.image.name -->
-                          <img
-                            v-if="gallery.image"
-                            :src="
-                              apiService.getImageUrl(
-                                gallery.image.path,
-                                gallery.image.thumbnail_name
-                              )
-                            "
-                            alt="Gallery image"
-                          />
-                          <button
-                            v-if="gallery.image"
-                            class="delete-btn"
-                            @click="confirmRemove(idx)"
-                            aria-label="Delete image"
-                          >
+                          <img v-if="gallery.image" :src="apiService.getImageUrl(
+                            gallery.image.path,
+                            gallery.image.thumbnail_name
+                          )
+                            " alt="Gallery image" />
+                          <button v-if="gallery.image" class="delete-btn" @click="confirmRemove(idx)"
+                            aria-label="Delete image">
                             ×
                           </button>
                         </div>
@@ -388,11 +268,8 @@
               </div> -->
 
               <div class="col-lg-12 p-t-20 text-center">
-                <button
-                  type="button"
-                  @click="saveSections"
-                  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink"
-                >
+                <button type="button" @click="saveSections"
+                  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-pink">
                   Save
                 </button>
 
@@ -401,10 +278,8 @@
 										class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-default">Cancel</button>
 									</a> -->
                 <NuxtLink to="/manage-rooms/room-list">
-                  <button
-                    type="button"
-                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-default"
-                  >
+                  <button type="button"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-default">
                     Cancel
                   </button>
                 </NuxtLink>
@@ -466,7 +341,7 @@ export default {
         { icon: "icon-hotel-double_bed_2", name: "King Size Bed" },
         { icon: "icon-hotel-safety_box", name: "Safety Box" },
         { icon: "icon-hotel-patio", name: "Balcony" },
-        { icon: "icon-hotel-tv", name: "32 Inch TV" },
+        { icon: "icon-hotel-tv", name: "43 Inch TV" },
         { icon: "icon-hotel-disable", name: "Disable Access" },
         { icon: "icon-hotel-dog", name: "Pet Allowed" },
         { icon: "icon-hotel-bottle", name: "Welcome Bottle" },
