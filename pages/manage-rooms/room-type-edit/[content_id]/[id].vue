@@ -653,22 +653,22 @@ export default {
         // this.requestLandingPage.status = this.selectedStatus;
 
         console.log("this.requestSection2:", requestSection2);
-        // const resp = await apiService.post(
-        //   `/landingpage/update/page/${this.selectedPage?.name}/section/2`,
-        //   requestSection2
-        // );
-        // console.log("Update sections success:", resp);
-        // swal(
-        //   {
-        //     title: "Save Success",
-        //     type: "success",
-        //     showCancelButton: false,
-        //     confirmButtonText: "OK",
-        //   },
-        //   () => {
-        //     navigateTo("/manage-rooms/room-list");
-        //   }
-        // );
+        const resp = await apiService.post(
+          `/landingpage/update/page/${this.selectedPage?.name}/section/2`,
+          requestSection2
+        );
+        console.log("Update sections success:", resp);
+        swal(
+          {
+            title: "Save Success",
+            type: "success",
+            showCancelButton: false,
+            confirmButtonText: "OK",
+          },
+          () => {
+            navigateTo("/manage-rooms/room-list");
+          }
+        );
       } catch (err) {
         console.error("Update sections error:", err);
       }
