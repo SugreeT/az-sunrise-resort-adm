@@ -338,17 +338,27 @@ export default {
       currentLang: "en",
 
       facilityOptions: [
-        { icon: "icon-hotel-double_bed_2", name: "King Size Bed" },
-        { icon: "icon-hotel-safety_box", name: "Safety Box" },
-        { icon: "icon-hotel-patio", name: "Balcony" },
-        { icon: "icon-hotel-tv", name: "43 Inch TV" },
-        { icon: "icon-hotel-disable", name: "Disable Access" },
-        { icon: "icon-hotel-dog", name: "Pet Allowed" },
-        { icon: "icon-hotel-bottle", name: "Welcome Bottle" },
-        { icon: "icon-hotel-wifi", name: "Wifi / Netflix access" },
-        { icon: "icon-hotel-hairdryer", name: "Air Dryer" },
-        { icon: "icon-hotel-condition", name: "Air Condition" },
-        { icon: "icon-hotel-loundry", name: "Loundry Service" },
+        { "icon": "icon-hotel-double_bed_2", "name": "King Size Bed", "status": "N" },
+        { "icon": "customicon-double-bed", "name": "Queen Size Bed", "status": "N" },
+        { "icon": "icon-hotel-single_bed", "name": "Two Single Beds", "status": "N" },
+
+        { "icon": "icon-hotel-patio", "name": "Balcony", "status": "N" },
+        { "icon": "icon-hotel-restaurant", "name": "Desk", "status": "N" },
+
+        { "icon": "icon-spa-tisane", "name": "Free toiletries", "status": "N" },
+        { "icon": "icon-hotel-shower", "name": "Shower", "status": "N" },
+        { "icon": "icon-spa-towels", "name": "Towels", "status": "N" },
+
+        { "icon": "icon-hotel-condition", "name": "Air conditioning", "status": "N" },
+        { "icon": "icon-hotel-coffee", "name": "Electric kettle", "status": "N" },
+        { "icon": "icon-hotel-tv", "name": "TV", "status": "N" },
+        { "icon": "icon-hotel-calendar_1", "name": "Mini Refrigerator", "status": "N" },
+        { "icon": "icon-hotel-hairdryer", "name": "Hairdryer", "status": "N" },
+        { "icon": "icon-hotel-safety_box", "name": "Safety box", "status": "N" },
+
+        { "icon": "icon-hotel-loundry", "name": "Bathrobe", "status": "N" },
+        { "icon": "icon-spa-dress", "name": "Slipper", "status": "N" },
+        { "icon": "icon-hotel-info", "name": "Umbrella", "status": "N" }
       ],
 
       // สถานะของ checkbox แต่ละตัวในแต่ละภาษา (true/false)
